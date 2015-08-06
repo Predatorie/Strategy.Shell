@@ -9,9 +9,21 @@
 
 namespace Strategy.Shell.Interfaces
 {
+    using System;
+
     /// <summary>The ButtonBarView interface.</summary>
     public interface IButtonBarView
     {
-         
+        /// <summary>The selection changed.</summary>
+        event EventHandler CloseView;
+
+        /// <summary>The remove level.</summary>
+        event EventHandler SaveStrategy;
+
+        /// <summary>The load strategy.</summary>
+        event EventHandler LoadStrategy;
+
+        /// <summary>The view loaded.</summary>
+        event EventHandler ViewLoaded;
     }
 }

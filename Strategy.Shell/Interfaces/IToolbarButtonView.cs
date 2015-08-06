@@ -9,8 +9,33 @@
 
 namespace Strategy.Shell.Interfaces
 {
+    using System;
+
     /// <summary>The ToolbarButtonView interface.</summary>
     public interface IToolbarButtonView
-    {         
+    {
+        /// <summary>The add level.</summary>
+        event EventHandler AddLevel;
+
+        /// <summary>The remove level.</summary>
+        event EventHandler RemoveLevel;
+
+        /// <summary>The import part levels.</summary>
+        event EventHandler ImportPartLevels;
+
+        /// <summary>The save level list.</summary>
+        event EventHandler SaveLevelList;
+
+        /// <summary>The save level list.</summary>
+        event EventHandler LevelScan;
+
+        /// <summary>The load level list.</summary>
+        event EventHandler LoadLevelList;
+
+        /// <summary>The selection changed.</summary>
+        event EventHandler OpenOperationsLibrary;
+
+        /// <summary>The view loaded.</summary>
+        event EventHandler ViewLoaded;
     }
 }

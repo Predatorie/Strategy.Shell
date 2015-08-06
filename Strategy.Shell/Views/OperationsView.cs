@@ -22,6 +22,7 @@ namespace Strategy.Shell.Views
         {
             this.InitializeComponent();
             this.OperationsTreeView.AfterSelect += (s, e) => this.OnSelectionChanged();
+            this.Load += (s, e) => this.OnViewLoad();
         }
 
         /// <summary>The selection changed.</summary>
@@ -52,10 +53,17 @@ namespace Strategy.Shell.Views
             this.OperationsTreeView.SelectedNode = this.OperationsTreeView.Nodes[key];
         }
 
+        public event EventHandler ViewLoaded;
+
         /// <summary>The on selection changed.</summary>
         protected virtual void OnSelectionChanged()
         {
             var handler = this.SelectionChanged;
+            handler?.Invoke(this, EventArgs.Empty);
+        }
+        protected virtual void OnViewLoad()
+        {
+            var handler = this.ViewLoaded;
             handler?.Invoke(this, EventArgs.Empty);
         }
     }

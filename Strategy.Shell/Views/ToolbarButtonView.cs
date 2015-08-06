@@ -9,6 +9,7 @@
 
 namespace Strategy.Shell.Views
 {
+    using System;
     using System.Windows.Forms;
 
     using Interfaces;
@@ -20,6 +21,58 @@ namespace Strategy.Shell.Views
         public ToolbarButtonView()
         {
             this.InitializeComponent();
+
+            this.Load += (s, e) => this.OnViewLoad();
+        }
+
+        public event EventHandler AddLevel
+        {
+            add { this.ButtonAddLevel.Click += value; }
+            remove { this.ButtonAddLevel.Click -= value; }
+        }
+
+        public event EventHandler RemoveLevel
+        {
+            add { this.ButtonRemoveLevel.Click += value; }
+            remove { this.ButtonRemoveLevel.Click -= value; }
+        }
+
+        public event EventHandler ImportPartLevels
+        {
+            add { this.ButtonImportPartLevels.Click += value; }
+            remove { this.ButtonImportPartLevels.Click -= value; }
+        }
+
+        public event EventHandler SaveLevelList
+        {
+            add { this.ButtonSaveLevelList.Click += value; }
+            remove { this.ButtonSaveLevelList.Click -= value; }
+        }
+
+        public event EventHandler LevelScan
+        {
+            add { this.ButtonLevelScan.Click += value; }
+            remove { this.ButtonLevelScan.Click -= value; }
+        }
+
+        public event EventHandler LoadLevelList
+        {
+            add { this.ButtonLoadLevelList.Click += value; }
+            remove { this.ButtonLoadLevelList.Click -= value; }
+        }
+
+        public event EventHandler OpenOperationsLibrary
+        {
+            add { this.ButtonOpenOperationsLibrary.Click += value; }
+            remove { this.ButtonOpenOperationsLibrary.Click -= value; }
+        }
+
+        public event EventHandler ViewLoaded;
+
+        protected virtual void OnViewLoad()
+        {
+            var handler = this.ViewLoaded;
+            handler?.Invoke(this, EventArgs.Empty);
         }
     }
 }

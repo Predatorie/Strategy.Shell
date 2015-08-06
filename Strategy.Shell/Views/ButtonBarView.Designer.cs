@@ -28,20 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ButtonImportPartLevels = new System.Windows.Forms.Button();
             this.ButtonClose = new System.Windows.Forms.Button();
             this.ButtonSave = new System.Windows.Forms.Button();
+            this.ButtonLoadStrategy = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // ButtonImportPartLevels
-            // 
-            this.ButtonImportPartLevels.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ButtonImportPartLevels.Location = new System.Drawing.Point(3, 4);
-            this.ButtonImportPartLevels.Name = "ButtonImportPartLevels";
-            this.ButtonImportPartLevels.Size = new System.Drawing.Size(125, 23);
-            this.ButtonImportPartLevels.TabIndex = 0;
-            this.ButtonImportPartLevels.Text = "Import Part Levels";
-            this.ButtonImportPartLevels.UseVisualStyleBackColor = true;
             // 
             // ButtonClose
             // 
@@ -55,31 +45,40 @@
             // 
             // ButtonSave
             // 
-            this.ButtonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ButtonSave.Location = new System.Drawing.Point(400, 4);
+            this.ButtonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ButtonSave.Location = new System.Drawing.Point(109, 4);
             this.ButtonSave.Name = "ButtonSave";
-            this.ButtonSave.Size = new System.Drawing.Size(75, 23);
+            this.ButtonSave.Size = new System.Drawing.Size(100, 23);
             this.ButtonSave.TabIndex = 2;
-            this.ButtonSave.Text = "Save";
+            this.ButtonSave.Text = "Save Strategy...";
             this.ButtonSave.UseVisualStyleBackColor = true;
+            // 
+            // ButtonLoadStrategy
+            // 
+            this.ButtonLoadStrategy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ButtonLoadStrategy.Location = new System.Drawing.Point(3, 4);
+            this.ButtonLoadStrategy.Name = "ButtonLoadStrategy";
+            this.ButtonLoadStrategy.Size = new System.Drawing.Size(100, 23);
+            this.ButtonLoadStrategy.TabIndex = 3;
+            this.ButtonLoadStrategy.Text = "Load Strategy...";
+            this.ButtonLoadStrategy.UseVisualStyleBackColor = true;
             // 
             // ButtonBarView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.ButtonLoadStrategy);
             this.Controls.Add(this.ButtonSave);
             this.Controls.Add(this.ButtonClose);
-            this.Controls.Add(this.ButtonImportPartLevels);
             this.Name = "ButtonBarView";
-            this.Size = new System.Drawing.Size(559, 42);
+            this.Size = new System.Drawing.Size(559, 30);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button ButtonImportPartLevels;
         private System.Windows.Forms.Button ButtonClose;
         private System.Windows.Forms.Button ButtonSave;
+        private System.Windows.Forms.Button ButtonLoadStrategy;
     }
 }

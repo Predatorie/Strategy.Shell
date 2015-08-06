@@ -32,5 +32,7 @@ namespace Strategy.Shell.Interfaces
         /// <summary>The select level node.</summary>
         /// <param name="key">The key.</param>
         void SelectNode(string key);
+
+        event EventHandler ViewLoaded;
     }
 }

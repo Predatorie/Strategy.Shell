@@ -123,10 +123,10 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="ButtonPanelRegion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 386</value>
+    <value>0, 381</value>
   </data>
   <data name="ButtonPanelRegion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>686, 23</value>
+    <value>734, 30</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="ButtonPanelRegion.TabIndex" type="System.Int32, mscorlib">
@@ -151,7 +151,7 @@
     <value>0, 0</value>
   </data>
   <data name="ToolbarButtonPanelRegion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>686, 23</value>
+    <value>734, 45</value>
   </data>
   <data name="ToolbarButtonPanelRegion.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -172,7 +172,7 @@
     <value>Fill</value>
   </data>
   <data name="ShellContainer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 23</value>
+    <value>0, 45</value>
   </data>
   <data name="&gt;&gt;ShellContainer.Panel1.Name" xml:space="preserve">
     <value>ShellContainer.Panel1</value>
@@ -199,10 +199,10 @@
     <value>1</value>
   </data>
   <data name="ShellContainer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>686, 363</value>
+    <value>734, 336</value>
   </data>
   <data name="ShellContainer.SplitterDistance" type="System.Int32, mscorlib">
-    <value>338</value>
+    <value>361</value>
   </data>
   <data name="ShellContainer.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -226,10 +226,10 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>686, 409</value>
+    <value>734, 411</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>628, 411</value>
+    <value>750, 450</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>

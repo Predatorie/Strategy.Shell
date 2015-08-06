@@ -9,6 +9,7 @@
 
 namespace Strategy.Shell.Views
 {
+    using System;
     using System.Windows.Forms;
 
     using Interfaces;
@@ -20,6 +21,35 @@ namespace Strategy.Shell.Views
         public ButtonBarView()
         {
             this.InitializeComponent();
+
+            this.Load += (s, e) => this.OnViewLoad();
+        }
+
+        /// <summary>The close view.</summary>
+        public event EventHandler CloseView
+        {
+            add { this.ButtonClose.Click += value; }
+            remove { this.ButtonClose.Click -= value; }
+        }
+
+        public event EventHandler SaveStrategy
+        {
+            add { this.ButtonSave.Click += value; }
+            remove { this.ButtonSave.Click -= value; }
+        }
+
+        public event EventHandler LoadStrategy
+        {
+            add { this.ButtonLoadStrategy.Click += value; }
+            remove { this.ButtonLoadStrategy.Click -= value; }
+        }
+
+        public event EventHandler ViewLoaded;
+
+        protected virtual void OnViewLoad()
+        {
+            var handler = this.ViewLoaded;
+            handler?.Invoke(this, EventArgs.Empty);
         }
     }
 }
