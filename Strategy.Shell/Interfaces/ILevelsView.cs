@@ -18,6 +18,9 @@ namespace Strategy.Shell.Interfaces
         /// <summary>The selection changed.</summary>
         event EventHandler SelectionChanged;
 
+        /// <summary>The view loaded.</summary>
+        event EventHandler ViewLoaded;
+
         /// <summary>Gets the selected node.</summary>
         TreeNode SelectedNode { get; }
 
@@ -31,8 +34,6 @@ namespace Strategy.Shell.Interfaces
 
         /// <summary>The select level node.</summary>
         /// <param name="key">The key.</param>
-        void SelectNode(string key);
-
-        event EventHandler ViewLoaded;
+        void SelectNode(string key);     
     }
 }

@@ -1,6 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ShellView.cs" company="Mick George @Osoy">
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
+//
+// TODO: Implement Presenter
+//
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 namespace Strategy.Shell.Views
@@ -43,7 +46,6 @@ namespace Strategy.Shell.Views
             this.operationsView = new OperationsView { Dock = DockStyle.Fill };
 
             this.InjectViews();
-
 
             // Handles high contrast
             if (!SystemInformation.HighContrast)

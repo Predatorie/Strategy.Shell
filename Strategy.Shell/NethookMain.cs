@@ -46,7 +46,7 @@ namespace Strategy.Shell
         public override MCamReturn Run(int param)
         {
             // First time user has run the app
-            if(Settings.Default.FirstRun)
+            if (Settings.Default.FirstRun)
             {
                 //// TODO: Do something first time running
 
@@ -59,7 +59,7 @@ namespace Strategy.Shell
             var fileBrowserService = new FileBrowserService();
             var eventAggregator = new EventAggregator();
 
-            using(var view = new ShellView(msgBoxService, fileBrowserService, eventAggregator))
+            using (var view = new ShellView(msgBoxService, fileBrowserService, eventAggregator))
             {
                 view.ShowDialog();
             }
