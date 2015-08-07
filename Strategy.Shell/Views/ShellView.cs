@@ -1,58 +1,74 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ShellView.cs" company="Mick George @Osoy">
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
-//
-// TODO: Implement Presenter
-//
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace Strategy.Shell.Views
 {
-    using System.Drawing;
     using System.Windows.Forms;
 
     using Reactive.EventAggregator;
 
     using Interfaces;
+    using Presenter;
     using Services;
 
     /// <summary>The shell view.</summary>
-    public sealed partial class ShellView : Form, IShellView
+    public partial class ShellView : Form, IShellView
     {
-        /// <summary>The event aggregator.</summary>
-        private IEventAggregator eventAggregator;
+        #region Fields
 
+        /// <summary>The button bar view.</summary>
         private readonly ButtonBarView buttonBarView;
 
+        /// <summary>The toolbar button view.</summary>
         private readonly ToolbarButtonView toolbarButtonView;
 
+        /// <summary>The levels view.</summary>
         private readonly LevelsView levelsView;
 
+        /// <summary>The operations view.</summary>
         private readonly OperationsView operationsView;
 
+        #endregion
+
+        #region Construction
+
         /// <summary>Initializes a new instance of the <see cref="ShellView"/> class.</summary>
-        /// <param name="messageBoxService">The message box service.</param>
-        /// <param name="fileBrowserService">The file browser service.</param>
-        /// <param name="eventAggregator">The event aggregator.</param>
-        public ShellView(IMessageBoxService messageBoxService, IFileBrowserService fileBrowserService, IEventAggregator eventAggregator)
+        /// <param name="msgBoxService">The msg Box Service.</param>
+        /// <param name="fileBrowserService">The file Browser Service.</param>
+        /// <param name="eventAggregator">The event Aggregator.</param>
+        public ShellView(IMessageBoxService msgBoxService, IFileBrowserService fileBrowserService, IEventAggregator eventAggregator)
         {
             this.InitializeComponent();
 
-            this.eventAggregator = eventAggregator;
+            // Wire up our view presenters
+            var toolbarView = new ToolbarButtonView { Dock = DockStyle.Fill };
+            var toolbarViewPresenter = new ToolbarViewPresenter(toolbarView, msgBoxService, fileBrowserService, eventAggregator);
 
-            this.buttonBarView = new ButtonBarView { Dock = DockStyle.Fill };
-            this.toolbarButtonView = new ToolbarButtonView { Dock = DockStyle.Fill };
-            this.levelsView = new LevelsView { Dock = DockStyle.Fill };
-            this.operationsView = new OperationsView { Dock = DockStyle.Fill };
+            var buttonView = new ButtonBarView { Dock = DockStyle.Fill };
+            var buttonViewPresenter = new ButtonBarViewPresenter(buttonView, msgBoxService, fileBrowserService, eventAggregator);
 
+            var levelView = new LevelsView { Dock = DockStyle.Fill };
+            var levelViewPresenter = new LevelsViewPresenter(levelView, msgBoxService, fileBrowserService, eventAggregator);
+
+            var opsView = new OperationsView { Dock = DockStyle.Fill };
+            var opsViewPresenter = new OperationsViewPresenter(opsView, msgBoxService, fileBrowserService, eventAggregator);
+
+            // Wire up the views
+            this.buttonBarView = buttonView;
+            this.toolbarButtonView = toolbarView;
+            this.levelsView = levelView;
+            this.operationsView = opsView;
+
+            // Place the views in the correct regions
             this.InjectViews();
-
-            // Handles high contrast
-            if (!SystemInformation.HighContrast)
-            {
-                this.BackColor = Color.White;
-            }
         }
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>Gets the button bar view.</summary>
         public IButtonBarView ButtonBarView => this.buttonBarView;
@@ -66,6 +82,15 @@ namespace Strategy.Shell.Views
         /// <summary>Gets the toolbar button view.</summary>
         public IToolbarButtonView ToolbarButtonView => this.toolbarButtonView;
 
+        /// <summary>
+        /// Returns the handle to this form, usefull for setting modal dialogs to this form
+        /// </summary>
+        public IWin32Window WindowHandle => FromHandle(this.Handle);
+
+        #endregion
+
+        #region Private Methods
+
         /// <summary>The inject views.</summary>
         private void InjectViews()
         {
@@ -75,5 +100,7 @@ namespace Strategy.Shell.Views
             this.ButtonPanelRegion.Controls.Add(this.buttonBarView);
             this.ToolbarButtonPanelRegion.Controls.Add(this.toolbarButtonView);
         }
+
+        #endregion
     }
 }

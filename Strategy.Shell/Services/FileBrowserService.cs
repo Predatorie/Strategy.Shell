@@ -3,32 +3,29 @@
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace Strategy.Shell.Services
 {
     using System.Windows.Forms;
 
-    using Localization;
-
-    using Mastercam.IO;
-
     /// <summary>The file browser service.</summary>
     public class FileBrowserService : IFileBrowserService
     {
-        /// <summary>The browse for file.</summary>
-        /// <param name="fileFilter">The file filter.</param>
-        /// <returns>The <see cref="string"/>.</returns>
-        public string BrowseForFile(string fileFilter)
+        /// <summary>The BrowseForFile method</summary>
+        /// <param name="parent">The parent form.</param>
+        /// <param name="title">The title.</param>
+        /// <param name="fileFilter">The file filter type</param>
+        /// <param name="location">The Initial Directory</param>
+        /// <returns>The selected file pth</returns>
+        public string BrowseForFile(IWin32Window parent, string title, string fileFilter, string location)
         {
             using (var dlg = new OpenFileDialog())
             {
-                dlg.InitialDirectory = SettingsManager.SharedDirectory;
                 dlg.Multiselect = false;
-                dlg.Title = LocalizationStrings.Title;
-
+                dlg.Title = title;
                 dlg.Filter = fileFilter;
+                dlg.InitialDirectory = location;
 
-                if (dlg.ShowDialog() == DialogResult.OK)
+                if (dlg.ShowDialog(parent) == DialogResult.OK)
                 {
                     return dlg.FileName;
                 }                   

@@ -15,7 +15,7 @@ namespace Strategy.Shell.Views
     using Interfaces;
 
     /// <summary>The button bar view.</summary>
-    public partial class ButtonBarView : UserControl, IButtonBarView
+    public partial class ButtonBarView : UserControl, IButtonBarView, IViewBase
     {
         /// <summary>Initializes a new instance of the <see cref="ButtonBarView"/> class.</summary>
         public ButtonBarView()
@@ -24,6 +24,11 @@ namespace Strategy.Shell.Views
 
             this.Load += (s, e) => this.OnViewLoad();
         }
+
+        /// <summary>
+        /// Returns the handle to this form, usefull for setting modal dialogs to this form
+        /// </summary>
+        public IWin32Window WindowHandle => FromHandle(this.Handle);
 
         /// <summary>The close view.</summary>
         public event EventHandler CloseView
@@ -44,11 +49,11 @@ namespace Strategy.Shell.Views
             remove { this.ButtonLoadStrategy.Click -= value; }
         }
 
-        public event EventHandler ViewLoaded;
+        public event EventHandler ViewLoad;
 
         protected virtual void OnViewLoad()
         {
-            var handler = this.ViewLoaded;
+            var handler = this.ViewLoad;
             handler?.Invoke(this, EventArgs.Empty);
         }
     }

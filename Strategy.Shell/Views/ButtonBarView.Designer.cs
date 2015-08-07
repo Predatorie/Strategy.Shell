@@ -60,7 +60,7 @@
             this.ButtonLoadStrategy.Name = "ButtonLoadStrategy";
             this.ButtonLoadStrategy.Size = new System.Drawing.Size(100, 23);
             this.ButtonLoadStrategy.TabIndex = 3;
-            this.ButtonLoadStrategy.Text = "Load Strategy...";
+            this.ButtonLoadStrategy.Text = "ViewLoad Strategy...";
             this.ButtonLoadStrategy.UseVisualStyleBackColor = true;
             // 
             // ButtonBarView

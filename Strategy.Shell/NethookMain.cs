@@ -12,10 +12,13 @@ namespace Strategy.Shell
     using Mastercam.App;
     using Mastercam.App.Types;
 
+    using Presenter;
+
+    using Properties;
+
     using Reactive.EventAggregator;
 
-    using Strategy.Shell.Properties;
-    using Strategy.Shell.Services;
+    using Services;
 
     using Views;
 
@@ -58,11 +61,13 @@ namespace Strategy.Shell
             var msgBoxService = new MessageBoxService();
             var fileBrowserService = new FileBrowserService();
             var eventAggregator = new EventAggregator();
+            var sysInfoService = new SystemInformationService();
 
-            using (var view = new ShellView(msgBoxService, fileBrowserService, eventAggregator))
-            {
-                view.ShowDialog();
-            }
+            var shellView = new ShellView(msgBoxService, fileBrowserService, eventAggregator);
+            // ReSharper disable once UnusedVariable
+            var presenter = new ShellViewPresenter(shellView, msgBoxService, fileBrowserService, eventAggregator, sysInfoService);
+
+            shellView.ShowDialog();
 
             return MCamReturn.NoErrors;
         }

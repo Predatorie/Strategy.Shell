@@ -84,16 +84,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\OperationsLibraryLoadEvent.cs" />
     <Compile Include="FunctionTable\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Globals.cs" />
     <Compile Include="Interfaces\IButtonBarView.cs" />
     <Compile Include="Interfaces\ILevelsView.cs" />
     <Compile Include="Interfaces\IOperationsView.cs" />
     <Compile Include="Interfaces\IShellView.cs" />
     <Compile Include="Interfaces\IToolbarButtonView.cs" />
+    <Compile Include="Interfaces\IViewBase.cs" />
     <Compile Include="Localization\LocalizationStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -102,6 +105,11 @@
     <Compile Include="NethookMain.cs" />
     <Compile Include="Operations\IMastercamOperation.cs" />
     <Compile Include="Operations\MastercamOperation.cs" />
+    <Compile Include="Presenter\ButtonBarViewPresenter.cs" />
+    <Compile Include="Presenter\LevelsViewPresenter.cs" />
+    <Compile Include="Presenter\OperationsViewPresenter.cs" />
+    <Compile Include="Presenter\ShellViewPresenter.cs" />
+    <Compile Include="Presenter\ToolbarViewPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -116,7 +124,9 @@
     <Compile Include="Services\FileBrowserService.cs" />
     <Compile Include="Services\IFileBrowserService.cs" />
     <Compile Include="Services\IMessageBoxService.cs" />
+    <Compile Include="Services\ISystemInformationService.cs" />
     <Compile Include="Services\MessageBoxService.cs" />
+    <Compile Include="Services\SystemInformationService.cs" />
     <Compile Include="Views\ButtonBarView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -197,7 +207,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Presenter\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -19,7 +19,7 @@ namespace Strategy.Shell.Interfaces
         event EventHandler SelectionChanged;
 
         /// <summary>The view loaded.</summary>
-        event EventHandler ViewLoaded;
+        event EventHandler ViewLoad;
 
         /// <summary>Gets the selected node.</summary>
         TreeNode SelectedNode { get; }

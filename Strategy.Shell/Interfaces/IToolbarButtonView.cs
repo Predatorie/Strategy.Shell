@@ -10,6 +10,7 @@
 namespace Strategy.Shell.Interfaces
 {
     using System;
+    using System.Windows.Forms;
 
     /// <summary>The ToolbarButtonView interface.</summary>
     public interface IToolbarButtonView
@@ -36,6 +37,9 @@ namespace Strategy.Shell.Interfaces
         event EventHandler OpenOperationsLibrary;
 
         /// <summary>The view loaded.</summary>
-        event EventHandler ViewLoaded;
+        event EventHandler ViewLoad;
+
+        /// <summary>Gets the window handle.</summary>
+        IWin32Window WindowHandle { get; }
     }
 }
