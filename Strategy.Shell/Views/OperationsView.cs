@@ -31,16 +31,25 @@ namespace Strategy.Shell.Views
         /// <summary>Gets the selected node.</summary>
         public TreeNode SelectedNode => this.OperationsTreeView.SelectedNode;
 
+        public TreeNode MainTreeNode => this.OperationsTreeView.TopNode;
+
+        public TreeView Tree => this.OperationsTreeView;
+
         /// <summary>
         /// Returns the handle to this form, usefull for setting modal dialogs to this form
         /// </summary>
         public IWin32Window WindowHandle => FromHandle(this.Handle);
 
+        public void AddMainTreeNode(TreeNode node)
+        {
+            this.OperationsTreeView.Nodes.Add(node);
+        }
+
         /// <summary>The add node.</summary>
         /// <param name="levelNode">The level node.</param>
         public void AddNode(TreeNode levelNode)
         {
-            this.OperationsTreeView.Nodes.Add(levelNode);
+            this.OperationsTreeView.TopNode.Nodes.Add(levelNode);
         }
 
         /// <summary>The remove node.</summary>
@@ -48,7 +57,7 @@ namespace Strategy.Shell.Views
         public void RemoveNode(string key)
         {
             var node = this.OperationsTreeView.Nodes[key];
-            this.OperationsTreeView.Nodes.Remove(node);
+            this.OperationsTreeView.TopNode.Nodes.Remove(node);
         }
 
         /// <summary>The select node.</summary>

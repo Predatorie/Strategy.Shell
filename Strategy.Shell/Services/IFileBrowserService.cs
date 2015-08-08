@@ -5,6 +5,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace Strategy.Shell.Services
 {
+    using System.Collections.Generic;
     using System.Windows.Forms;
 
     using Interfaces;
@@ -18,6 +19,6 @@ namespace Strategy.Shell.Services
         /// <param name="fileFilter">The file filter.</param>
         /// <param name="location">The initial location</param>
         /// <returns>The <see cref="string"/> file path.</returns>
-        string BrowseForFile(IWin32Window parent, string title, string fileFilter, string location);
+        List<string> BrowseForFile(IWin32Window parent, string title, string fileFilter, string location);
     }
 }

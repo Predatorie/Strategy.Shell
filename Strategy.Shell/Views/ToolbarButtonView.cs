@@ -32,6 +32,8 @@ namespace Strategy.Shell.Views
         /// </summary>
         public IWin32Window WindowHandle => FromHandle(this.Handle);
 
+        public ToolStrip ToolBarStrip => this.ToolBarButtonsCollection;
+
         #endregion
 
         #region Event Handlers

@@ -5,6 +5,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace Strategy.Shell.Services
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Windows.Forms;
 
     /// <summary>The file browser service.</summary>
@@ -16,22 +18,22 @@ namespace Strategy.Shell.Services
         /// <param name="fileFilter">The file filter type</param>
         /// <param name="location">The Initial Directory</param>
         /// <returns>The selected file pth</returns>
-        public string BrowseForFile(IWin32Window parent, string title, string fileFilter, string location)
+        public List<string> BrowseForFile(IWin32Window parent, string title, string fileFilter, string location)
         {
             using (var dlg = new OpenFileDialog())
             {
-                dlg.Multiselect = false;
+                dlg.Multiselect = true;
                 dlg.Title = title;
                 dlg.Filter = fileFilter;
                 dlg.InitialDirectory = location;
 
                 if (dlg.ShowDialog(parent) == DialogResult.OK)
                 {
-                    return dlg.FileName;
+                    return dlg.FileNames.ToList();
                 }                   
             }
 
-            return string.Empty;
+            return new List<string>();
         }
     }
 }

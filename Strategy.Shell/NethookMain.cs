@@ -67,6 +67,7 @@ namespace Strategy.Shell
             // ReSharper disable once UnusedVariable
             var presenter = new ShellViewPresenter(shellView, msgBoxService, fileBrowserService, eventAggregator, sysInfoService);
 
+            // TODO: Hook upto Mastercam window
             shellView.ShowDialog();
 
             return MCamReturn.NoErrors;

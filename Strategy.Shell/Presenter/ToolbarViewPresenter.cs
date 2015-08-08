@@ -7,6 +7,8 @@ namespace Strategy.Shell.Presenter
 {
     using System;
     using System.IO;
+    using System.Linq;
+    using System.Windows.Forms;
 
     using Events;
 
@@ -20,6 +22,8 @@ namespace Strategy.Shell.Presenter
     using Reactive.EventAggregator;
 
     using Services;
+
+    using Strategy.Shell.FunctionTable;
 
     /// <summary>The toolbar view presenter.</summary>
     public class ToolbarViewPresenter
@@ -94,13 +98,13 @@ namespace Strategy.Shell.Presenter
             // Determine what operations library folder we will open too.
             var libraryLocation = Path.Combine(SettingsManager.SharedDirectory, MachineDefManager.IsCurrentMachineGroupRouter() ? "router\\OPS" : "mill\\Ops");
 
-            // Prompr user to select an operations library
+            // Prompr user to select an operations library(s)
             var operationsLib = this.fileBrowserService.BrowseForFile(this.view.WindowHandle, LocalizationStrings.PromptForOperationsLibrary, Globals.FileFilterOperations, libraryLocation);
 
-            if (File.Exists(operationsLib))
+            if (operationsLib.Any())
             {
                 // Notify our subscribers
-                var payload = new OperationsLibraryLoadEvent { Library = operationsLib };
+                var payload = new OperationsLibraryLoadEvent { Libraries = operationsLib };
                 this.eventAggregator.Publish(payload);
             }
         }
@@ -110,7 +114,6 @@ namespace Strategy.Shell.Presenter
         /// <param name="eventArgs">The event args.</param>
         private void ViewOnLoadLevelList(object sender, EventArgs eventArgs)
         {
-
         }
 
         /// <summary>The toolbar button view on level scan.</summary>
@@ -142,11 +145,31 @@ namespace Strategy.Shell.Presenter
         /// <param name="eventArgs">The event args.</param>
         private void ViewOnViewLoad(object sender, EventArgs eventArgs)
         {
+            this.LoadImages();
         }
 
         #endregion
 
         #region Private Methods   
+
+        /// <summary>The load images.</summary>
+        private void LoadImages()
+        {
+            // Load the images in an ImageList.
+            var list = new ImageList();
+
+            list.Images.Add(Resource.Save);
+            list.Images.Add(Resource.SaveAs);
+            list.Images.Add(Resource.AddMaterial);
+            list.Images.Add(Resource.AddNewLevel);
+            list.Images.Add(Resource.ClearCutlist);
+            list.Images.Add(Resource.NewLevelScan);
+            list.Images.Add(Resource.NewStrategy);
+            list.Images.Add(Resource.Open);
+            list.Images.Add(Resource.Options);
+
+            this.view.ToolBarStrip.ImageList = list;
+        }
 
         #endregion
 

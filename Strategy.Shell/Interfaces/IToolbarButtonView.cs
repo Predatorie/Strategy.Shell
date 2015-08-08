@@ -39,6 +39,9 @@ namespace Strategy.Shell.Interfaces
         /// <summary>The view loaded.</summary>
         event EventHandler ViewLoad;
 
+        /// <summary>Gets the tool bar strip.</summary>
+        ToolStrip ToolBarStrip { get; }
+
         /// <summary>Gets the window handle.</summary>
         IWin32Window WindowHandle { get; }
     }

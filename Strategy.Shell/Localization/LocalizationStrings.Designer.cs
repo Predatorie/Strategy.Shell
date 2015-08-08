@@ -61,6 +61,15 @@ namespace Strategy.Shell.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operation Libraries.
+        /// </summary>
+        public static string MainNode {
+            get {
+                return ResourceManager.GetString("MainNode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Operations Library.
         /// </summary>
         public static string PromptForOperationsLibrary {

@@ -6,10 +6,12 @@
 
 namespace Strategy.Shell.Events
 {
+    using System.Collections.Generic;
+
     /// <summary>The operations library load event.</summary>
     public class OperationsLibraryLoadEvent
     {
         /// <summary>Gets or sets the library.</summary>
-        public string Library { get; set; }
+        public List<string> Libraries { get; set; }
     }
 }
