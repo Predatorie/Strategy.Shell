@@ -3,18 +3,16 @@
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace Strategy.Shell.Presenter
 {
     using System;
     using System.Drawing;
     using System.Windows.Forms;
 
-    using Interfaces;
-
     using Reactive.EventAggregator;
 
-    using Services;
+    using Strategy.Shell.Interfaces;
+    using Strategy.Shell.Services;
 
     /// <summary>The shell view presenter.</summary>
     public class ShellViewPresenter
@@ -46,7 +44,12 @@ namespace Strategy.Shell.Presenter
         /// <param name="fileBrowserService">The file Browser Service.</param>
         /// <param name="eventAggregator">The event Aggregator.</param>
         /// <param name="systemInformationService">The system Information Service.</param>
-        public ShellViewPresenter(IShellView shell, IMessageBoxService msgBoxService, IFileBrowserService fileBrowserService, IEventAggregator eventAggregator, ISystemInformationService systemInformationService)
+        public ShellViewPresenter(
+            IShellView shell, 
+            IMessageBoxService msgBoxService, 
+            IFileBrowserService fileBrowserService, 
+            IEventAggregator eventAggregator, 
+            ISystemInformationService systemInformationService)
         {
             // Wire up our services
             this.msgBoxService = msgBoxService;

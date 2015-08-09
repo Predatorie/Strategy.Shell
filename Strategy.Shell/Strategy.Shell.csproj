@@ -84,7 +84,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\AddLevelCommand.cs" />
     <Compile Include="Commands\CommandBase.cs" />
+    <Compile Include="Commands\ICommandBase.cs" />
+    <Compile Include="Commands\IToolbarCommand.cs" />
+    <Compile Include="Commands\OpenLevelsCommand.cs" />
+    <Compile Include="Commands\OpenOperationsCommand.cs" />
+    <Compile Include="Commands\OpenPartLevelsCommand.cs" />
+    <Compile Include="Commands\RemoveLevelCommand.cs" />
+    <Compile Include="Commands\SaveLevelsCommand.cs" />
+    <Compile Include="Commands\ScanLevelCommand.cs" />
+    <Compile Include="Events\SaveLevelsEvent.cs" />
     <Compile Include="Events\OperationsLibraryLoadEvent.cs" />
     <Compile Include="FunctionTable\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -203,15 +213,29 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="FunctionTable\Assets\2DToolpathsSlotMill16.png" />
+    <Content Include="FunctionTable\Assets\2DToolpathsThreadMill16.png" />
     <Content Include="FunctionTable\Assets\AddMaterial.png" />
     <Content Include="FunctionTable\Assets\AddNewLevel.png" />
+    <Content Include="FunctionTable\Assets\Arrow-Green-Right.png" />
+    <Content Include="FunctionTable\Assets\Arrow-Right-Green.png" />
     <Content Include="FunctionTable\Assets\BlockDrill.png" />
     <Content Include="FunctionTable\Assets\CircleMill.png" />
     <Content Include="FunctionTable\Assets\ClearCutlist.png" />
     <Content Include="FunctionTable\Assets\Contour.png" />
     <Content Include="FunctionTable\Assets\Drill.png" />
     <Content Include="FunctionTable\Assets\Engrave.png" />
+    <Content Include="FunctionTable\Assets\FBM_Pocket_RoughToolErr_DB_M_16x16.bmp" />
+    <Content Include="FunctionTable\Assets\FileImportFolder16.png" />
     <Content Include="FunctionTable\Assets\HelixBore.png" />
+    <Content Include="FunctionTable\Assets\millBall.png" />
+    <Content Include="FunctionTable\Assets\millBull.png" />
+    <Content Include="FunctionTable\Assets\millDrill.png" />
+    <Content Include="FunctionTable\Assets\millFlat.png" />
+    <Content Include="FunctionTable\Assets\millTap.png" />
+    <Content Include="FunctionTable\Assets\millTaper.png" />
+    <Content Include="FunctionTable\Assets\NestingGeometryNesting16.png" />
+    <Content Include="FunctionTable\Assets\NestingToolpathNesting16.png" />
     <Content Include="FunctionTable\Assets\NewLevelScan.png" />
     <Content Include="FunctionTable\Assets\NewStrategy.png" />
     <Content Include="FunctionTable\Assets\Open.png" />
@@ -222,6 +246,9 @@
     <Content Include="FunctionTable\Assets\Run24.png" />
     <Content Include="FunctionTable\Assets\Save.png" />
     <Content Include="FunctionTable\Assets\SaveAs.png" />
+    <Content Include="FunctionTable\Assets\subgroup.bmp" />
+    <Content Include="FunctionTable\Assets\ToolMill16.bmp" />
+    <Content Include="FunctionTable\Assets\Tools.png" />
     <Content Include="ReadMeFirst\ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>

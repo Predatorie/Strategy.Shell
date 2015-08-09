@@ -3,27 +3,18 @@
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace Strategy.Shell.Presenter
 {
-    using System;
-    using System.IO;
-    using System.Linq;
-    using System.Windows.Forms;
+    using System.Collections.Generic;
 
-    using Events;
+    using Commands;
 
     using Interfaces;
-
-    using Localization;
-
-    using Mastercam.IO;
-    using Mastercam.Support;
 
     using Reactive.EventAggregator;
 
     using Services;
-
-    using Strategy.Shell.FunctionTable;
 
     /// <summary>The toolbar view presenter.</summary>
     public class ToolbarViewPresenter
@@ -51,7 +42,13 @@ namespace Strategy.Shell.Presenter
         /// <param name="msgBoxService">The msg box service.</param>
         /// <param name="fileBrowserService">The file browser service.</param>
         /// <param name="eventAggregator">The event aggregator.</param>
-        public ToolbarViewPresenter(IToolbarButtonView view, IMessageBoxService msgBoxService, IFileBrowserService fileBrowserService, IEventAggregator eventAggregator)
+        /// <param name="commands">The commands.</param>
+        public ToolbarViewPresenter(
+            IToolbarButtonView view,
+            IMessageBoxService msgBoxService,
+            IFileBrowserService fileBrowserService,
+            IEventAggregator eventAggregator,
+            List<IToolbarCommand> commands)
         {
             // Wire up our services
             this.msgBoxService = msgBoxService;
@@ -59,119 +56,9 @@ namespace Strategy.Shell.Presenter
             this.eventAggregator = eventAggregator;
 
             this.view = view;
-
-            view.ViewLoad += this.ViewOnViewLoad;
-            view.AddLevel += this.ViewOnAddLevel;
-            view.ImportPartLevels += this.ViewOnImportPartLevels;
-            view.LevelScan += this.ViewOnLevelScan;
-            view.LoadLevelList += this.ViewOnLoadLevelList;
-            view.OpenOperationsLibrary += this.ViewOnOpenOperationsLibrary;
-            view.RemoveLevel += this.ViewOnRemoveLevel;
-            view.SaveLevelList += this.ViewOnSaveLevelList;
+            view.SetCommands(commands);
         }
 
-        #endregion
-
-        #region Event Handlers
-
-        /// <summary>The toolbar button view on save level list.</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="eventArgs">The event args.</param>
-        private void ViewOnSaveLevelList(object sender, EventArgs eventArgs)
-        {
-            this.msgBoxService.Ok("ViewOnSaveLevelList", string.Empty);
-        }
-
-        /// <summary>The toolbar button view on remove level.</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="eventArgs">The event args.</param>
-        private void ViewOnRemoveLevel(object sender, EventArgs eventArgs)
-        {
-            this.msgBoxService.Ok("ViewOnRemoveLevel", string.Empty);
-        }
-
-        /// <summary>The toolbar button view on open operations library.</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="eventArgs">The event args.</param>
-        private void ViewOnOpenOperationsLibrary(object sender, EventArgs eventArgs)
-        {
-            // Determine what operations library folder we will open too.
-            var libraryLocation = Path.Combine(SettingsManager.SharedDirectory, MachineDefManager.IsCurrentMachineGroupRouter() ? "router\\OPS" : "mill\\Ops");
-
-            // Prompr user to select an operations library(s)
-            var operationsLib = this.fileBrowserService.BrowseForFile(this.view.WindowHandle, LocalizationStrings.PromptForOperationsLibrary, Globals.FileFilterOperations, libraryLocation);
-
-            if (operationsLib.Any())
-            {
-                // Notify our subscribers
-                var payload = new OperationsLibraryLoadEvent { Libraries = operationsLib };
-                this.eventAggregator.Publish(payload);
-            }
-        }
-
-        /// <summary>The toolbar button view on load level list.</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="eventArgs">The event args.</param>
-        private void ViewOnLoadLevelList(object sender, EventArgs eventArgs)
-        {
-        }
-
-        /// <summary>The toolbar button view on level scan.</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="eventArgs">The event args.</param>
-        private void ViewOnLevelScan(object sender, EventArgs eventArgs)
-        {
-            this.msgBoxService.Ok("ViewOnLevelScan", string.Empty);
-        }
-
-        /// <summary>The toolbar button view on import part levels.</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="eventArgs">The event args.</param>
-        private void ViewOnImportPartLevels(object sender, EventArgs eventArgs)
-        {
-            this.msgBoxService.Ok("ViewOnImportPartLevels", string.Empty);
-        }
-
-        /// <summary>The toolbar button view on add level.</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="eventArgs">The event args.</param>
-        private void ViewOnAddLevel(object sender, EventArgs eventArgs)
-        {
-            this.msgBoxService.Ok("ViewOnAddLevel", string.Empty);
-        }
-
-        /// <summary>The toolbar button view on view loaded.</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="eventArgs">The event args.</param>
-        private void ViewOnViewLoad(object sender, EventArgs eventArgs)
-        {
-            this.LoadImages();
-        }
-
-        #endregion
-
-        #region Private Methods   
-
-        /// <summary>The load images.</summary>
-        private void LoadImages()
-        {
-            // Load the images in an ImageList.
-            var list = new ImageList();
-
-            list.Images.Add(Resource.Save);
-            list.Images.Add(Resource.SaveAs);
-            list.Images.Add(Resource.AddMaterial);
-            list.Images.Add(Resource.AddNewLevel);
-            list.Images.Add(Resource.ClearCutlist);
-            list.Images.Add(Resource.NewLevelScan);
-            list.Images.Add(Resource.NewStrategy);
-            list.Images.Add(Resource.Open);
-            list.Images.Add(Resource.Options);
-
-            this.view.ToolBarStrip.ImageList = list;
-        }
-
-        #endregion
-
+        #endregion 
     }
 }

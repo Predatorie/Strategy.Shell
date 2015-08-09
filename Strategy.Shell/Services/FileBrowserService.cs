@@ -3,11 +3,15 @@
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace Strategy.Shell.Services
 {
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Windows.Forms;
+
+    using Localization;
 
     /// <summary>The file browser service.</summary>
     public class FileBrowserService : IFileBrowserService
@@ -30,10 +34,33 @@ namespace Strategy.Shell.Services
                 if (dlg.ShowDialog(parent) == DialogResult.OK)
                 {
                     return dlg.FileNames.ToList();
-                }                   
+                }
             }
 
             return new List<string>();
+        }
+
+        /// <summary>The browse for folder.</summary>
+        /// <param name="title">The title.</param>
+        /// <returns>The <see cref="string"/>.</returns>
+        public string BrowseForFolder(string title)
+        {
+            using (var browse = new FolderBrowserDialog())
+            {
+                browse.Description = LocalizationStrings.SelectFolder;
+                browse.ShowNewFolderButton = true;
+                if (browse.ShowDialog() != DialogResult.OK)
+                {
+                    return string.Empty;
+                }
+
+                if (Directory.Exists(browse.SelectedPath))
+                {
+                    return browse.SelectedPath;
+                }
+            }
+
+            return string.Empty;
         }
     }
 }

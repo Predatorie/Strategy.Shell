@@ -1,5 +1,15 @@
-﻿namespace Strategy.Shell.Views
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="OperationsView.Designer.cs" company="Mick George @Osoy">
+//   Copyright (c) 2015 Mick George aphextwin@seidr.net
+// </copyright>
+// <summary>
+//   Defines the OperationsView type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Strategy.Shell.Views
 {
+    /// <summary>The operations view.</summary>
     partial class OperationsView
     {
         /// <summary> 
@@ -52,6 +62,7 @@
 
         #endregion
 
+        /// <summary>The operations tree view.</summary>
         private System.Windows.Forms.TreeView OperationsTreeView;
     }
 }

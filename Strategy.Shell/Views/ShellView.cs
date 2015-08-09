@@ -6,6 +6,7 @@
 
 namespace Strategy.Shell.Views
 {
+    using System.Collections.Generic;
     using System.Windows.Forms;
 
     using Reactive.EventAggregator;
@@ -13,6 +14,8 @@ namespace Strategy.Shell.Views
     using Interfaces;
     using Presenter;
     using Services;
+
+    using Strategy.Shell.Commands;
 
     /// <summary>The shell view.</summary>
     public partial class ShellView : Form, IShellView
@@ -39,13 +42,15 @@ namespace Strategy.Shell.Views
         /// <param name="msgBoxService">The msg Box Service.</param>
         /// <param name="fileBrowserService">The file Browser Service.</param>
         /// <param name="eventAggregator">The event Aggregator.</param>
-        public ShellView(IMessageBoxService msgBoxService, IFileBrowserService fileBrowserService, IEventAggregator eventAggregator)
+        /// <param name="commands"></param>
+        public ShellView(IMessageBoxService msgBoxService, IFileBrowserService fileBrowserService, IEventAggregator eventAggregator,
+            List<IToolbarCommand> commands)
         {
             this.InitializeComponent();
 
             // Wire up our view presenters
             var toolbarView = new ToolbarButtonView { Dock = DockStyle.Fill };
-            var toolbarViewPresenter = new ToolbarViewPresenter(toolbarView, msgBoxService, fileBrowserService, eventAggregator);
+            var toolbarViewPresenter = new ToolbarViewPresenter(toolbarView, msgBoxService, fileBrowserService, eventAggregator, commands);
 
             var buttonView = new ButtonBarView { Dock = DockStyle.Fill };
             var buttonViewPresenter = new ButtonBarViewPresenter(buttonView, msgBoxService, fileBrowserService, eventAggregator);
@@ -94,8 +99,8 @@ namespace Strategy.Shell.Views
         /// <summary>The inject views.</summary>
         private void InjectViews()
         {
-            this.ShellContainer.Panel1.Controls.Add(this.levelsView);
-            this.ShellContainer.Panel2.Controls.Add(this.operationsView);
+            this.ShellContainer.Panel1.Controls.Add(this.operationsView);
+            this.ShellContainer.Panel2.Controls.Add(this.levelsView);
 
             this.ButtonPanelRegion.Controls.Add(this.buttonBarView);
             this.ToolbarButtonPanelRegion.Controls.Add(this.toolbarButtonView);

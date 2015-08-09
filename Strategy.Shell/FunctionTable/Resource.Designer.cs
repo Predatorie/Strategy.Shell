@@ -83,6 +83,26 @@ namespace Strategy.Shell.FunctionTable {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Arrow {
+            get {
+                object obj = ResourceManager.GetObject("Arrow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Arrow2 {
+            get {
+                object obj = ResourceManager.GetObject("Arrow2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap BlockDrill {
             get {
                 object obj = ResourceManager.GetObject("BlockDrill", resourceCulture);
@@ -153,6 +173,86 @@ namespace Strategy.Shell.FunctionTable {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap millBall {
+            get {
+                object obj = ResourceManager.GetObject("millBall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap millBull {
+            get {
+                object obj = ResourceManager.GetObject("millBull", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap millDrill {
+            get {
+                object obj = ResourceManager.GetObject("millDrill", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap millFlat {
+            get {
+                object obj = ResourceManager.GetObject("millFlat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap millTap {
+            get {
+                object obj = ResourceManager.GetObject("millTap", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap millTaper {
+            get {
+                object obj = ResourceManager.GetObject("millTaper", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap NestingGeometryNesting16 {
+            get {
+                object obj = ResourceManager.GetObject("NestingGeometryNesting16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap NestingOperation {
+            get {
+                object obj = ResourceManager.GetObject("NestingOperation", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap NewLevelScan {
             get {
                 object obj = ResourceManager.GetObject("NewLevelScan", resourceCulture);
@@ -183,6 +283,16 @@ namespace Strategy.Shell.FunctionTable {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap OperationGroup {
+            get {
+                object obj = ResourceManager.GetObject("OperationGroup", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Operations {
             get {
                 object obj = ResourceManager.GetObject("Operations", resourceCulture);
@@ -203,9 +313,29 @@ namespace Strategy.Shell.FunctionTable {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap PartImport {
+            get {
+                object obj = ResourceManager.GetObject("PartImport", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Pocket {
             get {
                 object obj = ResourceManager.GetObject("Pocket", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RoughTool {
+            get {
+                object obj = ResourceManager.GetObject("RoughTool", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -255,6 +385,46 @@ namespace Strategy.Shell.FunctionTable {
         internal static System.Drawing.Bitmap SaveAs {
             get {
                 object obj = ResourceManager.GetObject("SaveAs", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SlotMill {
+            get {
+                object obj = ResourceManager.GetObject("SlotMill", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ThreadMill {
+            get {
+                object obj = ResourceManager.GetObject("ThreadMill", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ToolMill16 {
+            get {
+                object obj = ResourceManager.GetObject("ToolMill16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Tools {
+            get {
+                object obj = ResourceManager.GetObject("Tools", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

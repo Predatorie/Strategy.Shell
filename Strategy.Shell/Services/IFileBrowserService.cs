@@ -13,12 +13,17 @@ namespace Strategy.Shell.Services
     /// <summary>The FileBrowserService interface.</summary>
     public interface IFileBrowserService
     {
-        /// <summary>The browse for file.</summary>
+        /// <summary>TODO: mcam2017 API has Mastercam Window reference</summary>
         /// <param name="parent">The calling form</param>
         /// <param name="title">The title.</param>
         /// <param name="fileFilter">The file filter.</param>
         /// <param name="location">The initial location</param>
         /// <returns>The <see cref="string"/> file path.</returns>
         List<string> BrowseForFile(IWin32Window parent, string title, string fileFilter, string location);
+
+        /// <summary>The browse for folder.</summary>
+        /// <param name="title">The title.</param>
+        /// <returns>The <see cref="string"/>.</returns>
+        string BrowseForFolder(string title);
     }
 }

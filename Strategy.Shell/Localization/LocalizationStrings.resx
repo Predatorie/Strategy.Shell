@@ -118,10 +118,34 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MainNode" xml:space="preserve">
-    <value>Operation Libraries</value>
+    <value>OPERATION LIBRARIES</value>
+  </data>
+  <data name="NoOperationsLoaded" xml:space="preserve">
+    <value>No operations loaded</value>
+  </data>
+  <data name="OpenOperationsLib" xml:space="preserve">
+    <value>Operations</value>
+  </data>
+  <data name="OpenPartFile" xml:space="preserve">
+    <value>Part FIle</value>
+  </data>
+  <data name="OperationsLoaded" xml:space="preserve">
+    <value>operations loaded</value>
   </data>
   <data name="PromptForOperationsLibrary" xml:space="preserve">
     <value>Select Operations Library</value>
+  </data>
+  <data name="RemoveLevel" xml:space="preserve">
+    <value>Remove Level</value>
+  </data>
+  <data name="RunScan" xml:space="preserve">
+    <value>Scan</value>
+  </data>
+  <data name="SaveLevels" xml:space="preserve">
+    <value>Save Levels</value>
+  </data>
+  <data name="SelectFolder" xml:space="preserve">
+    <value>Select Folder</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Strategy Designer</value>

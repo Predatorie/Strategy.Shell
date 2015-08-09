@@ -5,10 +5,11 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace Strategy.Shell.Views
 {
-    using System;
+    using System.Collections.Generic;
     using System.Windows.Forms;
 
-    using Strategy.Shell.Interfaces;
+    using Commands;
+    using Interfaces;
 
     /// <summary>The toolbar button view.</summary>
     public partial class ToolbarButtonView : UserControl, IToolbarButtonView, IViewBase
@@ -19,82 +20,42 @@ namespace Strategy.Shell.Views
         public ToolbarButtonView()
         {
             this.InitializeComponent();
-
-            this.Load += (s, e) => this.OnViewLoad();
         }
 
         #endregion
 
-        #region Public Properties
+        #region Public Methods
 
-        /// <summary>
-        /// Returns the handle to this form, usefull for setting modal dialogs to this form
-        /// </summary>
-        public IWin32Window WindowHandle => FromHandle(this.Handle);
-
-        public ToolStrip ToolBarStrip => this.ToolBarButtonsCollection;
-
-        #endregion
-
-        #region Event Handlers
-
-        /// <summary>The add level.</summary>
-        public event EventHandler AddLevel
+        /// <summary>The set commands.</summary>
+        /// <param name="commands">The commands.</param>
+        public void SetCommands(List<IToolbarCommand> commands)
         {
-            add { this.ButtonAddLevel.Click += value; }
-            remove { this.ButtonAddLevel.Click -= value; }
-        }
+            this.ToolBarButtonsCollection.Items.Clear();
+            foreach (var command in commands)
+            {
+                var button = new ToolStripButton
+                {
+                    Text = command.ToolTip, 
+                    Image = command.Icon, 
+                    Enabled = command.CanExecute, 
+                    ImageScaling = ToolStripItemImageScaling.None, 
+                    DisplayStyle = ToolStripItemDisplayStyle.ImageAndText, 
+                    TextImageRelation = TextImageRelation.ImageAboveText,
+                    Padding = new Padding(2)
+                };
 
-        /// <summary>The remove level.</summary>
-        public event EventHandler RemoveLevel
-        {
-            add { this.ButtonRemoveLevel.Click += value; }
-            remove { this.ButtonRemoveLevel.Click -= value; }
-        }
+                var c = command; // Create a closure around the command
+                command.PropertyChanged += (s, e) =>
+                    {
+                        button.Text = c.ToolTip;
+                        button.Image = c.Icon;
+                        button.Enabled = c.CanExecute;
+                    };
 
-        /// <summary>The import part levels.</summary>
-        public event EventHandler ImportPartLevels
-        {
-            add { this.ButtonImportPartLevels.Click += value; }
-            remove { this.ButtonImportPartLevels.Click -= value; }
-        }
+                button.Click += (s, e) => c.Execute();
 
-        /// <summary>The save level list.</summary>
-        public event EventHandler SaveLevelList
-        {
-            add { this.ButtonSaveLevelList.Click += value; }
-            remove { this.ButtonSaveLevelList.Click -= value; }
-        }
-
-        /// <summary>The level scan.</summary>
-        public event EventHandler LevelScan
-        {
-            add { this.ButtonLevelScan.Click += value; }
-            remove { this.ButtonLevelScan.Click -= value; }
-        }
-
-        /// <summary>The load level list.</summary>
-        public event EventHandler LoadLevelList
-        {
-            add { this.ButtonLoadLevelList.Click += value; }
-            remove { this.ButtonLoadLevelList.Click -= value; }
-        }
-
-        /// <summary>The open operations library.</summary>
-        public event EventHandler OpenOperationsLibrary
-        {
-            add { this.ButtonOpenOperationsLibrary.Click += value; }
-            remove { this.ButtonOpenOperationsLibrary.Click -= value; }
-        }
-
-        /// <summary>The view load.</summary>
-        public event EventHandler ViewLoad;
-
-        /// <summary>The on view load.</summary>
-        protected virtual void OnViewLoad()
-        {
-            var handler = this.ViewLoad;
-            handler?.Invoke(this, EventArgs.Empty);
+                this.ToolBarButtonsCollection.Items.Add(button);
+            }
         }
 
         #endregion

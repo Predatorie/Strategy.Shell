@@ -142,8 +142,35 @@
   <data name="Engrave" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>assets\engrave.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="RoughTool" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\fbm_pocket_roughtoolerr_db_m_16x16.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="HelixBore" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>assets\helixbore.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="millBall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\millball.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="millBull" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\millbull.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="millDrill" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\milldrill.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="millFlat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\millflat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="millTap" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\milltap.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="millTaper" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\milltaper.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NestingGeometryNesting16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\nestinggeometrynesting16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NestingOperation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\nestingtoolpathnesting16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="NewLevelScan" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>assets\newlevelscan.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -154,11 +181,17 @@
   <data name="Open" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>assets\open.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="OperationGroup" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\subgroup.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Operations" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>assets\operations.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Options" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>assets\options.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PartImport" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\fileimportfolder16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Pocket" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>assets\pocket.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -178,5 +211,23 @@
   </data>
   <data name="SaveAs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>assets\saveas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SlotMill" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\2dtoolpathsslotmill16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ThreadMill" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\2dtoolpathsthreadmill16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ToolMill16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\toolmill16.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tools" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\tools.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Arrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\arrow-right-green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Arrow2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\arrow-green-right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

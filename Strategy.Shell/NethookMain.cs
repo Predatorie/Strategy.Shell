@@ -9,6 +9,10 @@
 
 namespace Strategy.Shell
 {
+    using System.Collections.Generic;
+
+    using Commands;
+
     using Mastercam.App;
     using Mastercam.App.Types;
 
@@ -57,14 +61,29 @@ namespace Strategy.Shell
                 Settings.Default.Save();
             }
 
+            // TODO: Implement DI
+
             // Implement our services
             var msgBoxService = new MessageBoxService();
             var fileBrowserService = new FileBrowserService();
             var eventAggregator = new EventAggregator();
             var sysInfoService = new SystemInformationService();
 
-            var shellView = new ShellView(msgBoxService, fileBrowserService, eventAggregator);
-            // ReSharper disable once UnusedVariable
+            // Create all our toolbar buttons
+            var toolbarCommands = new List<IToolbarCommand>
+                               {
+                                   new OpenOperationsCommand(eventAggregator, fileBrowserService),
+                                   new ScanLevelCommand(eventAggregator, fileBrowserService),
+                                   new OpenPartLevelsCommand(eventAggregator, fileBrowserService),
+                                   new AddLevelCommand(eventAggregator),
+                                   new RemoveLevelCommand(eventAggregator, fileBrowserService),
+                                   new SaveLevelsCommand(eventAggregator)
+                               };
+
+            // The ShellView is responsible for creating all child views and view presenters
+            var shellView = new ShellView(msgBoxService, fileBrowserService, eventAggregator, toolbarCommands);
+
+            // Wire up the main presenter
             var presenter = new ShellViewPresenter(shellView, msgBoxService, fileBrowserService, eventAggregator, sysInfoService);
 
             // TODO: Hook upto Mastercam window

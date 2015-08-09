@@ -7,6 +7,8 @@ namespace Strategy.Shell.Presenter
 {
     using System;
 
+    using Events;
+
     using Interfaces;
 
     using Reactive.EventAggregator;
@@ -49,6 +51,8 @@ namespace Strategy.Shell.Presenter
             this.view = view;
             view.ViewLoad += this.LevelsViewOnViewLoad;
             view.SelectionChanged += this.LevelsViewOnSelectionChanged;
+
+            this.eventAggregator.GetEvent<SaveLevelsEvent>().Subscribe(this.OnSaveLevels);
         }
 
         #endregion
@@ -67,6 +71,18 @@ namespace Strategy.Shell.Presenter
         /// <param name="eventArgs">The event args.</param>
         private void LevelsViewOnViewLoad(object sender, EventArgs eventArgs)
         {
+            // TODO: Create parent level
+        }
+
+        /// <summary>The on save levels.</summary>
+        /// <param name="e">The e.</param>
+        private void OnSaveLevels(SaveLevelsEvent e)
+        {
+            // TODO: Prompt for file name and save the levels to disk
+
+            // TODO: Iterated all levels/Operations add to list
+
+            // TODO: Serialize list
         }
 
         #endregion

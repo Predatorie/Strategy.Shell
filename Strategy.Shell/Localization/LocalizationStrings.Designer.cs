@@ -61,11 +61,47 @@ namespace Strategy.Shell.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Operation Libraries.
+        ///   Looks up a localized string similar to OPERATION LIBRARIES.
         /// </summary>
         public static string MainNode {
             get {
                 return ResourceManager.GetString("MainNode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No operations loaded.
+        /// </summary>
+        public static string NoOperationsLoaded {
+            get {
+                return ResourceManager.GetString("NoOperationsLoaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operations.
+        /// </summary>
+        public static string OpenOperationsLib {
+            get {
+                return ResourceManager.GetString("OpenOperationsLib", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Part FIle.
+        /// </summary>
+        public static string OpenPartFile {
+            get {
+                return ResourceManager.GetString("OpenPartFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to operations loaded.
+        /// </summary>
+        public static string OperationsLoaded {
+            get {
+                return ResourceManager.GetString("OperationsLoaded", resourceCulture);
             }
         }
         
@@ -75,6 +111,42 @@ namespace Strategy.Shell.Localization {
         public static string PromptForOperationsLibrary {
             get {
                 return ResourceManager.GetString("PromptForOperationsLibrary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Level.
+        /// </summary>
+        public static string RemoveLevel {
+            get {
+                return ResourceManager.GetString("RemoveLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scan.
+        /// </summary>
+        public static string RunScan {
+            get {
+                return ResourceManager.GetString("RunScan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Levels.
+        /// </summary>
+        public static string SaveLevels {
+            get {
+                return ResourceManager.GetString("SaveLevels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Folder.
+        /// </summary>
+        public static string SelectFolder {
+            get {
+                return ResourceManager.GetString("SelectFolder", resourceCulture);
             }
         }
         
