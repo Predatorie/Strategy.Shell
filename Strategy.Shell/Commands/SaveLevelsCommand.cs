@@ -31,7 +31,7 @@ namespace Strategy.Shell.Commands
         /// <summary>The execute.</summary>
         public override void Execute()
         {
-            this.eventAggregator.Publish(new SaveLevelsEvent());
+            this.eventAggregator.Publish(new SaveLevelsMessage());
         }
     }
 }

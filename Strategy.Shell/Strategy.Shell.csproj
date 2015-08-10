@@ -92,18 +92,20 @@
     <Compile Include="Commands\ICommandBase.cs" />
     <Compile Include="Commands\IButtonsCommand.cs" />
     <Compile Include="Commands\IToolbarCommand.cs" />
+    <Compile Include="Events\LevelSelectedMessage.cs" />
     <Compile Include="Commands\OpenLevelsCommand.cs" />
     <Compile Include="Commands\OpenOperationsCommand.cs" />
     <Compile Include="Commands\OpenPartLevelsCommand.cs" />
+    <Compile Include="Events\OperationSelectedMessage.cs" />
     <Compile Include="Commands\RemoveLevelCommand.cs" />
     <Compile Include="Commands\SaveLevelsCommand.cs" />
     <Compile Include="Commands\ScanLevelCommand.cs" />
-    <Compile Include="Events\AddLevelEvent.cs" />
-    <Compile Include="Events\CloseShellEvent.cs" />
-    <Compile Include="Events\OpenPartEvent.cs" />
-    <Compile Include="Events\RemoveLevelEvent.cs" />
-    <Compile Include="Events\SaveLevelsEvent.cs" />
-    <Compile Include="Events\OperationsLibraryLoadEvent.cs" />
+    <Compile Include="Events\AddLevelMessage.cs" />
+    <Compile Include="Events\CloseShellMessage.cs" />
+    <Compile Include="Events\OpenPartMessage.cs" />
+    <Compile Include="Events\RemoveLevelMessage.cs" />
+    <Compile Include="Events\SaveLevelsMessage.cs" />
+    <Compile Include="Events\OperationsLibraryLoadMessage.cs" />
     <Compile Include="FunctionTable\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

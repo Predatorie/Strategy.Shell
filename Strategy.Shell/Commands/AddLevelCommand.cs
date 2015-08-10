@@ -33,7 +33,7 @@ namespace Strategy.Shell.Commands
         /// <summary>The execute.</summary>
         public override void Execute()
         {
-            this.eventAggregator.Publish(new AddLevelEvent());
+            this.eventAggregator.Publish(new AddLevelMessage());
         }
     }
 }

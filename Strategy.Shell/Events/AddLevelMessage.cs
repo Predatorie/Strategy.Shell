@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CloseShellEvent.cs" company="Mick George @Osoy">
+// <copyright file="AddLevelMessage.cs" company="Mick George @Osoy">
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
 // <summary>
-//   Defines the CloseShellEvent type.
+//   Defines the AddLevelEvent type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -11,8 +11,8 @@ namespace Strategy.Shell.Events
 {
     using System;
 
-    /// <summary>The close shell event.</summary>
-    public class CloseShellEvent : EventArgs
+    /// <summary>The add level event.</summary>
+    public class AddLevelMessage : EventArgs
     {         
     }
 }

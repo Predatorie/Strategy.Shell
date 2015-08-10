@@ -77,7 +77,7 @@ namespace Strategy.Shell.Views
             this.operationsView = opsView;
 
             this.eventAggregator = eventAggregator;
-            this.eventAggregator.GetEvent<CloseShellEvent>().Subscribe(this.OnCloseShell);
+            this.eventAggregator.GetEvent<CloseShellMessage>().Subscribe(this.OnCloseShell);
            
             // Place the views in the correct regions
             this.InjectViews();
@@ -122,7 +122,7 @@ namespace Strategy.Shell.Views
         /// Closes the main view, called from the button close
         /// </summary>
         /// <param name="e"></param>
-        private void OnCloseShell(CloseShellEvent e)
+        private void OnCloseShell(CloseShellMessage e)
         {
             this.Close();
         }

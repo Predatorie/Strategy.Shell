@@ -37,7 +37,7 @@ namespace Strategy.Shell.Commands
         public override void Execute()
         {
             // TODO: Add check state before closing
-            this.eventAggregator.Publish(new CloseShellEvent());
+            this.eventAggregator.Publish(new CloseShellMessage());
         }
     }
 }

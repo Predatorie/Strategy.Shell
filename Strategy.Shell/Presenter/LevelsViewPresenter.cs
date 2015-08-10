@@ -3,7 +3,6 @@
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace Strategy.Shell.Presenter
 {
     using System;
@@ -12,7 +11,6 @@ namespace Strategy.Shell.Presenter
     using System.IO;
     using System.Linq;
     using System.Windows.Forms;
-    using System.Windows.Forms.VisualStyles;
 
     using Events;
 
@@ -24,16 +22,19 @@ namespace Strategy.Shell.Presenter
 
     using Mastercam.IO;
 
+    using Models;
+
     using Reactive.EventAggregator;
 
     using Services;
-
-    using Strategy.Shell.Models;
 
     /// <summary>The levels view presenter.</summary>
     public class LevelsViewPresenter
     {
         #region Fields
+
+        /// <summary>The file manager service.</summary>
+        private readonly IFileManagerService fileManagerService;
 
         /// <summary>The toolbar button view.</summary>
         private readonly ILevelsView view;
@@ -45,10 +46,7 @@ namespace Strategy.Shell.Presenter
         private readonly IFileBrowserService fileBrowserService;
 
         /// <summary>The event aggregator.</summary>
-        private IEventAggregator eventAggregator;
-
-        /// <summary>The file manager service.</summary>
-        private IFileManagerService fileManagerService;
+        private readonly IEventAggregator eventAggregator;
 
         #endregion
 
@@ -70,17 +68,17 @@ namespace Strategy.Shell.Presenter
             // Wire up our services
             this.msgBoxService = msgBoxService;
             this.fileBrowserService = fileBrowserService;
-            this.eventAggregator = eventAggregator;
             this.fileManagerService = fileManagerService;
+            this.eventAggregator = eventAggregator;
 
             this.view = view;
             view.ViewLoad += this.LevelsViewOnViewLoad;
             view.SelectionChanged += this.LevelsViewOnSelectionChanged;
-
-            this.eventAggregator.GetEvent<SaveLevelsEvent>().Subscribe(this.OnSaveLevels);
-            this.eventAggregator.GetEvent<AddLevelEvent>().Subscribe(this.OnAddLevel);
-            this.eventAggregator.GetEvent<RemoveLevelEvent>().Subscribe(this.OnRemoveLevel);
-            this.eventAggregator.GetEvent<OpenPartEvent>().Subscribe(this.OnOpenParts);
+            
+            this.eventAggregator.GetEvent<SaveLevelsMessage>().Subscribe(this.OnSaveLevels);
+            this.eventAggregator.GetEvent<AddLevelMessage>().Subscribe(this.OnAddLevel);
+            this.eventAggregator.GetEvent<RemoveLevelMessage>().Subscribe(this.OnRemoveLevel);
+            this.eventAggregator.GetEvent<OpenPartMessage>().Subscribe(this.OnOpenParts);
         }
 
         #endregion
@@ -92,6 +90,11 @@ namespace Strategy.Shell.Presenter
         /// <param name="eventArgs">The event args.</param>
         private void LevelsViewOnSelectionChanged(object sender, EventArgs eventArgs)
         {
+            var selectedLevel = this.view.SelectedNode;
+            if (selectedLevel != null)
+            {
+                this.eventAggregator.Publish(new LevelSelectedMessage(selectedLevel));
+            }
         }
 
         /// <summary>The levels view on view loaded.</summary>
@@ -118,15 +121,20 @@ namespace Strategy.Shell.Presenter
 
         /// <summary>The on remove level.</summary>
         /// <param name="e">The e.</param>
-        private void OnRemoveLevel(RemoveLevelEvent e)
+        private void OnRemoveLevel(RemoveLevelMessage e)
         {
-            // Test for main node...?
+            // Test for main node
+            if (e.Level.Tag != null && e.Level.Tag.ToString() == "main")
+            {
+                return;
+            }
+
             this.view.Tree.Nodes[0].Nodes.Remove(e.Level);
         }
 
         /// <summary>The on add level.</summary>
         /// <param name="e">The e.</param>
-        private void OnAddLevel(AddLevelEvent e)
+        private void OnAddLevel(AddLevelMessage e)
         {
             // Get the count of nodes below the main node
             var count = this.view.Tree.Nodes[0].Nodes.Count + 1;
@@ -137,14 +145,14 @@ namespace Strategy.Shell.Presenter
 
         /// <summary>The on save levels.</summary>
         /// <param name="e">The e.</param>
-        private void OnSaveLevels(SaveLevelsEvent e)
+        private void OnSaveLevels(SaveLevelsMessage e)
         {
             // TODO: Prompt for file name and save the levels to disk
             var levels = this.view.Tree.Nodes[0].Nodes;
 
             if (levels.Count > 0)
             {
-                var filename = Mastercam.IO.SettingsManager.SharedDirectory + "\\text.xml";
+                var filename = SettingsManager.SharedDirectory + "\\text.xml";
                 var levelsList = new Levels { Name = filename };
 
                 foreach (TreeNode level in levels)
@@ -158,7 +166,7 @@ namespace Strategy.Shell.Presenter
 
         /// <summary>The on open parts.</summary>
         /// <param name="e">The e.</param>
-        private void OnOpenParts(OpenPartEvent e)
+        private void OnOpenParts(OpenPartMessage e)
         {
             // Cache current file if there is one open
             var currentFile = FileManager.CurrentFileName;
@@ -193,8 +201,14 @@ namespace Strategy.Shell.Presenter
             var treeLevels = this.view.Tree.Nodes[0].Nodes;
             if (treeLevels.Count > 0)
             {
-                // TODO: Fix this as its failing. Filter out duplicate names already in our tree
-                foreach (var level in distinctList.Where(level => !treeLevels.Find(level, true).Any()))
+                // Filter out duplicate names already in our tree
+                foreach (var node in treeLevels.Cast<TreeNode>().Where(node => distinctList.Contains(node.Text)))
+                {
+                    distinctList.Remove(node.Text);
+                }
+
+                // Finally add our new level nodes
+                foreach (var level in distinctList)
                 {
                     this.AddLevel(new TreeNode(level));
                 }

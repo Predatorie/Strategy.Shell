@@ -41,7 +41,7 @@ namespace Strategy.Shell.Presenter
         private readonly IFileBrowserService fileBrowserService;
 
         /// <summary>The event aggregator.</summary>
-        private IEventAggregator eventAggregator;
+        private readonly IEventAggregator eventAggregator;
 
         #endregion
 
@@ -64,7 +64,7 @@ namespace Strategy.Shell.Presenter
             view.SelectionChanged += this.OperationsViewOnSelectionChanged;
 
             // Event subscriptions
-            this.eventAggregator.GetEvent<OperationsLibraryLoadEvent>().Subscribe(this.OnOperationsLibraryLoadEvent);
+            this.eventAggregator.GetEvent<OperationsLibraryLoadMessage>().Subscribe(this.OnOperationsLibraryLoadEvent);
         }
 
         #endregion
@@ -74,7 +74,7 @@ namespace Strategy.Shell.Presenter
         /// <summary>The operations library load event.</summary>
         /// <param name="e">The payload event.</param>
         /// <summary> This event handles loading of the treeview for all operation files selected</summary>
-        private void OnOperationsLibraryLoadEvent(OperationsLibraryLoadEvent e)
+        private void OnOperationsLibraryLoadEvent(OperationsLibraryLoadMessage e)
         {
             var totalOperations = 0;
 
@@ -236,6 +236,11 @@ namespace Strategy.Shell.Presenter
         /// <param name="eventArgs">The event args.</param>
         private void OperationsViewOnSelectionChanged(object sender, EventArgs eventArgs)
         {
+            var selectedLevel = this.view.SelectedNode;
+            if (selectedLevel != null)
+            {
+                this.eventAggregator.Publish(new OperationSelectedMessage(selectedLevel));
+            }
         }
 
         /// <summary>The operations view on view loaded.</summary>

@@ -17,9 +17,15 @@ namespace Strategy.Shell.Models
     [Serializable]
     public class Levels : ILevels
     {
+        /// <summary>Initializes a new instance of the <see cref="Levels"/> class.</summary>
+        public Levels()
+        {
+            this.List = new List<string>();
+        }
+
         /// <summary>Gets or sets the list.</summary>
-        [XmlArray("LEVELS")]
-        [XmlArrayItem("NAME")]
+        [XmlArray("LIST")]
+        [XmlArrayItem("LEVEL-NAME")]
         public List<string> List { get; set; }
 
         /// <summary>Gets or sets the name.</summary>

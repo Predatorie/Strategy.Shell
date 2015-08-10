@@ -1,18 +1,18 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SaveLevelsEvent.cs" company="Mick George @Osoy">
+// <copyright file="OperationsLibraryLoadMessage.cs" company="Mick George @Osoy">
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
-// <summary>
-//   Defines the SaveLevelsEvent type.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Strategy.Shell.Events
 {
     using System;
+    using System.Collections.Generic;
 
-    /// <summary>The levels event.</summary>
-    public class SaveLevelsEvent : EventArgs
+    /// <summary>The operations library load event.</summary>
+    public class OperationsLibraryLoadMessage : EventArgs
     {
+        /// <summary>Gets or sets the library.</summary>
+        public List<string> Libraries { get; set; }
     }
 }

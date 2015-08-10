@@ -59,7 +59,7 @@ namespace Strategy.Shell.Commands
             }
 
             // Notify our subscribers
-            var payload = new OperationsLibraryLoadEvent { Libraries = operationsLib };
+            var payload = new OperationsLibraryLoadMessage { Libraries = operationsLib };
             this.eventAggregator.Publish(payload);
         }
     }

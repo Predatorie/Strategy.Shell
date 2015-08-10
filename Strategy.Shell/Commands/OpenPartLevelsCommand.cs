@@ -54,7 +54,7 @@ namespace Strategy.Shell.Commands
 
             if (file.Any())
             {
-                this.eventAggregator.Publish(new OpenPartEvent { FilePath = file });
+                this.eventAggregator.Publish(new OpenPartMessage { FilePath = file });
             }
         }
     }
