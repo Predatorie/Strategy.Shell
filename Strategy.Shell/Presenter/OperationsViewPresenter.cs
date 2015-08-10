@@ -127,7 +127,7 @@ namespace Strategy.Shell.Presenter
 
                             // Tool information TODO = Localize
                             var filename = new TreeNode("File = " + operation.OperationTool.FileName, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
-                            var mfg = new TreeNode("Name = " + operation.OperationTool.MfgToolCode, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
+                            var mfg = new TreeNode("Manufacture Code = " + operation.OperationTool.MfgToolCode, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
                             var name = new TreeNode("Name = " + operation.OperationTool.Name, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
                             var diameter = new TreeNode("Diameter = " + operation.OperationTool.Diameter, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
                             var fluteLength = new TreeNode("FluteLength = " + operation.OperationTool.FluteLength, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);

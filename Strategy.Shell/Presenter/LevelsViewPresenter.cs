@@ -163,23 +163,48 @@ namespace Strategy.Shell.Presenter
             // Cache current file if there is one open
             var currentFile = FileManager.CurrentFileName;
 
-            foreach (var file in e.FilePath)
+            var levelsToAdd = new List<string>();
+
+            // Open all selected files and add levels to our list
+            foreach (var listOfNamedLevels in
+                e.FilePath.Where(FileManager.Open).Select(file => LevelsManager.GetLevelNumbersWithNames()).Where(listOfNamedLevels => listOfNamedLevels.Any()))
             {
-                if (FileManager.Open(file))
+                levelsToAdd = listOfNamedLevels.Select(LevelsManager.GetLevelName).ToList();
+            }
+
+            // Sort the levels
+            levelsToAdd.Sort();
+
+            var distinctList = new List<string>();
+            var previous = string.Empty;
+
+            // Filter out duplicate names
+            foreach (var name in levelsToAdd)
+            {
+                if (name != previous)
                 {
-                    var listOfNamedLevels = LevelsManager.GetLevelNumbersWithNames();
-                    if (listOfNamedLevels.Any())
-                    {
-                        var levelsToAdd = listOfNamedLevels.Select(LevelsManager.GetLevelName).ToList();
+                    distinctList.Add(name);
+                }
 
-                        // Filter out duplicate names already in our tree
-                        var treeLevels = this.view.Tree.Nodes[0].Nodes;
+                previous = name;
+            }
 
-                        foreach (var level in levelsToAdd.Where(level => !treeLevels.Find(level, true).Any()))
-                        {
-                            this.AddLevel(new TreeNode(level));
-                        }
-                    }
+            // Get the main node
+            var treeLevels = this.view.Tree.Nodes[0].Nodes;
+            if (treeLevels.Count > 0)
+            {
+                // TODO: Fix this as its failing. Filter out duplicate names already in our tree
+                foreach (var level in distinctList.Where(level => !treeLevels.Find(level, true).Any()))
+                {
+                    this.AddLevel(new TreeNode(level));
+                }
+            }
+            else
+            {
+                // Ok to add as is
+                foreach (var level in distinctList)
+                {
+                    this.AddLevel(new TreeNode(level));
                 }
             }
 
