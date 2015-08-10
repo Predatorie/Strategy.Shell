@@ -6,6 +6,7 @@
 namespace Strategy.Shell.Commands
 {
     using System.Drawing;
+    using System.Windows.Forms;
 
     using Events;
 
@@ -28,13 +29,14 @@ namespace Strategy.Shell.Commands
             this.ToolTip = LocalizationStrings.CloseShell;
             this.CanExecute = true;
             this.Location = new Point(480, 4);
+            this.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
 
         }
 
         /// <summary>The execute.</summary>
         public override void Execute()
         {
-            // TODO: Check state, can we just close?
+            // TODO: Add check state before closing
             this.eventAggregator.Publish(new CloseShellEvent());
         }
     }

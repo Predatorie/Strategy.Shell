@@ -33,13 +33,13 @@ namespace Strategy.Shell.Views
 
             foreach (var command in commands)
             {
-                var button = new Button()
+                var button = new Button
                 {
-                    Text = command.ToolTip, 
-                    Enabled = command.CanExecute, 
-                    Margin = new Padding(2), 
+                    Text = command.ToolTip,
+                    Enabled = command.CanExecute,
+                    Margin = new Padding(2),
                     Location = command.Location,
-                    Anchor = AnchorStyles.Right | AnchorStyles.Bottom
+                    Anchor = command.Anchor
                 };
 
                 var c = command; // Create a closure around the command

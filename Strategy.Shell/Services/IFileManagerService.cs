@@ -2,26 +2,21 @@
 // <copyright file="IFileManagerService.cs" company="Mick George @Osoy">
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
-// <summary>
-//   Defines the IFileManagerService type.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace Strategy.Shell.Services
 {
-    using Models;
-
     /// <summary>The FileManagerService interface.</summary>
     public interface IFileManagerService
     {
         /// <summary>The save.</summary>
         /// <param name="filepath">The filepath.</param>
-        /// <param name="strategy">The strategy.</param>
-        void SaveStrategy(string filepath, IStrategy strategy);
+        /// <param name="o">The o.</param>
+        void WriteObject(string filepath, object o);
 
-        /// <summary>The load.</summary>
+        /// <summary>Reads the file to de-serialize</summary>
+        /// <typeparam name="T">The type to de-serialize</typeparam>
         /// <param name="filepath">The filepath.</param>
-        /// <param name="strategy">The strategy.</param>
-        void LoadStrategy(string filepath, IStrategy strategy);
+        /// <returns>The <see cref="T"/> The type to return</returns>
+        T ReadObject<T>(string filepath);
     }
 }

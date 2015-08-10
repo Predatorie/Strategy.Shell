@@ -12,7 +12,7 @@ namespace Strategy.Shell.Models
 
     /// <summary>The strategy.</summary>
     [Serializable]
-    public class Strategy : IStrategy
+    public class Strategy : object, IStrategy
     {
         /// <summary>Gets or sets the version.</summary>
         [XmlElement]

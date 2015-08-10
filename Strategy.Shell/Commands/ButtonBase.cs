@@ -9,6 +9,8 @@
 
     public abstract class ButtonBase : IButtonsCommand
     {
+        #region Fields
+
         /// <summary>The can execute.</summary>
         private bool canExecute;
 
@@ -22,14 +24,28 @@
 
         private Point point;
 
+        private AnchorStyles anchorStyles;
+
+        #endregion
+
+        #region Construction
+
         /// <summary>Initializes a new instance of the <see cref="CommandBase"/> class.</summary>
         protected ButtonBase()
         {
             this.canExecute = true;
         }
 
+        #endregion
+
+        #region Events
+
         /// <summary>The property changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>Gets or sets a value indicating whether can execute.</summary>
         public bool CanExecute
@@ -132,10 +148,37 @@
             }
         }
 
+        public AnchorStyles Anchor
+        {
+            get
+            {
+                return this.anchorStyles;
+            }
+
+            set
+            {
+                if (this.anchorStyles == value)
+                {
+                    return;
+                }
+
+                this.anchorStyles = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region Public Methods
+
         /// <summary>
         /// Whoever inherits this class will override this method
         /// </summary>
         public abstract void Execute();
+
+        #endregion
+
+        #region Protected Methods
 
         /// <summary>The on property changed.</summary>
         /// <param name="propertyName">The property name.</param>
@@ -144,5 +187,7 @@
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        #endregion
     }
 }

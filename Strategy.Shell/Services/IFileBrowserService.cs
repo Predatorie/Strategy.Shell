@@ -3,12 +3,11 @@
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace Strategy.Shell.Services
 {
     using System.Collections.Generic;
     using System.Windows.Forms;
-
-    using Interfaces;
 
     /// <summary>The FileBrowserService interface.</summary>
     public interface IFileBrowserService
