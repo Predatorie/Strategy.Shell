@@ -2,22 +2,14 @@
 // <copyright file="SaveLevelsCommand.cs" company="Mick George @Osoy">
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
-// <summary>
-//   
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace Strategy.Shell.Commands
 {
-    using System.Reactive.Linq;
-
-    using Events;
-
-    using FunctionTable;
-
-    using Localization;
-
     using Reactive.EventAggregator;
+
+    using Strategy.Shell.Events;
+    using Strategy.Shell.FunctionTable;
+    using Strategy.Shell.Localization;
 
     /// <summary>The save levels file command.</summary>
     public class SaveLevelsCommand : CommandBase
@@ -39,7 +31,7 @@ namespace Strategy.Shell.Commands
         /// <summary>The execute.</summary>
         public override void Execute()
         {
-            this.eventAggregator.GetEvent<SaveLevelsEvent>().Publish(new SaveLevelsEvent());
+            this.eventAggregator.Publish(new SaveLevelsEvent());
         }
     }
 }

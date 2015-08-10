@@ -9,6 +9,7 @@ namespace Strategy.Shell.Presenter
     using System;
     using System.Drawing;
     using System.Windows.Forms;
+    using System.Windows.Forms.VisualStyles;
 
     using Events;
 
@@ -21,6 +22,8 @@ namespace Strategy.Shell.Presenter
     using Reactive.EventAggregator;
 
     using Services;
+
+    using Strategy.Shell.Models;
 
     /// <summary>The levels view presenter.</summary>
     public class LevelsViewPresenter
@@ -53,10 +56,10 @@ namespace Strategy.Shell.Presenter
         /// <param name="eventAggregator">The event aggregator.</param>
         /// <param name="fileManagerService">The file Manager Service.</param>
         public LevelsViewPresenter(
-            ILevelsView view, 
-            IMessageBoxService msgBoxService, 
-            IFileBrowserService fileBrowserService, 
-            IEventAggregator eventAggregator, 
+            ILevelsView view,
+            IMessageBoxService msgBoxService,
+            IFileBrowserService fileBrowserService,
+            IEventAggregator eventAggregator,
             IFileManagerService fileManagerService)
         {
             // Wire up our services
@@ -95,10 +98,12 @@ namespace Strategy.Shell.Presenter
             // Create the top node
             var mainNode = new TreeNode(LocalizationStrings.MainLevelsNode, (int)LevelsTreeIconIndex.MainLevel, (int)LevelsTreeIconIndex.MainLevel)
             {
-                NodeFont = new Font(this.view.Tree.Font, FontStyle.Bold)
+                NodeFont = new Font(this.view.Tree.Font, FontStyle.Bold),
+                Tag = "main"
             };
 
             this.view.Tree.Nodes.Add(mainNode);
+            this.view.Tree.LabelEdit = true;
         }
 
         #endregion
@@ -120,7 +125,8 @@ namespace Strategy.Shell.Presenter
             // Get the count of nodes below the main node
             var count = this.view.Tree.Nodes[0].Nodes.Count + 1;
             var level = new TreeNode(LocalizationStrings.NewLevelName + " " + count);
-            this.view.Tree.Nodes[0].Nodes.Add(level);
+
+            var index = this.view.Tree.Nodes[0].Nodes.Add(level);
         }
 
         /// <summary>The on save levels.</summary>
@@ -132,15 +138,16 @@ namespace Strategy.Shell.Presenter
 
             if (levels.Count > 0)
             {
+                var filename = Mastercam.IO.SettingsManager.SharedDirectory + "\\text.xml";
+                var levelsList = new Levels { Name = filename };
+
                 foreach (TreeNode level in levels)
                 {
-
+                    levelsList.List.Add(level.Text);
                 }
+
+                this.fileManagerService.WriteObject(levelsList.Name, levelsList);
             }
-
-            //// TODO: Iterated all levels/Operations add to list
-
-            //// TODO: Serialize list
         }
 
         /// <summary>The load images.</summary>
