@@ -100,6 +100,7 @@
     <Compile Include="Commands\ScanLevelCommand.cs" />
     <Compile Include="Events\AddLevelEvent.cs" />
     <Compile Include="Events\CloseShellEvent.cs" />
+    <Compile Include="Events\OpenPartEvent.cs" />
     <Compile Include="Events\RemoveLevelEvent.cs" />
     <Compile Include="Events\SaveLevelsEvent.cs" />
     <Compile Include="Events\OperationsLibraryLoadEvent.cs" />

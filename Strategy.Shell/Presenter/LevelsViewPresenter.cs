@@ -7,7 +7,10 @@
 namespace Strategy.Shell.Presenter
 {
     using System;
+    using System.Collections.Generic;
     using System.Drawing;
+    using System.IO;
+    using System.Linq;
     using System.Windows.Forms;
     using System.Windows.Forms.VisualStyles;
 
@@ -18,6 +21,8 @@ namespace Strategy.Shell.Presenter
     using Interfaces;
 
     using Localization;
+
+    using Mastercam.IO;
 
     using Reactive.EventAggregator;
 
@@ -75,6 +80,7 @@ namespace Strategy.Shell.Presenter
             this.eventAggregator.GetEvent<SaveLevelsEvent>().Subscribe(this.OnSaveLevels);
             this.eventAggregator.GetEvent<AddLevelEvent>().Subscribe(this.OnAddLevel);
             this.eventAggregator.GetEvent<RemoveLevelEvent>().Subscribe(this.OnRemoveLevel);
+            this.eventAggregator.GetEvent<OpenPartEvent>().Subscribe(this.OnOpenParts);
         }
 
         #endregion
@@ -126,7 +132,7 @@ namespace Strategy.Shell.Presenter
             var count = this.view.Tree.Nodes[0].Nodes.Count + 1;
             var level = new TreeNode(LocalizationStrings.NewLevelName + " " + count);
 
-            var index = this.view.Tree.Nodes[0].Nodes.Add(level);
+            this.AddLevel(level);
         }
 
         /// <summary>The on save levels.</summary>
@@ -147,6 +153,44 @@ namespace Strategy.Shell.Presenter
                 }
 
                 this.fileManagerService.WriteObject(levelsList.Name, levelsList);
+            }
+        }
+
+        /// <summary>The on open parts.</summary>
+        /// <param name="e">The e.</param>
+        private void OnOpenParts(OpenPartEvent e)
+        {
+            // Cache current file if there is one open
+            var currentFile = FileManager.CurrentFileName;
+
+            foreach (var file in e.FilePath)
+            {
+                if (FileManager.Open(file))
+                {
+                    var listOfNamedLevels = LevelsManager.GetLevelNumbersWithNames();
+                    if (listOfNamedLevels.Any())
+                    {
+                        var levelsToAdd = listOfNamedLevels.Select(LevelsManager.GetLevelName).ToList();
+
+                        // Filter out duplicate names already in our tree
+                        var treeLevels = this.view.Tree.Nodes[0].Nodes;
+
+                        foreach (var level in levelsToAdd.Where(level => !treeLevels.Find(level, true).Any()))
+                        {
+                            this.AddLevel(new TreeNode(level));
+                        }
+                    }
+                }
+            }
+
+            // Re-open previous file
+            if (File.Exists(currentFile))
+            {
+                FileManager.Open(currentFile);
+            }
+            else
+            {
+                FileManager.New();
             }
         }
 
@@ -172,6 +216,14 @@ namespace Strategy.Shell.Presenter
             list.Images.Add(Resource.Tree_View_Delete);
 
             this.view.Tree.ImageList = list;
+        }
+
+        /// <summary>The add level.</summary>
+        /// <param name="name">The name.</param>
+        /// <returns>The <see cref="int"/>.</returns>
+        private int AddLevel(TreeNode name)
+        {
+            return this.view.Tree.Nodes[0].Nodes.Add(name);
         }
 
         #endregion

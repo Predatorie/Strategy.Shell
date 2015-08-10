@@ -114,6 +114,12 @@ namespace Strategy.Shell
         /// </summary>
         public const string FileFilterOperations = "(*.operations-9)|*.operations-9";
 
+
+        /// <summary>
+        /// TODO: Add filter to include dxf, dwg, older mcx
+        /// </summary>
+        public const string FileFilterDrawings = "(*.dxf)|*.dxf";
+
         #endregion
     }
 }
