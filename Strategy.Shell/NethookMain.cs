@@ -68,6 +68,7 @@ namespace Strategy.Shell
             var fileBrowserService = new FileBrowserService();
             var eventAggregator = new EventAggregator();
             var sysInfoService = new SystemInformationService();
+            var fileManagerService = new FileManagerService();
 
             // Create all our toolbar buttons
             var toolbarCommands = new List<IToolbarCommand>
@@ -76,12 +77,17 @@ namespace Strategy.Shell
                                    new ScanLevelCommand(eventAggregator, fileBrowserService),
                                    new OpenPartLevelsCommand(eventAggregator, fileBrowserService),
                                    new AddLevelCommand(eventAggregator),
-                                   new RemoveLevelCommand(eventAggregator, fileBrowserService),
+                                   new RemoveLevelCommand(eventAggregator),
                                    new SaveLevelsCommand(eventAggregator)
                                };
 
+            var buttonCommands = new List<IButtonsCommand>
+            {
+                                         new CloseShellCommand(eventAggregator)
+                                     };
+
             // The ShellView is responsible for creating all child views and view presenters
-            var shellView = new ShellView(msgBoxService, fileBrowserService, eventAggregator, toolbarCommands);
+            var shellView = new ShellView(msgBoxService, fileBrowserService, eventAggregator, toolbarCommands, fileManagerService, buttonCommands);
 
             // Wire up the main presenter
             var presenter = new ShellViewPresenter(shellView, msgBoxService, fileBrowserService, eventAggregator, sysInfoService);
@@ -100,20 +106,6 @@ namespace Strategy.Shell
         /// <param name="param">System parameter.</param>
         /// <returns>A <c>MCamReturn</c> return type representing the outcome of this method.</returns>
         public override MCamReturn Close(int param)
-        {
-            return MCamReturn.NoErrors;
-        }
-
-        /// <summary>
-        /// This method is used to handle notification messages from the main Mastercam app to your NetHook
-        ///  application. This could allow you to include special handling of certain notification messages, such as
-        ///  graphical repaints or file changes. Just like the Close and Init methods, this is entirely optional
-        ///  and probably should only be used if you're very comfortable with the Mastercam messaging system and
-        ///  want to do some very advanced application programming.
-        /// </summary>
-        /// <param name="eventFlag">Event type</param>
-        /// <returns>A <c>MCamReturn</c> return type representing the outcome of this method.</returns>
-        public override MCamReturn Notify(MCamEvent eventFlag)
         {
             return MCamReturn.NoErrors;
         }

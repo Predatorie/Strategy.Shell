@@ -61,11 +61,47 @@ namespace Strategy.Shell.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OPERATION LIBRARIES.
+        ///   Looks up a localized string similar to Add Level.
+        /// </summary>
+        public static string AddLevel {
+            get {
+                return ResourceManager.GetString("AddLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string CloseShell {
+            get {
+                return ResourceManager.GetString("CloseShell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LEVELS.
+        /// </summary>
+        public static string MainLevelsNode {
+            get {
+                return ResourceManager.GetString("MainLevelsNode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OPERATIONS.
         /// </summary>
         public static string MainNode {
             get {
                 return ResourceManager.GetString("MainNode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Level.
+        /// </summary>
+        public static string NewLevelName {
+            get {
+                return ResourceManager.GetString("NewLevelName", resourceCulture);
             }
         }
         

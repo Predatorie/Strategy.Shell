@@ -61,7 +61,47 @@ namespace Strategy.Shell
         Arrow,
 
         /// <summary>The arrow 2.</summary>
-        Arrow2
+        Arrow2,
+
+        /// <summary>The params.</summary>
+        Params
+    }
+
+    /// <summary>The levels tree icon index.</summary>
+    public enum LevelsTreeIconIndex
+    {
+        /// <summary>The main level.</summary>
+        MainLevel,
+
+        /// <summary>The block drill.</summary>
+        BlockDrill,
+
+        /// <summary>The circle mill.</summary>
+        CircleMill,
+
+        /// <summary>The contour.</summary>
+        Contour,
+
+        /// <summary>The drill.</summary>
+        Drill,
+
+        /// <summary>The engrave.</summary>
+        Engrave,
+
+        /// <summary>The helix bore.</summary>
+        HelixBore,
+
+        /// <summary>The pocket.</summary>
+        Pocket,
+
+        /// <summary>The slot mill.</summary>
+        SlotMill,
+
+        /// <summary>The thread mill.</summary>
+        ThreadMill,
+
+        /// <summary>The nesting operation.</summary>
+        NestingOperation,
     }
 
     /// <summary>The globals.</summary>

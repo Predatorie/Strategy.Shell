@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SaveLevelsEvent.cs" company="Mick George @Osoy">
+// <copyright file="CloseShellEvent.cs" company="Mick George @Osoy">
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
 // <summary>
-//   Defines the SaveLevelsEvent type.
+//   Defines the CloseShellEvent type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -11,8 +11,8 @@ namespace Strategy.Shell.Events
 {
     using System;
 
-    /// <summary>The levels event.</summary>
-    public class SaveLevelsEvent : EventArgs
-    {
+    /// <summary>The close shell event.</summary>
+    public class CloseShellEvent : EventArgs
+    {         
     }
 }

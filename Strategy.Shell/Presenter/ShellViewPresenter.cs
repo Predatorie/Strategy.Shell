@@ -3,16 +3,18 @@
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace Strategy.Shell.Presenter
 {
     using System;
     using System.Drawing;
     using System.Windows.Forms;
 
+    using Interfaces;
+
     using Reactive.EventAggregator;
 
-    using Strategy.Shell.Interfaces;
-    using Strategy.Shell.Services;
+    using Services;
 
     /// <summary>The shell view presenter.</summary>
     public class ShellViewPresenter

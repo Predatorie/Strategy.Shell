@@ -5,6 +5,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace Strategy.Shell.Commands
 {
+    using System.Drawing;
     using System.Windows.Forms;
 
     /// <summary>The ToolbarCommand interface.</summary>
@@ -12,5 +13,8 @@ namespace Strategy.Shell.Commands
     {
         /// <summary>Gets or sets the parent.</summary>
         IWin32Window Parent { get; set; }
+
+        /// <summary>Gets or sets the icon.</summary>
+        Image Icon { get; set; }
     }
 }

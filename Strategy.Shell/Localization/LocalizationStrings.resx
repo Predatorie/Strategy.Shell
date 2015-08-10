@@ -117,8 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddLevel" xml:space="preserve">
+    <value>Add Level</value>
+  </data>
+  <data name="CloseShell" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="MainLevelsNode" xml:space="preserve">
+    <value>LEVELS</value>
+  </data>
   <data name="MainNode" xml:space="preserve">
-    <value>OPERATION LIBRARIES</value>
+    <value>OPERATIONS</value>
+  </data>
+  <data name="NewLevelName" xml:space="preserve">
+    <value>New Level</value>
   </data>
   <data name="NoOperationsLoaded" xml:space="preserve">
     <value>No operations loaded</value>

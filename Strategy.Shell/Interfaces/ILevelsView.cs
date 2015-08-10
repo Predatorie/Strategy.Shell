@@ -24,13 +24,8 @@ namespace Strategy.Shell.Interfaces
         /// <summary>Gets the selected node.</summary>
         TreeNode SelectedNode { get; }
 
-        /// <summary>The add level node.</summary>
-        /// <param name="levelNode">The level node.</param>
-        void AddNode(TreeNode levelNode);
-
-        /// <summary>The remove level node.</summary>
-        /// <param name="key">The key.</param>
-        void RemoveNode(string key);
+        /// <summary>Gets the tree.</summary>
+        TreeView Tree { get; }
 
         /// <summary>The select level node.</summary>
         /// <param name="key">The key.</param>

@@ -2,59 +2,57 @@
 // <copyright file="ButtonBarView.cs" company="Mick George @Osoy">
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
-// <summary>
-//   The button bar view.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Strategy.Shell.Views
 {
-    using System;
+    using System.Collections.Generic;
     using System.Windows.Forms;
 
+    using Commands;
     using Interfaces;
 
     /// <summary>The button bar view.</summary>
     public partial class ButtonBarView : UserControl, IButtonBarView, IViewBase
     {
+        #region Constrction
+
         /// <summary>Initializes a new instance of the <see cref="ButtonBarView"/> class.</summary>
         public ButtonBarView()
         {
             this.InitializeComponent();
-
-            this.Load += (s, e) => this.OnViewLoad();
         }
 
-        /// <summary>
-        /// Returns the handle to this form, usefull for setting modal dialogs to this form
-        /// </summary>
-        public IWin32Window WindowHandle => FromHandle(this.Handle);
+        #endregion
 
-        /// <summary>The close view.</summary>
-        public event EventHandler CloseView
+        /// <summary>The set commands.</summary>
+        /// <param name="commands">The commands.</param>
+        public void SetCommands(List<IButtonsCommand> commands)
         {
-            add { this.ButtonClose.Click += value; }
-            remove { this.ButtonClose.Click -= value; }
-        }
+            this.Controls.Clear();
 
-        public event EventHandler SaveStrategy
-        {
-            add { this.ButtonSave.Click += value; }
-            remove { this.ButtonSave.Click -= value; }
-        }
+            foreach (var command in commands)
+            {
+                var button = new Button()
+                {
+                    Text = command.ToolTip, 
+                    Enabled = command.CanExecute, 
+                    Margin = new Padding(2), 
+                    Location = command.Location,
+                    Anchor = AnchorStyles.Right | AnchorStyles.Bottom
+                };
 
-        public event EventHandler LoadStrategy
-        {
-            add { this.ButtonLoadStrategy.Click += value; }
-            remove { this.ButtonLoadStrategy.Click -= value; }
-        }
+                var c = command; // Create a closure around the command
+                command.PropertyChanged += (s, e) =>
+                {
+                    button.Text = c.ToolTip;
+                    button.Enabled = c.CanExecute;
+                };
 
-        public event EventHandler ViewLoad;
+                button.Click += (s, e) => c.Execute();
 
-        protected virtual void OnViewLoad()
-        {
-            var handler = this.ViewLoad;
-            handler?.Invoke(this, EventArgs.Empty);
+                this.Controls.Add(button);
+            }
         }
     }
 }

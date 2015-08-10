@@ -17,6 +17,8 @@ namespace Strategy.Shell.Views
     /// <summary>The levels view.</summary>
     public partial class LevelsView : UserControl, ILevelsView, IViewBase
     {
+        #region Construction
+
         /// <summary>Initializes a new instance of the <see cref="LevelsView"/> class.</summary>
         public LevelsView()
         {
@@ -26,31 +28,30 @@ namespace Strategy.Shell.Views
             this.Load += (s, e) => this.OnViewLoad();
         }
 
+        #endregion
+
+        #region Public Events
+
         /// <summary>The selection changed.</summary>
         public event EventHandler SelectionChanged;
+
+        public event EventHandler ViewLoad;
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>Gets the selected node.</summary>
         public TreeNode SelectedNode => this.LevelsTree.SelectedNode;
 
         /// <summary>
-        /// Returns the handle to this form, usefull for setting modal dialogs to this form
+        /// Gets the levels treeview (used to set images list)
         /// </summary>
-        public IWin32Window WindowHandle => FromHandle(this.Handle);
+        public TreeView Tree => this.LevelsTree;
 
-        /// <summary>The add node.</summary>
-        /// <param name="levelNode">The level node.</param>
-        public void AddNode(TreeNode levelNode)
-        {
-            this.LevelsTree.Nodes.Add(levelNode);
-        }
+        #endregion
 
-        /// <summary>The remove node.</summary>
-        /// <param name="key">The key.</param>
-        public void RemoveNode(string key)
-        {
-            var node = this.LevelsTree.Nodes[key];
-            this.LevelsTree.Nodes.Remove(node);
-        }
+        #region Public Methods
 
         /// <summary>The select node.</summary>
         /// <param name="key">The key.</param>
@@ -59,7 +60,9 @@ namespace Strategy.Shell.Views
             this.LevelsTree.SelectedNode = this.LevelsTree.Nodes[key];
         }
 
-        public event EventHandler ViewLoad;
+        #endregion
+
+        #region Protected Methods
 
         /// <summary>The on selection changed.</summary>
         protected virtual void OnSelectionChanged()
@@ -72,5 +75,7 @@ namespace Strategy.Shell.Views
             var handler = this.ViewLoad;
             handler?.Invoke(this, EventArgs.Empty);
         }
+
+        #endregion
     }
 }

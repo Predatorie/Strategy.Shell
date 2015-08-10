@@ -17,6 +17,8 @@ namespace Strategy.Shell.Views
     /// <summary>The operations view.</summary>
     public partial class OperationsView : UserControl, IOperationsView, IViewBase
     {
+        #region Construction
+
         /// <summary>Initializes a new instance of the <see cref="OperationsView"/> class.</summary>
         public OperationsView()
         {
@@ -25,40 +27,29 @@ namespace Strategy.Shell.Views
             this.Load += (s, e) => this.OnViewLoad();
         }
 
+        #endregion
+
+        #region Public Events
+
         /// <summary>The selection changed.</summary>
         public event EventHandler SelectionChanged;
+
+        public event EventHandler ViewLoad;
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>Gets the selected node.</summary>
         public TreeNode SelectedNode => this.OperationsTreeView.SelectedNode;
 
-        public TreeNode MainTreeNode => this.OperationsTreeView.TopNode;
+        // public TreeNode MainTreeNode => this.OperationsTreeView.TopNode;
 
         public TreeView Tree => this.OperationsTreeView;
 
-        /// <summary>
-        /// Returns the handle to this form, usefull for setting modal dialogs to this form
-        /// </summary>
-        public IWin32Window WindowHandle => FromHandle(this.Handle);
+        #endregion
 
-        public void AddMainTreeNode(TreeNode node)
-        {
-            this.OperationsTreeView.Nodes.Add(node);
-        }
-
-        /// <summary>The add node.</summary>
-        /// <param name="levelNode">The level node.</param>
-        public void AddNode(TreeNode levelNode)
-        {
-            this.OperationsTreeView.TopNode.Nodes.Add(levelNode);
-        }
-
-        /// <summary>The remove node.</summary>
-        /// <param name="key">The key.</param>
-        public void RemoveNode(string key)
-        {
-            var node = this.OperationsTreeView.Nodes[key];
-            this.OperationsTreeView.TopNode.Nodes.Remove(node);
-        }
+        #region Public Methods
 
         /// <summary>The select node.</summary>
         /// <param name="key">The key.</param>
@@ -67,7 +58,9 @@ namespace Strategy.Shell.Views
             this.OperationsTreeView.SelectedNode = this.OperationsTreeView.Nodes[key];
         }
 
-        public event EventHandler ViewLoad;
+        #endregion
+
+        #region Protected Methods
 
         /// <summary>The on selection changed.</summary>
         protected virtual void OnSelectionChanged()
@@ -80,5 +73,7 @@ namespace Strategy.Shell.Views
             var handler = this.ViewLoad;
             handler?.Invoke(this, EventArgs.Empty);
         }
+
+        #endregion
     }
 }

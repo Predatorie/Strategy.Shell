@@ -6,6 +6,7 @@
 
 namespace Strategy.Shell.Views
 {
+    using System;
     using System.Collections.Generic;
     using System.Windows.Forms;
 
@@ -15,7 +16,8 @@ namespace Strategy.Shell.Views
     using Presenter;
     using Services;
 
-    using Strategy.Shell.Commands;
+    using Commands;
+    using Events;
 
     /// <summary>The shell view.</summary>
     public partial class ShellView : Form, IShellView
@@ -34,6 +36,11 @@ namespace Strategy.Shell.Views
         /// <summary>The operations view.</summary>
         private readonly OperationsView operationsView;
 
+        /// <summary>
+        /// The Event Aggregator singleton
+        /// </summary>
+        private readonly IEventAggregator eventAggregator;
+
         #endregion
 
         #region Construction
@@ -43,22 +50,24 @@ namespace Strategy.Shell.Views
         /// <param name="fileBrowserService">The file Browser Service.</param>
         /// <param name="eventAggregator">The event Aggregator.</param>
         /// <param name="commands"></param>
+        /// <param name="fileManagerService"></param>
+        /// <param name="buttonsCommands"></param>
         public ShellView(IMessageBoxService msgBoxService, IFileBrowserService fileBrowserService, IEventAggregator eventAggregator,
-            List<IToolbarCommand> commands)
+            List<IToolbarCommand> commands, IFileManagerService fileManagerService, List<IButtonsCommand> buttonsCommands)
         {
             this.InitializeComponent();
 
             // Wire up our view presenters
             var toolbarView = new ToolbarButtonView { Dock = DockStyle.Fill };
-            var toolbarViewPresenter = new ToolbarViewPresenter(toolbarView, msgBoxService, fileBrowserService, eventAggregator, commands);
+            var toolbarViewPresenter = new ToolbarViewPresenter(toolbarView, commands);
 
             var buttonView = new ButtonBarView { Dock = DockStyle.Fill };
-            var buttonViewPresenter = new ButtonBarViewPresenter(buttonView, msgBoxService, fileBrowserService, eventAggregator);
+            var buttonViewPresenter = new ButtonBarViewPresenter(buttonView, buttonsCommands);
 
-            var levelView = new LevelsView { Dock = DockStyle.Fill };
-            var levelViewPresenter = new LevelsViewPresenter(levelView, msgBoxService, fileBrowserService, eventAggregator);
+            var levelView = new LevelsView { Dock = DockStyle.Fill, Margin = new Padding(5) };
+            var levelViewPresenter = new LevelsViewPresenter(levelView, msgBoxService, fileBrowserService, eventAggregator, fileManagerService);
 
-            var opsView = new OperationsView { Dock = DockStyle.Fill };
+            var opsView = new OperationsView { Dock = DockStyle.Fill, Margin = new Padding(5) };
             var opsViewPresenter = new OperationsViewPresenter(opsView, msgBoxService, fileBrowserService, eventAggregator);
 
             // Wire up the views
@@ -67,6 +76,9 @@ namespace Strategy.Shell.Views
             this.levelsView = levelView;
             this.operationsView = opsView;
 
+            this.eventAggregator = eventAggregator;
+            this.eventAggregator.GetEvent<CloseShellEvent>().Subscribe(this.OnCloseShell);
+           
             // Place the views in the correct regions
             this.InjectViews();
         }
@@ -104,6 +116,15 @@ namespace Strategy.Shell.Views
 
             this.ButtonPanelRegion.Controls.Add(this.buttonBarView);
             this.ToolbarButtonPanelRegion.Controls.Add(this.toolbarButtonView);
+        }
+
+        /// <summary>
+        /// Closes the main view, called from the button close
+        /// </summary>
+        /// <param name="e"></param>
+        private void OnCloseShell(CloseShellEvent e)
+        {
+            this.Close();
         }
 
         #endregion

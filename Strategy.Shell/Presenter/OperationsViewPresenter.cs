@@ -104,14 +104,14 @@ namespace Strategy.Shell.Presenter
                             };
 
                             // Operation Information TODO: Localize
-                            var linkingDepth = new TreeNode("Depth: " + operation.Linking.Depth, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
-                            var linkingClearance = new TreeNode("Clearance: " + operation.Linking.Clearance, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
-                            var linkingClearanceOn = new TreeNode("Clearance On: " + operation.Linking.ClearanceOn, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
-                            var spindleSpeed = new TreeNode("Spindle Speed: " + operation.SpindleSpeed, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
-                            var feedRate = new TreeNode("FeedRate: " + operation.FeedRate, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
-                            var plungeRate = new TreeNode("PlungeRate: " + operation.PlungeRate, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
-                            var diameterOffset = new TreeNode("Diameter Offset: " + operation.DiameterOffset, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
-                            var tlo = new TreeNode("Length Offset: " + operation.LengthOffset, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
+                            var linkingDepth = new TreeNode("Depth = " + operation.Linking.Depth, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
+                            var linkingClearance = new TreeNode("Clearance = " + operation.Linking.Clearance, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
+                            var linkingClearanceOn = new TreeNode("Clearance On = " + operation.Linking.ClearanceOn, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
+                            var spindleSpeed = new TreeNode("Spindle Speed = " + operation.SpindleSpeed, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
+                            var feedRate = new TreeNode("FeedRate = " + operation.FeedRate, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
+                            var plungeRate = new TreeNode("PlungeRate = " + operation.PlungeRate, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
+                            var diameterOffset = new TreeNode("Diameter Offset = " + operation.DiameterOffset, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
+                            var tlo = new TreeNode("Length Offset = " + operation.LengthOffset, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
 
                             var operationInformation = new List<TreeNode>
                                                            {
@@ -125,16 +125,16 @@ namespace Strategy.Shell.Presenter
                                                                tlo
                                                            };
 
-                            // Tool information TODO: Localize
-                            var filename = new TreeNode("File: " + operation.OperationTool.FileName, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
-                            var mfg = new TreeNode("Name: " + operation.OperationTool.MfgToolCode, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
-                            var name = new TreeNode("Name: " + operation.OperationTool.Name, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
-                            var diameter = new TreeNode("Diameter: " + operation.OperationTool.Diameter, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
-                            var fluteLength = new TreeNode("FluteLength: " + operation.OperationTool.FluteLength, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
-                            var flutes = new TreeNode("Flutes: " + operation.OperationTool.Flutes, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
-                            var length = new TreeNode("Length: " + operation.OperationTool.Length, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
-                            var holderDia = new TreeNode("HolderDia: " + operation.OperationTool.HolderDia, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
-                            var holderLength = new TreeNode("HolderDia: " + operation.OperationTool.HolderLength, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
+                            // Tool information TODO = Localize
+                            var filename = new TreeNode("File = " + operation.OperationTool.FileName, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
+                            var mfg = new TreeNode("Name = " + operation.OperationTool.MfgToolCode, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
+                            var name = new TreeNode("Name = " + operation.OperationTool.Name, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
+                            var diameter = new TreeNode("Diameter = " + operation.OperationTool.Diameter, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
+                            var fluteLength = new TreeNode("FluteLength = " + operation.OperationTool.FluteLength, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
+                            var flutes = new TreeNode("Flutes = " + operation.OperationTool.Flutes, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
+                            var length = new TreeNode("Length = " + operation.OperationTool.Length, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
+                            var holderDia = new TreeNode("HolderDia = " + operation.OperationTool.HolderDia, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
+                            var holderLength = new TreeNode("HolderDia = " + operation.OperationTool.HolderLength, (int)OperationTreeIconIndex.Arrow2, (int)OperationTreeIconIndex.Arrow2);
 
                             var toolinformation = new List<TreeNode>
                                            {
@@ -194,10 +194,14 @@ namespace Strategy.Shell.Presenter
                             }
 
                             counter++;
-                            var node = new TreeNode($"ID: {counter + ": " + thisOperation.Operation.Type + " - " + operation.Name}", index, index) { Tag = thisOperation };
+                            var node = new TreeNode($"ID:{counter + " = " + thisOperation.Operation.Type + " - " + operation.Name}", index, index)
+                            {
+                                Tag = thisOperation,
+                                NodeFont = new Font(this.view.Tree.Font, FontStyle.Bold)
+                            };
 
                             // TODO: Localize
-                            var op = new TreeNode("Params", (int)OperationTreeIconIndex.Operations, (int)OperationTreeIconIndex.Operations);
+                            var op = new TreeNode("Params", (int)OperationTreeIconIndex.Params, (int)OperationTreeIconIndex.Params);
                             var tool = new TreeNode("Tool", (int)OperationTreeIconIndex.MillFlat, (int)OperationTreeIconIndex.MillFlat);
 
                             op.Nodes.AddRange(operationInformation.ToArray());
@@ -209,15 +213,18 @@ namespace Strategy.Shell.Presenter
                             nodes.Add(node);
                         }
 
-                        var allnodes = new TreeNode(lib, nodes.ToArray()) { NodeFont = new Font(this.view.Tree.Font, FontStyle.Bold) };
+                        var allnodes = new TreeNode(lib, nodes.ToArray());
                         allnodes.Expand();
 
-                        this.view.MainTreeNode.Nodes.Add(allnodes);
+                        // Append nodes to the parent node
+                        this.view.Tree.Nodes[0].Nodes.Add(allnodes);
                     }
                 }
             }
 
             FileManager.New(false);
+
+            this.view.Tree.Nodes[0].Expand();
 
             this.msgBoxService.Ok(
                 totalOperations > 0 ? $"{totalOperations} " + LocalizationStrings.OperationsLoaded : LocalizationStrings.NoOperationsLoaded,
@@ -229,7 +236,6 @@ namespace Strategy.Shell.Presenter
         /// <param name="eventArgs">The event args.</param>
         private void OperationsViewOnSelectionChanged(object sender, EventArgs eventArgs)
         {
-
         }
 
         /// <summary>The operations view on view loaded.</summary>
@@ -240,10 +246,12 @@ namespace Strategy.Shell.Presenter
             this.LoadImages();
 
             // Create the top node
-            var mainNode = new TreeNode(LocalizationStrings.MainNode, (int)OperationTreeIconIndex.Operations, (int)OperationTreeIconIndex.Operations);
-            mainNode.Expand();
+            var mainNode = new TreeNode(LocalizationStrings.MainNode, (int)OperationTreeIconIndex.OperationGroup, (int)OperationTreeIconIndex.OperationGroup)
+            {
+                NodeFont = new Font(this.view.Tree.Font, FontStyle.Bold)
+            };
 
-            this.view.AddMainTreeNode(mainNode);
+            this.view.Tree.Nodes.Add(mainNode);
         }
 
         #endregion
@@ -271,10 +279,11 @@ namespace Strategy.Shell.Presenter
             list.Images.Add(Resource.SlotMill);
             list.Images.Add(Resource.ThreadMill);
             list.Images.Add(Resource.NestingOperation);
-            list.Images.Add(Resource.millFlat);
+            list.Images.Add(Resource.Tool16);
             list.Images.Add(Resource.OperationGroup);
             list.Images.Add(Resource.Arrow);
             list.Images.Add(Resource.Arrow2);
+            list.Images.Add(Resource.Params);
 
             this.view.Tree.ImageList = list;
         }

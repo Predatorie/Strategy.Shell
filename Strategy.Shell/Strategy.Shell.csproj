@@ -85,8 +85,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\AddLevelCommand.cs" />
+    <Compile Include="Commands\ButtonBase.cs" />
+    <Compile Include="Commands\CloseShellCommand.cs" />
     <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\ICommandBase.cs" />
+    <Compile Include="Commands\IButtonsCommand.cs" />
     <Compile Include="Commands\IToolbarCommand.cs" />
     <Compile Include="Commands\OpenLevelsCommand.cs" />
     <Compile Include="Commands\OpenOperationsCommand.cs" />
@@ -94,6 +97,9 @@
     <Compile Include="Commands\RemoveLevelCommand.cs" />
     <Compile Include="Commands\SaveLevelsCommand.cs" />
     <Compile Include="Commands\ScanLevelCommand.cs" />
+    <Compile Include="Events\AddLevelEvent.cs" />
+    <Compile Include="Events\CloseShellEvent.cs" />
+    <Compile Include="Events\RemoveLevelEvent.cs" />
     <Compile Include="Events\SaveLevelsEvent.cs" />
     <Compile Include="Events\OperationsLibraryLoadEvent.cs" />
     <Compile Include="FunctionTable\Resource.Designer.cs">
@@ -113,6 +119,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LocalizationStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Models\IStrategy.cs" />
+    <Compile Include="Models\Strategy.cs" />
     <Compile Include="NethookMain.cs" />
     <Compile Include="Operations\IMastercamOperation.cs" />
     <Compile Include="Operations\MastercamOperation.cs" />
@@ -134,7 +142,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Services\FileBrowserService.cs" />
+    <Compile Include="Services\FileManagerService.cs" />
     <Compile Include="Services\IFileBrowserService.cs" />
+    <Compile Include="Services\IFileManagerService.cs" />
     <Compile Include="Services\IMessageBoxService.cs" />
     <Compile Include="Services\ISystemInformationService.cs" />
     <Compile Include="Services\MessageBoxService.cs" />
@@ -217,6 +227,7 @@
     <Content Include="FunctionTable\Assets\2DToolpathsThreadMill16.png" />
     <Content Include="FunctionTable\Assets\AddMaterial.png" />
     <Content Include="FunctionTable\Assets\AddNewLevel.png" />
+    <None Include="FunctionTable\Assets\addnewlevel1.png" />
     <Content Include="FunctionTable\Assets\Arrow-Green-Right.png" />
     <Content Include="FunctionTable\Assets\Arrow-Right-Green.png" />
     <Content Include="FunctionTable\Assets\BlockDrill.png" />
@@ -225,6 +236,7 @@
     <Content Include="FunctionTable\Assets\Contour.png" />
     <Content Include="FunctionTable\Assets\Drill.png" />
     <Content Include="FunctionTable\Assets\Engrave.png" />
+    <Content Include="FunctionTable\Assets\Expand All.png" />
     <Content Include="FunctionTable\Assets\FBM_Pocket_RoughToolErr_DB_M_16x16.bmp" />
     <Content Include="FunctionTable\Assets\FileImportFolder16.png" />
     <Content Include="FunctionTable\Assets\HelixBore.png" />
@@ -241,19 +253,27 @@
     <Content Include="FunctionTable\Assets\Open.png" />
     <Content Include="FunctionTable\Assets\Operations.png" />
     <Content Include="FunctionTable\Assets\Options.png" />
+    <Content Include="FunctionTable\Assets\Params.png" />
     <Content Include="FunctionTable\Assets\Pocket.png" />
     <Content Include="FunctionTable\Assets\Run16.png" />
     <Content Include="FunctionTable\Assets\Run24.png" />
     <Content Include="FunctionTable\Assets\Save.png" />
     <Content Include="FunctionTable\Assets\SaveAs.png" />
+    <Content Include="FunctionTable\Assets\sst16.bmp" />
+    <Content Include="FunctionTable\Assets\sst24.bmp" />
     <Content Include="FunctionTable\Assets\subgroup.bmp" />
     <Content Include="FunctionTable\Assets\ToolMill16.bmp" />
     <Content Include="FunctionTable\Assets\Tools.png" />
+    <Content Include="FunctionTable\Assets\Tree View-Add.png" />
+    <Content Include="FunctionTable\Assets\Tree View-Delete.png" />
+    <Content Include="FunctionTable\Assets\Tree View-Edit.png" />
+    <Content Include="FunctionTable\Assets\Tree View-New.png" />
+    <Content Include="FunctionTable\Assets\Tree View-Remove.png" />
+    <Content Include="FunctionTable\Assets\Tree View-Search.png" />
+    <Content Include="FunctionTable\Assets\Tree View.png" />
     <Content Include="ReadMeFirst\ReadMe.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)\FunctionTable\Strategy.Shell.ft" "$(mcam)\chooks\Strategy.Shell.ft"

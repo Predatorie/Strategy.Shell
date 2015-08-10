@@ -1,20 +1,16 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="OpenLevelsCommand.cs" company="Mick George @Osoy">
+// <copyright file="IButtonsCommand.cs" company="Mick George @Osoy">
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
-// <summary>
-//   Defines the OpenLevelsFileCommand type.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace Strategy.Shell.Commands
 {
-    /// <summary>The open levels file command.</summary>
-    public class OpenLevelsCommand : CommandBase
+    using System.Drawing;
+
+    /// <summary>The CommandButtonView interface.</summary>
+    public interface IButtonsCommand : ICommandBase
     {
-        /// <summary>The execute.</summary>
-        public override void Execute()
-        {
-        }
+        /// <summary>Gets or sets the location.</summary>
+        Point Location { get; set; }
     }
 }

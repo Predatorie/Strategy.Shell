@@ -41,7 +41,7 @@ namespace Strategy.Shell.Views
                     ImageScaling = ToolStripItemImageScaling.None, 
                     DisplayStyle = ToolStripItemDisplayStyle.ImageAndText, 
                     TextImageRelation = TextImageRelation.ImageAboveText,
-                    Padding = new Padding(2)
+                    Margin = new Padding(2)
                 };
 
                 var c = command; // Create a closure around the command
