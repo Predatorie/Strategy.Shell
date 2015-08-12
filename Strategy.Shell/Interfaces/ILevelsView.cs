@@ -21,6 +21,15 @@ namespace Strategy.Shell.Interfaces
         /// <summary>The view loaded.</summary>
         event EventHandler ViewLoad;
 
+        /// <summary>The drag drop.</summary>
+        event EventHandler LevelDragEnter;
+
+        /// <summary>The item drag.</summary>
+        event EventHandler LevelDragDrop;
+
+        /// <summary>The drag enter.</summary>
+        event EventHandler LevelDrag;
+
         /// <summary>Gets the selected node.</summary>
         TreeNode SelectedNode { get; }
 

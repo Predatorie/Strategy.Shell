@@ -25,6 +25,10 @@ namespace Strategy.Shell.Views
             this.InitializeComponent();
 
             this.LevelsTree.AfterSelect += (s, e) => this.OnSelectionChanged();
+            this.LevelsTree.ItemDrag += (s, e) => this.OnLevelDrag();
+            this.LevelsTree.DragDrop += (s, e) => this.OnLevelDragDrop();
+            this.LevelsTree.DragEnter += (s, e) => this.OnLevelDragEnter();
+
             this.Load += (s, e) => this.OnViewLoad();
         }
 
@@ -36,6 +40,12 @@ namespace Strategy.Shell.Views
         public event EventHandler SelectionChanged;
 
         public event EventHandler ViewLoad;
+
+        public event EventHandler LevelDragEnter;
+
+        public event EventHandler LevelDragDrop;
+
+        public event EventHandler LevelDrag;
 
         #endregion
 
@@ -73,6 +83,24 @@ namespace Strategy.Shell.Views
         protected virtual void OnViewLoad()
         {
             var handler = this.ViewLoad;
+            handler?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnLevelDragEnter()
+        {
+            var handler = this.LevelDragEnter;
+            handler?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnLevelDragDrop()
+        {
+            var handler = this.LevelDragDrop;
+            handler?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnLevelDrag()
+        {
+            var handler = this.LevelDrag;
             handler?.Invoke(this, EventArgs.Empty);
         }
 

@@ -28,6 +28,8 @@ namespace Strategy.Shell.Presenter
 
     using Services;
 
+    using Strategy.Shell.Operations;
+
     /// <summary>The levels view presenter.</summary>
     public class LevelsViewPresenter
     {
@@ -74,7 +76,11 @@ namespace Strategy.Shell.Presenter
             this.view = view;
             view.ViewLoad += this.LevelsViewOnViewLoad;
             view.SelectionChanged += this.LevelsViewOnSelectionChanged;
-            
+            view.Tree.ItemDrag += this.OnLevelItemDrag;
+            view.Tree.DragDrop += this.OnLevelDragDrop;
+            view.Tree.DragEnter += this.OnLevelDragEnter;
+            view.Tree.AllowDrop = true;
+
             this.eventAggregator.GetEvent<SaveLevelsMessage>().Subscribe(this.OnSaveLevels);
             this.eventAggregator.GetEvent<AddLevelMessage>().Subscribe(this.OnAddLevel);
             this.eventAggregator.GetEvent<RemoveLevelMessage>().Subscribe(this.OnRemoveLevel);
@@ -84,6 +90,72 @@ namespace Strategy.Shell.Presenter
         #endregion
 
         #region Event Handlers
+
+        /// <summary>The on level drag drop.</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The e.</param>
+        private void OnLevelDragDrop(object sender, DragEventArgs e)
+        {
+            // TODO: If node originates from Operations Tree .clone() the node we are dragging
+            // TODO: but if we are moving a node within this levels tree use .remove()
+
+            // TODO: Icons are not coming over when cloning, need to sync the image lists for both trees....!
+
+            var node = (TreeNode)e.Data.GetData(typeof(TreeNode));
+
+            if (node?.Tag != null)
+            {
+                if (node.Tag.GetType() == typeof(MastercamOperation))
+                {
+                    // Retrieve the client coordinates of the drop location.
+                    var targetPoint = this.view.Tree.PointToClient(new Point(e.X, e.Y));
+
+                    // Retrieve the node at the drop location.
+                    var targetNode = this.view.Tree.GetNodeAt(targetPoint);
+
+                    // Retrieve the node that was dragged.
+                    var draggedNode = (TreeNode)e.Data.GetData(typeof(TreeNode));
+
+                    // Confirm that the node at the drop location is not 
+                    // the dragged node and that target node isn't null
+                    // (for example if you drag outside the control)
+                    if (!draggedNode.Equals(targetNode) && targetNode != null)
+                    {
+                        // TODO: draggedNode.Remove();
+                        var clone = (TreeNode)draggedNode.Clone();
+
+                        targetNode.Nodes.Add(clone);
+
+                        // Expand the node at the location to show the dropped node.
+                        targetNode.Expand();
+                    }
+                }
+            }
+        }
+
+        /// <summary>The on level drag enter.</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The e.</param>
+        private void OnLevelDragEnter(object sender, DragEventArgs e)
+        {
+            // TODO: If coming from operations we are copying else we are moving
+            e.Effect = DragDropEffects.Copy;
+        }
+
+        /// <summary>The on level item drag.</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The e.</param>
+        private void OnLevelItemDrag(object sender, ItemDragEventArgs e)
+        {
+            // Only allow the operation node to be draggable
+            var item = (TreeNode)e.Item;
+            if (item?.Tag == null || item.Tag.ToString() != "level")
+            {
+                return;
+            }
+
+            this.view.Tree.DoDragDrop(e.Item, DragDropEffects.Move);
+        }
 
         /// <summary>The levels view on selection changed.</summary>
         /// <param name="sender">The sender.</param>
@@ -138,7 +210,7 @@ namespace Strategy.Shell.Presenter
         {
             // Get the count of nodes below the main node
             var count = this.view.Tree.Nodes[0].Nodes.Count + 1;
-            var level = new TreeNode(LocalizationStrings.NewLevelName + " " + count);
+            var level = new TreeNode(LocalizationStrings.NewLevelName + " " + count) { Tag = "level" };
 
             this.AddLevel(level);
         }

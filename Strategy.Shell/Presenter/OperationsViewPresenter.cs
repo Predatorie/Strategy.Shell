@@ -62,6 +62,10 @@ namespace Strategy.Shell.Presenter
             this.view = view;
             view.ViewLoad += this.OperationsViewOnViewLoad;
             view.SelectionChanged += this.OperationsViewOnSelectionChanged;
+            view.Tree.ItemDrag += this.OnOperationItemDrag;
+            view.Tree.DragDrop += this.OnOperationDragDrop;
+            view.Tree.DragEnter += this.OnOperationDragEnter;
+            view.Tree.AllowDrop = true;
 
             // Event subscriptions
             this.eventAggregator.GetEvent<OperationsLibraryLoadMessage>().Subscribe(this.OnOperationsLibraryLoadEvent);
@@ -70,6 +74,28 @@ namespace Strategy.Shell.Presenter
         #endregion
 
         #region Event Handlers
+
+        private void OnOperationDragDrop(object sender, DragEventArgs e)
+        {
+            // TODO: Add code to handle drop
+        }
+
+        private void OnOperationDragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Copy;
+        }
+
+        private void OnOperationItemDrag(object sender, ItemDragEventArgs e)
+        {
+            // Only allow the operation node to be draggable
+            var item = (TreeNode)e.Item;
+            if (item?.Tag == null || item.Tag.GetType() != typeof(MastercamOperation))
+            {
+                return;
+            }
+
+            this.view.Tree.DoDragDrop(e.Item, DragDropEffects.Copy);
+        }
 
         /// <summary>The operations library load event.</summary>
         /// <param name="e">The payload event.</param>

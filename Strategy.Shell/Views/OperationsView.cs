@@ -24,6 +24,10 @@ namespace Strategy.Shell.Views
         {
             this.InitializeComponent();
             this.OperationsTreeView.AfterSelect += (s, e) => this.OnSelectionChanged();
+            this.OperationsTreeView.ItemDrag += (s, e) => this.OnOperationDrag();
+            this.OperationsTreeView.DragEnter += (s, e) => this.OnOperationDragEnter();
+            this.OperationsTreeView.DragDrop += (s, e) => this.OnOperationDragDrop();
+
             this.Load += (s, e) => this.OnViewLoad();
         }
 
@@ -35,6 +39,12 @@ namespace Strategy.Shell.Views
         public event EventHandler SelectionChanged;
 
         public event EventHandler ViewLoad;
+
+        public event EventHandler OperationDragEnter;
+
+        public event EventHandler OperationDragDrop;
+
+        public event EventHandler OperationDrag;
 
         #endregion
 
@@ -72,6 +82,24 @@ namespace Strategy.Shell.Views
         {
             var handler = this.ViewLoad;
             handler?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnOperationDrag()
+        {
+            var handler = this.OperationDrag;
+            handler?.Invoke(this, (ItemDragEventArgs)EventArgs.Empty);
+        }
+
+        protected virtual void OnOperationDragEnter()
+        {
+            var handler = this.OperationDragEnter;
+            handler?.Invoke(this, (ItemDragEventArgs)EventArgs.Empty);
+        }
+
+        protected virtual void OnOperationDragDrop()
+        {
+            var handler = this.OperationDragDrop;
+            handler?.Invoke(this, (ItemDragEventArgs)EventArgs.Empty);
         }
 
         #endregion
