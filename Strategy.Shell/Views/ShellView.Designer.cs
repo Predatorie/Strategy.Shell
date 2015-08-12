@@ -41,7 +41,6 @@ namespace Strategy.Shell.Views
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShellView));
             this.ButtonPanelRegion = new System.Windows.Forms.Panel();
-            this.ToolbarButtonPanelRegion = new System.Windows.Forms.Panel();
             this.ShellContainer = new System.Windows.Forms.SplitContainer();
             ((System.ComponentModel.ISupportInitialize)(this.ShellContainer)).BeginInit();
             this.ShellContainer.SuspendLayout();
@@ -51,11 +50,6 @@ namespace Strategy.Shell.Views
             // 
             resources.ApplyResources(this.ButtonPanelRegion, "ButtonPanelRegion");
             this.ButtonPanelRegion.Name = "ButtonPanelRegion";
-            // 
-            // ToolbarButtonPanelRegion
-            // 
-            resources.ApplyResources(this.ToolbarButtonPanelRegion, "ToolbarButtonPanelRegion");
-            this.ToolbarButtonPanelRegion.Name = "ToolbarButtonPanelRegion";
             // 
             // ShellContainer
             // 
@@ -76,7 +70,6 @@ namespace Strategy.Shell.Views
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.ShellContainer);
-            this.Controls.Add(this.ToolbarButtonPanelRegion);
             this.Controls.Add(this.ButtonPanelRegion);
             this.MinimizeBox = false;
             this.Name = "ShellView";
@@ -93,9 +86,6 @@ namespace Strategy.Shell.Views
 
         /// <summary>The button panel region.</summary>
         private System.Windows.Forms.Panel ButtonPanelRegion;
-
-        /// <summary>The toolbar button panel region.</summary>
-        private System.Windows.Forms.Panel ToolbarButtonPanelRegion;
 
         /// <summary>The shell container.</summary>
         private System.Windows.Forms.SplitContainer ShellContainer;

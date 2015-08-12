@@ -7,7 +7,7 @@
 namespace Strategy.Shell
 {
     /// <summary>The toolbar icon.</summary>
-    public enum OperationTreeIconIndex
+    public enum TreeIconIndex
     {
         /// <summary>The operations.</summary>
         Operations = 0,
@@ -64,44 +64,16 @@ namespace Strategy.Shell
         Arrow2,
 
         /// <summary>The params.</summary>
-        Params
-    }
+        Params,
 
-    /// <summary>The levels tree icon index.</summary>
-    public enum LevelsTreeIconIndex
-    {
+        /// <summary>The tree view add.</summary>
+        TreeViewAdd,
+
+        /// <summary>The tree view delete.</summary>
+        TreeViewDelete,
+
         /// <summary>The main level.</summary>
-        MainLevel,
-
-        /// <summary>The block drill.</summary>
-        BlockDrill,
-
-        /// <summary>The circle mill.</summary>
-        CircleMill,
-
-        /// <summary>The contour.</summary>
-        Contour,
-
-        /// <summary>The drill.</summary>
-        Drill,
-
-        /// <summary>The engrave.</summary>
-        Engrave,
-
-        /// <summary>The helix bore.</summary>
-        HelixBore,
-
-        /// <summary>The pocket.</summary>
-        Pocket,
-
-        /// <summary>The slot mill.</summary>
-        SlotMill,
-
-        /// <summary>The thread mill.</summary>
-        ThreadMill,
-
-        /// <summary>The nesting operation.</summary>
-        NestingOperation,
+        MainLevel
     }
 
     /// <summary>The globals.</summary>

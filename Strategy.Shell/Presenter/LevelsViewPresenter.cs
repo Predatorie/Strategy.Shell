@@ -177,7 +177,7 @@ namespace Strategy.Shell.Presenter
             this.LoadImages();
 
             // Create the top node
-            var mainNode = new TreeNode(LocalizationStrings.MainLevelsNode, (int)LevelsTreeIconIndex.MainLevel, (int)LevelsTreeIconIndex.MainLevel)
+            var mainNode = new TreeNode(LocalizationStrings.MainLevelsNode, (int)TreeIconIndex.MainLevel, (int)TreeIconIndex.MainLevel)
             {
                 NodeFont = new Font(this.view.Tree.Font, FontStyle.Bold),
                 Tag = "main"
@@ -311,8 +311,8 @@ namespace Strategy.Shell.Presenter
             // Load the images in an ImageList.
             var list = new ImageList();
 
-            // NOTE: Sync order with Operations Tree enum in Globals.cs
-            list.Images.Add(Resource.MainLevel);
+            // NOTE: Sync order with Tree enum in Globals.cs
+            list.Images.Add(Resource.Operations);
             list.Images.Add(Resource.BlockDrill);
             list.Images.Add(Resource.CircleMill);
             list.Images.Add(Resource.Contour);
@@ -320,11 +320,20 @@ namespace Strategy.Shell.Presenter
             list.Images.Add(Resource.Engrave);
             list.Images.Add(Resource.HelixBore);
             list.Images.Add(Resource.Pocket);
+            list.Images.Add(Resource.Save);
+            list.Images.Add(Resource.SaveAs);
+            list.Images.Add(Resource.NewStrategy);
             list.Images.Add(Resource.SlotMill);
             list.Images.Add(Resource.ThreadMill);
             list.Images.Add(Resource.NestingOperation);
+            list.Images.Add(Resource.millFlat);
+            list.Images.Add(Resource.OperationGroup);
+            list.Images.Add(Resource.Arrow);
+            list.Images.Add(Resource.Arrow2);
+            list.Images.Add(Resource.Params);
             list.Images.Add(Resource.Tree_View_Add);
             list.Images.Add(Resource.Tree_View_Delete);
+            list.Images.Add(Resource.MainLevel);
 
             this.view.Tree.ImageList = list;
         }

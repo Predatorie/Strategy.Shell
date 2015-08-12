@@ -29,20 +29,32 @@
         private void InitializeComponent()
         {
             this.LevelsTree = new System.Windows.Forms.TreeView();
+            this.ToolbarButtonPanelRegion = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // LevelsTree
             // 
-            this.LevelsTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LevelsTree.Location = new System.Drawing.Point(0, 0);
+            this.LevelsTree.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LevelsTree.Location = new System.Drawing.Point(0, 51);
             this.LevelsTree.Name = "LevelsTree";
-            this.LevelsTree.Size = new System.Drawing.Size(349, 472);
+            this.LevelsTree.Size = new System.Drawing.Size(349, 421);
             this.LevelsTree.TabIndex = 0;
+            // 
+            // ToolbarButtonPanelRegion
+            // 
+            this.ToolbarButtonPanelRegion.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ToolbarButtonPanelRegion.Location = new System.Drawing.Point(0, 0);
+            this.ToolbarButtonPanelRegion.Name = "ToolbarButtonPanelRegion";
+            this.ToolbarButtonPanelRegion.Size = new System.Drawing.Size(349, 45);
+            this.ToolbarButtonPanelRegion.TabIndex = 2;
             // 
             // LevelsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.ToolbarButtonPanelRegion);
             this.Controls.Add(this.LevelsTree);
             this.Name = "LevelsView";
             this.Size = new System.Drawing.Size(349, 472);
@@ -53,5 +65,6 @@
         #endregion
 
         private System.Windows.Forms.TreeView LevelsTree;
+        private System.Windows.Forms.Panel ToolbarButtonPanelRegion;
     }
 }

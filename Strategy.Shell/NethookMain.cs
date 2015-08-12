@@ -71,15 +71,19 @@ namespace Strategy.Shell
             var fileManagerService = new FileManagerService();
 
             // Create all our toolbar buttons
-            var toolbarCommands = new List<IToolbarCommand>
+            var operationscommands = new List<IToolbarCommand>
                                {
-                                   new OpenOperationsCommand(eventAggregator, fileBrowserService),
-                                   new ScanLevelCommand(eventAggregator, fileBrowserService),
-                                   new OpenPartLevelsCommand(eventAggregator, fileBrowserService),
-                                   new AddLevelCommand(eventAggregator),
-                                   new RemoveLevelCommand(eventAggregator),
-                                   new SaveLevelsCommand(eventAggregator)
+                                   new OpenOperationsCommand(eventAggregator, fileBrowserService)
                                };
+
+            var levelscommands = new List<IToolbarCommand>
+                                     {
+                                        new ScanLevelCommand(eventAggregator, fileBrowserService),
+                                        new OpenPartLevelsCommand(eventAggregator, fileBrowserService),
+                                        new AddLevelCommand(eventAggregator),
+                                        new RemoveLevelCommand(eventAggregator),
+                                        new SaveLevelsCommand(eventAggregator)
+                                     };
 
             var buttonCommands = new List<IButtonsCommand>
             {
@@ -87,7 +91,7 @@ namespace Strategy.Shell
                                      };
 
             // The ShellView is responsible for creating all child views and view presenters
-            var shellView = new ShellView(msgBoxService, fileBrowserService, eventAggregator, toolbarCommands, fileManagerService, buttonCommands);
+            var shellView = new ShellView(msgBoxService, fileBrowserService, eventAggregator, operationscommands, levelscommands, fileManagerService, buttonCommands);
 
             // Wire up the main presenter
             var presenter = new ShellViewPresenter(shellView, msgBoxService, fileBrowserService, eventAggregator, sysInfoService);

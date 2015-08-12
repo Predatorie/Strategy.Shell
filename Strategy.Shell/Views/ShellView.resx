@@ -142,37 +142,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ButtonPanelRegion.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="ToolbarButtonPanelRegion.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="ToolbarButtonPanelRegion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="ToolbarButtonPanelRegion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>734, 45</value>
-  </data>
-  <data name="ToolbarButtonPanelRegion.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;ToolbarButtonPanelRegion.Name" xml:space="preserve">
-    <value>ToolbarButtonPanelRegion</value>
-  </data>
-  <data name="&gt;&gt;ToolbarButtonPanelRegion.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ToolbarButtonPanelRegion.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;ToolbarButtonPanelRegion.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="ShellContainer.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="ShellContainer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 45</value>
+    <value>0, 0</value>
   </data>
   <data name="&gt;&gt;ShellContainer.Panel1.Name" xml:space="preserve">
     <value>ShellContainer.Panel1</value>
@@ -199,7 +175,7 @@
     <value>1</value>
   </data>
   <data name="ShellContainer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>734, 336</value>
+    <value>734, 381</value>
   </data>
   <data name="ShellContainer.SplitterDistance" type="System.Int32, mscorlib">
     <value>361</value>

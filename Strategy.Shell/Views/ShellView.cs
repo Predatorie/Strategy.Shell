@@ -28,7 +28,9 @@ namespace Strategy.Shell.Views
         private readonly ButtonBarView buttonBarView;
 
         /// <summary>The toolbar button view.</summary>
-        private readonly ToolbarButtonView toolbarButtonView;
+        private readonly ToolbarButtonView toolbarOperationsButtonView;
+
+        private readonly ToolbarButtonView toolbarLevelsButtonView;
 
         /// <summary>The levels view.</summary>
         private readonly LevelsView levelsView;
@@ -49,17 +51,22 @@ namespace Strategy.Shell.Views
         /// <param name="msgBoxService">The msg Box Service.</param>
         /// <param name="fileBrowserService">The file Browser Service.</param>
         /// <param name="eventAggregator">The event Aggregator.</param>
-        /// <param name="commands"></param>
+        /// <param name="operationscommands"></param>
+        /// <param name="levelscommands"></param>
         /// <param name="fileManagerService"></param>
         /// <param name="buttonsCommands"></param>
         public ShellView(IMessageBoxService msgBoxService, IFileBrowserService fileBrowserService, IEventAggregator eventAggregator,
-            List<IToolbarCommand> commands, IFileManagerService fileManagerService, List<IButtonsCommand> buttonsCommands)
+            List<IToolbarCommand> operationscommands, List<IToolbarCommand> levelscommands, IFileManagerService fileManagerService, List<IButtonsCommand> buttonsCommands)
         {
             this.InitializeComponent();
 
             // Wire up our view presenters
-            var toolbarView = new ToolbarButtonView { Dock = DockStyle.Fill };
-            var toolbarViewPresenter = new ToolbarViewPresenter(toolbarView, commands);
+            var toolbarOperationsView = new ToolbarButtonView { Dock = DockStyle.Top };
+            var toolbarViewPresenter = new ToolbarViewPresenter(toolbarOperationsView, operationscommands);
+
+            var toolbarLevelsView = new ToolbarButtonView { Dock = DockStyle.Top };
+            var toolbarLevelsViewPresenter = new ToolbarViewPresenter(toolbarLevelsView, levelscommands);
+
 
             var buttonView = new ButtonBarView { Dock = DockStyle.Fill };
             var buttonViewPresenter = new ButtonBarViewPresenter(buttonView, buttonsCommands);
@@ -72,7 +79,8 @@ namespace Strategy.Shell.Views
 
             // Wire up the views
             this.buttonBarView = buttonView;
-            this.toolbarButtonView = toolbarView;
+            this.toolbarOperationsButtonView = toolbarOperationsView;
+            this.toolbarLevelsButtonView = toolbarLevelsView;
             this.levelsView = levelView;
             this.operationsView = opsView;
 
@@ -97,7 +105,7 @@ namespace Strategy.Shell.Views
         public IOperationsView OperationsView => this.operationsView;
 
         /// <summary>Gets the toolbar button view.</summary>
-        public IToolbarButtonView ToolbarButtonView => this.toolbarButtonView;
+        public IToolbarButtonView ToolbarButtonView => this.toolbarOperationsButtonView;
 
         /// <summary>
         /// Returns the handle to this form, usefull for setting modal dialogs to this form
@@ -111,11 +119,13 @@ namespace Strategy.Shell.Views
         /// <summary>The inject views.</summary>
         private void InjectViews()
         {
+            this.ShellContainer.Panel1.Controls.Add(this.toolbarOperationsButtonView);
             this.ShellContainer.Panel1.Controls.Add(this.operationsView);
+
+            this.ShellContainer.Panel2.Controls.Add(this.toolbarLevelsButtonView);
             this.ShellContainer.Panel2.Controls.Add(this.levelsView);
 
             this.ButtonPanelRegion.Controls.Add(this.buttonBarView);
-            this.ToolbarButtonPanelRegion.Controls.Add(this.toolbarButtonView);
         }
 
         /// <summary>
