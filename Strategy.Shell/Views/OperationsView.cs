@@ -2,11 +2,7 @@
 // <copyright file="OperationsView.cs" company="Mick George @Osoy">
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
-// <summary>
-//   The operations view.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace Strategy.Shell.Views
 {
     using System;
@@ -14,12 +10,12 @@ namespace Strategy.Shell.Views
 
     using Interfaces;
 
-    /// <summary>The operations view.</summary>
+    /// <summary>The operations view.</summary> 
     public partial class OperationsView : UserControl, IOperationsView, IViewBase
     {
         #region Construction
 
-        /// <summary>Initializes a new instance of the <see cref="OperationsView"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="OperationsView"/> class.</summary>       
         public OperationsView()
         {
             this.InitializeComponent();
@@ -38,12 +34,16 @@ namespace Strategy.Shell.Views
         /// <summary>The selection changed.</summary>
         public event EventHandler SelectionChanged;
 
+        /// <summary>The view load.</summary>
         public event EventHandler ViewLoad;
 
+        /// <summary>The operation drag enter.</summary>
         public event EventHandler OperationDragEnter;
 
+        /// <summary>The operation drag drop.</summary>
         public event EventHandler OperationDragDrop;
 
+        /// <summary>The operation drag.</summary>
         public event EventHandler OperationDrag;
 
         #endregion
@@ -55,6 +55,7 @@ namespace Strategy.Shell.Views
 
         // public TreeNode MainTreeNode => this.OperationsTreeView.TopNode;
 
+        /// <summary>The tree.</summary>
         public TreeView Tree => this.OperationsTreeView;
 
         #endregion
@@ -78,24 +79,29 @@ namespace Strategy.Shell.Views
             var handler = this.SelectionChanged;
             handler?.Invoke(this, EventArgs.Empty);
         }
+
+        /// <summary>The on view load.</summary>
         protected virtual void OnViewLoad()
         {
             var handler = this.ViewLoad;
             handler?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>The on operation drag.</summary>
         protected virtual void OnOperationDrag()
         {
             var handler = this.OperationDrag;
             handler?.Invoke(this, (ItemDragEventArgs)EventArgs.Empty);
         }
 
+        /// <summary>The on operation drag enter.</summary>
         protected virtual void OnOperationDragEnter()
         {
             var handler = this.OperationDragEnter;
             handler?.Invoke(this, (ItemDragEventArgs)EventArgs.Empty);
         }
 
+        /// <summary>The on operation drag drop.</summary>
         protected virtual void OnOperationDragDrop()
         {
             var handler = this.OperationDragDrop;

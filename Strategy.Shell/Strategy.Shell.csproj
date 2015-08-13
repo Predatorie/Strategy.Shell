@@ -57,6 +57,14 @@
     <Reference Include="NETHook3_0">
       <HintPath>E:\Program Files\mcamx9\NETHook3_0.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Extensions.Conventions, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Extensions.Conventions.3.2.0.0\lib\net45-full\Ninject.Extensions.Conventions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Reactive.EventAggregator, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Reactive.EventAggregator.2.0.0\lib\net45\Reactive.EventAggregator.dll</HintPath>
       <Private>True</Private>
@@ -126,6 +134,7 @@
     <Compile Include="Models\Ilevels.cs" />
     <Compile Include="Models\IStrategy.cs" />
     <Compile Include="Models\Levels.cs" />
+    <Compile Include="Models\ShellModules.cs" />
     <Compile Include="Models\Strategy.cs" />
     <Compile Include="NethookMain.cs" />
     <Compile Include="Operations\IMastercamOperation.cs" />
@@ -288,8 +297,9 @@ copy "$(TargetDir)\Reactive.EventAggregator.dll" "$(mcam)\chooks\Strategist\"
 copy "$(TargetDir)\System.Reactive.Core.dll" "$(mcam)\chooks\Strategist\"
 copy "$(TargetDir)\System.Reactive.Interfaces.dll" "$(mcam)\chooks\Strategist\"
 copy "$(TargetDir)\System.Reactive.Linq.dll" "$(mcam)\chooks\Strategist\"
-copy "$(TargetDir)\System.Reactive.PlatformServices.dll" "$(mcam)\chooks\Strategist\"
-copy "$(TargetDir)\app.config" "$(mcam)\chooks\Strategist\"</PostBuildEvent>
+copy "$(TargetDir)\app.config" "$(mcam)\chooks\Strategist\"
+copy "$(TargetDir)\Ninject.dll" "$(mcam)\chooks\Strategist\"
+copy "$(TargetDir)\Ninject.Extensions.Conventions.dll" "$(mcam)\chooks\Strategist\"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
