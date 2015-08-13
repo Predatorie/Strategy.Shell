@@ -6,10 +6,13 @@
 
 namespace Strategy.Shell.Models
 {
+    using System.Collections.Generic;
+
     using Commands;
 
     using Interfaces;
 
+    using Ninject;
     using Ninject.Modules;
 
     using Reactive.EventAggregator;
@@ -31,12 +34,6 @@ namespace Strategy.Shell.Models
             this.Kernel.Bind<IEventAggregator>().To<EventAggregator>().InSingletonScope();
             this.Kernel.Bind<ISystemInformationService>().To<SystemInformationService>().InSingletonScope();
 
-            // Views
-            this.Kernel.Bind<IShellView>().To<ShellView>().InSingletonScope();
-            this.Kernel.Bind<IOperationsView>().To<OperationsView>().InSingletonScope();
-            this.Kernel.Bind<ILevelsView>().To<LevelsView>().InSingletonScope();
-            this.Kernel.Bind<IToolbarButtonView>().To<ToolbarButtonView>().InSingletonScope();
-
             //// TODO: Seperate out IToolbarCommand's for Operations Toolbar and Levels Toolbar
             //// TODO: so they are not duplicated across both toolbars
 
@@ -52,6 +49,31 @@ namespace Strategy.Shell.Models
 
             // Bottom buttons
             this.Kernel.Bind<IButtonsCommand>().To<CloseShellCommand>().InSingletonScope();
+
+            // Views            
+            this.Kernel.Bind<IOperationsView>().To<OperationsView>().InSingletonScope();
+            this.Kernel.Bind<ILevelsView>().To<LevelsView>().InSingletonScope();
+            this.Kernel.Bind<IToolbarButtonView>().To<ToolbarButtonView>().InSingletonScope();
+
+            ////// build our operations toolbar list
+            ////var operations = new List<IToolbarCommand> { this.Kernel.Get<OpenOperationsCommand>() };
+
+            ////// build our levels toolbar list
+            ////var levels = new List<IToolbarCommand>
+            ////                 {
+            ////                     this.Kernel.Get<ScanLevelCommand>(),
+            ////                     this.Kernel.Get<OpenPartLevelsCommand>(),
+            ////                     this.Kernel.Get<AddLevelCommand>(),
+            ////                     this.Kernel.Get<RemoveLevelCommand>(),
+            ////                     this.Kernel.Get<SaveLevelsCommand>()
+            ////                 };
+
+            ////this.Kernel.Bind<IShellView>()
+            ////    .To<ShellView>()
+            ////    .WithConstructorArgument("operationscommands", operations)
+            ////    .WithConstructorArgument("levelscommands", levels);
+
+            this.Kernel.Bind<IShellView>().To<ShellView>().InSingletonScope();
         }
     }
 }

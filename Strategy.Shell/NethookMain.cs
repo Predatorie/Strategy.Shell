@@ -5,14 +5,19 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace Strategy.Shell
 {
+    using System.Collections.Generic;
+
     using Mastercam.App;
     using Mastercam.App.Types;
 
     using Models;
 
     using Ninject;
+    using Ninject.Parameters;
 
     using Properties;
+
+    using Strategy.Shell.Commands;
 
     using Views;
 
@@ -49,7 +54,22 @@ namespace Strategy.Shell
             // Using Ninject for IoC
             using (var kernel = new StandardKernel(new ShellModules()))
             {
-                using (var shell = kernel.Get<ShellView>())
+                // build our operations toolbar list
+                var operations = new List<IToolbarCommand> { kernel.Get<OpenOperationsCommand>() };
+
+                // build our levels toolbar list
+                var levels = new List<IToolbarCommand>
+                             {
+                                 kernel.Get<ScanLevelCommand>(),
+                                 kernel.Get<OpenPartLevelsCommand>(),
+                                 kernel.Get<AddLevelCommand>(),
+                                 kernel.Get<RemoveLevelCommand>(),
+                                 kernel.Get<SaveLevelsCommand>()
+                             };
+
+                using (var shell = kernel.Get<ShellView>(
+                        new ConstructorArgument("operationscommands", operations),
+                        new ConstructorArgument("levelscommands", levels)))
                 {
                     shell.ShowDialog();
                 }
