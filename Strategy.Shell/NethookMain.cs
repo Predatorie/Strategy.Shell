@@ -7,6 +7,8 @@ namespace Strategy.Shell
 {
     using System.Collections.Generic;
 
+    using Commands;
+
     using Mastercam.App;
     using Mastercam.App.Types;
 
@@ -16,8 +18,6 @@ namespace Strategy.Shell
     using Ninject.Parameters;
 
     using Properties;
-
-    using Strategy.Shell.Commands;
 
     using Views;
 
