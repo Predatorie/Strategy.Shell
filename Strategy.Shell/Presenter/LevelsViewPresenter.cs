@@ -96,11 +96,6 @@ namespace Strategy.Shell.Presenter
         /// <param name="e">The e.</param>
         private void OnLevelDragDrop(object sender, DragEventArgs e)
         {
-            // TODO: If node originates from Operations Tree .clone() the node we are dragging
-            // TODO: but if we are moving a node within this levels tree use .remove()
-
-            // TODO: Icons are not coming over when cloning, need to sync the image lists for both trees....!
-
             var node = (TreeNode)e.Data.GetData(typeof(TreeNode));
 
             if (node?.Tag != null)
@@ -119,10 +114,15 @@ namespace Strategy.Shell.Presenter
                     // Confirm that the node at the drop location is not 
                     // the dragged node and that target node isn't null
                     // (for example if you drag outside the control)
-                    if (!draggedNode.Equals(targetNode) && targetNode != null)
+                    if (!draggedNode.Equals(targetNode) && targetNode != null && targetNode.Tag.GetType() != typeof(MastercamOperation))
                     {
-                        // TODO: draggedNode.Remove();
                         var clone = (TreeNode)draggedNode.Clone();
+
+                        // If we moving delete the original node
+                        if (e.Effect == DragDropEffects.Move)
+                        {
+                            draggedNode.Remove();
+                        }
 
                         targetNode.Nodes.Add(clone);
 
@@ -138,8 +138,12 @@ namespace Strategy.Shell.Presenter
         /// <param name="e">The e.</param>
         private void OnLevelDragEnter(object sender, DragEventArgs e)
         {
-            // TODO: If coming from operations we are copying else we are moving
-            e.Effect = DragDropEffects.Copy;
+            var draggedNode = (TreeNode)e.Data.GetData(typeof(TreeNode));
+
+            if (draggedNode.Parent?.Parent != null)
+            {
+                e.Effect = draggedNode.Parent.Parent.Text == LocalizationStrings.MainNode ? DragDropEffects.Copy : DragDropEffects.Move;
+            }
         }
 
         /// <summary>The on level item drag.</summary>
@@ -149,12 +153,14 @@ namespace Strategy.Shell.Presenter
         {
             // Only allow the operation node to be draggable
             var item = (TreeNode)e.Item;
-            if (item?.Tag == null || item.Tag.ToString() != "level")
-            {
-                return;
-            }
 
-            this.view.Tree.DoDragDrop(e.Item, DragDropEffects.Move);
+            if (item.Parent?.Parent != null)
+            {
+                if (item.Parent?.Parent.Text == LocalizationStrings.MainLevelsNode)
+                {
+                    this.view.Tree.DoDragDrop(e.Item, DragDropEffects.Move);
+                }
+            }
         }
 
         /// <summary>The levels view on selection changed.</summary>

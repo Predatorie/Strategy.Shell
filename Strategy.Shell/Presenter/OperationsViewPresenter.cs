@@ -77,7 +77,7 @@ namespace Strategy.Shell.Presenter
 
         private void OnOperationDragDrop(object sender, DragEventArgs e)
         {
-            // TODO: Add code to handle drop
+            e.Effect = DragDropEffects.None;
         }
 
         private void OnOperationDragEnter(object sender, DragEventArgs e)
