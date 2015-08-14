@@ -114,7 +114,7 @@ namespace Strategy.Shell.Presenter
                     // Confirm that the node at the drop location is not 
                     // the dragged node and that target node isn't null
                     // (for example if you drag outside the control)
-                    if (!draggedNode.Equals(targetNode) && targetNode != null && targetNode.Tag.GetType() != typeof(MastercamOperation))
+                    if (!draggedNode.Equals(targetNode) && targetNode != null && targetNode.Tag?.GetType() != typeof(MastercamOperation))
                     {
                         var clone = (TreeNode)draggedNode.Clone();
 
