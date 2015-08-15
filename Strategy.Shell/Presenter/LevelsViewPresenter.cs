@@ -3,6 +3,7 @@
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace Strategy.Shell.Presenter
 {
     using System;
@@ -12,23 +13,17 @@ namespace Strategy.Shell.Presenter
     using System.Linq;
     using System.Windows.Forms;
 
-    using Events;
-
-    using FunctionTable;
-
-    using Interfaces;
-
-    using Localization;
-
     using Mastercam.IO;
-
-    using Models;
 
     using Reactive.EventAggregator;
 
-    using Services;
-
+    using Strategy.Shell.Events;
+    using Strategy.Shell.FunctionTable;
+    using Strategy.Shell.Interfaces;
+    using Strategy.Shell.Localization;
+    using Strategy.Shell.Models;
     using Strategy.Shell.Operations;
+    using Strategy.Shell.Services;
 
     /// <summary>The levels view presenter.</summary>
     public class LevelsViewPresenter
@@ -50,6 +45,9 @@ namespace Strategy.Shell.Presenter
         /// <summary>The event aggregator.</summary>
         private readonly IEventAggregator eventAggregator;
 
+        /// <summary>The strategy service.</summary>
+        private readonly IStrategyService strategyService;
+
         #endregion
 
         #region Construction
@@ -60,18 +58,21 @@ namespace Strategy.Shell.Presenter
         /// <param name="fileBrowserService">The file browser service.</param>
         /// <param name="eventAggregator">The event aggregator.</param>
         /// <param name="fileManagerService">The file Manager Service.</param>
+        /// <param name="strategyService"></param>
         public LevelsViewPresenter(
-            ILevelsView view,
-            IMessageBoxService msgBoxService,
-            IFileBrowserService fileBrowserService,
-            IEventAggregator eventAggregator,
-            IFileManagerService fileManagerService)
+            ILevelsView view, 
+            IMessageBoxService msgBoxService, 
+            IFileBrowserService fileBrowserService, 
+            IEventAggregator eventAggregator, 
+            IFileManagerService fileManagerService, 
+            IStrategyService strategyService)
         {
             // Wire up our services
             this.msgBoxService = msgBoxService;
             this.fileBrowserService = fileBrowserService;
             this.fileManagerService = fileManagerService;
             this.eventAggregator = eventAggregator;
+            this.strategyService = strategyService;
 
             this.view = view;
             view.ViewLoad += this.LevelsViewOnViewLoad;
@@ -85,11 +86,53 @@ namespace Strategy.Shell.Presenter
             this.eventAggregator.GetEvent<AddLevelMessage>().Subscribe(this.OnAddLevel);
             this.eventAggregator.GetEvent<RemoveLevelMessage>().Subscribe(this.OnRemoveLevel);
             this.eventAggregator.GetEvent<OpenPartMessage>().Subscribe(this.OnOpenParts);
+            this.eventAggregator.GetEvent<SaveStrategyMessage>().Subscribe(this.OnSaveStrategyEvent);
+            this.eventAggregator.GetEvent<OpenStrategyMessage>().Subscribe(this.OnLoadStrategyEvent);
         }
 
         #endregion
 
         #region Event Handlers
+
+        /// <summary>The on save strategy event.</summary>
+        /// <param name="e">The e.</param>
+        private void OnSaveStrategyEvent(SaveStrategyMessage e)
+        {
+            var nodes = this.view.Tree.Nodes[0].Nodes;
+
+            if (nodes.Count > 1)
+            {
+                var strategy = new Strategy { Name = e.Name };
+
+                // Iterate each level
+                foreach (TreeNode level in nodes)
+                {
+                    var mapping = new MappedLevel { Name = level.Text };
+
+                    var operations = level.Nodes;
+                    if (operations.Count > 0)
+                    {
+                        // Iterate each operation for this level
+                        foreach (TreeNode operation in operations)
+                        {
+                            mapping.Operations.Add(operation.Text);
+                        }
+                    }
+
+                    strategy.MappedLevels.Add(mapping);
+                }
+
+                // Serialize the strategy to disk
+                this.strategyService.Serialize(strategy);
+            }
+        }
+
+        /// <summary>The on load strategy event.</summary>
+        /// <param name="e">The e.</param>
+        private void OnLoadStrategyEvent(OpenStrategyMessage e)
+        {
+            //// Load strategy into the tree
+        }
 
         /// <summary>The on level drag drop.</summary>
         /// <param name="sender">The sender.</param>
@@ -185,7 +228,7 @@ namespace Strategy.Shell.Presenter
             // Create the top node
             var mainNode = new TreeNode(LocalizationStrings.MainLevelsNode, (int)TreeIconIndex.MainLevel, (int)TreeIconIndex.MainLevel)
             {
-                NodeFont = new Font(this.view.Tree.Font, FontStyle.Bold),
+                NodeFont = new Font(this.view.Tree.Font, FontStyle.Bold), 
                 Tag = "main"
             };
 

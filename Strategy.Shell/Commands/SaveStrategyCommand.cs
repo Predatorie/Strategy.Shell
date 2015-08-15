@@ -1,16 +1,10 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="OpenLevelsCommand.cs" company="Mick George @Osoy">
+// <copyright file="SaveStrategyCommand.cs" company="Mick George @Osoy">
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
-// <summary>
-//   Defines the OpenLevelsFileCommand type.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace Strategy.Shell.Commands
 {
-    using System.Linq;
-
     using Events;
 
     using FunctionTable;
@@ -21,8 +15,8 @@ namespace Strategy.Shell.Commands
 
     using Services;
 
-    /// <summary>The open levels file command.</summary>
-    public class OpenLevelsCommand : CommandBase
+    /// <summary>The save strategy command.</summary>
+    public class SaveStrategyCommand : CommandBase
     {
         /// <summary>The event aggregator.</summary>
         private readonly IEventAggregator eventAggregator;
@@ -30,30 +24,31 @@ namespace Strategy.Shell.Commands
         /// <summary>The file browser service.</summary>
         private readonly IFileBrowserService fileBrowserService;
 
-        /// <summary>Initializes a new instance of the <see cref="OpenLevelsCommand"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="SaveStrategyCommand"/> class.</summary>
         /// <param name="eventAggregator">The event aggregator.</param>
-        /// <param name="fileBrowserService">The file browser service.</param>
-        public OpenLevelsCommand(IEventAggregator eventAggregator, IFileBrowserService fileBrowserService)
+        /// <param name="fileBrowserService">The file Browser Service.</param>
+        public SaveStrategyCommand(IEventAggregator eventAggregator, IFileBrowserService fileBrowserService)
         {
             this.eventAggregator = eventAggregator;
             this.fileBrowserService = fileBrowserService;
 
-            this.Icon = Resource.AddNewLevel;
-            this.ToolTip = LocalizationStrings.OpenLevels;
+            this.Icon = Resource.NewStrategy;
+            this.ToolTip = LocalizationStrings.SaveStrategy;
             this.CanExecute = true;
+
+            //// TODO: Wire up CanExecute if no levels assigned to operations
         }
 
         /// <summary>The execute.</summary>
         public override void Execute()
         {
-            var filepath = this.fileBrowserService.BrowseForFile(this.Parent, LocalizationStrings.Title, Globals.FileFilterXml, Globals.LevelsFolder, false);
-
-            if (!filepath.Any())
+            var filepath = this.fileBrowserService.SaveFile(this.Parent, LocalizationStrings.Title, Globals.FileFilterXml, Globals.StrategiesFolder);
+            if (string.IsNullOrWhiteSpace(filepath))
             {
                 return;
             }
 
-            this.eventAggregator.Publish(new OpenLevelsMessage { FilePath = filepath[0] });
+            this.eventAggregator.Publish(new SaveStrategyMessage { Name = filepath });
         }
     }
 }

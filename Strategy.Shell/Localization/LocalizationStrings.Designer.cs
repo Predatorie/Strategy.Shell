@@ -79,6 +79,15 @@ namespace Strategy.Shell.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Load Strategy.
+        /// </summary>
+        public static string LoadStrategy {
+            get {
+                return ResourceManager.GetString("LoadStrategy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LEVELS.
         /// </summary>
         public static string MainLevelsNode {
@@ -111,6 +120,15 @@ namespace Strategy.Shell.Localization {
         public static string NoOperationsLoaded {
             get {
                 return ResourceManager.GetString("NoOperationsLoaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load Levels.
+        /// </summary>
+        public static string OpenLevels {
+            get {
+                return ResourceManager.GetString("OpenLevels", resourceCulture);
             }
         }
         
@@ -174,6 +192,15 @@ namespace Strategy.Shell.Localization {
         public static string SaveLevels {
             get {
                 return ResourceManager.GetString("SaveLevels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Strategy.
+        /// </summary>
+        public static string SaveStrategy {
+            get {
+                return ResourceManager.GetString("SaveStrategy", resourceCulture);
             }
         }
         

@@ -55,8 +55,15 @@ namespace Strategy.Shell.Views
         /// <param name="levelscommands"></param>
         /// <param name="fileManagerService"></param>
         /// <param name="buttonsCommands"></param>
-        public ShellView(IMessageBoxService msgBoxService, IFileBrowserService fileBrowserService, IEventAggregator eventAggregator,
-            List<IToolbarCommand> operationscommands, List<IToolbarCommand> levelscommands, IFileManagerService fileManagerService, List<IButtonsCommand> buttonsCommands)
+        /// <param name="strategyService"></param>
+        public ShellView(IMessageBoxService msgBoxService, 
+            IFileBrowserService fileBrowserService, 
+            IEventAggregator eventAggregator,
+            List<IToolbarCommand> operationscommands, 
+            List<IToolbarCommand> levelscommands, 
+            IFileManagerService fileManagerService, 
+            List<IButtonsCommand> buttonsCommands, 
+            IStrategyService strategyService)
         {
             this.InitializeComponent();
 
@@ -72,7 +79,7 @@ namespace Strategy.Shell.Views
             var buttonViewPresenter = new ButtonBarViewPresenter(buttonView, buttonsCommands);
 
             var levelView = new LevelsView { Dock = DockStyle.Fill, Margin = new Padding(5) };
-            var levelViewPresenter = new LevelsViewPresenter(levelView, msgBoxService, fileBrowserService, eventAggregator, fileManagerService);
+            var levelViewPresenter = new LevelsViewPresenter(levelView, msgBoxService, fileBrowserService, eventAggregator, fileManagerService, strategyService);
 
             var opsView = new OperationsView { Dock = DockStyle.Fill, Margin = new Padding(5) };
             var opsViewPresenter = new OperationsViewPresenter(opsView, msgBoxService, fileBrowserService, eventAggregator);

@@ -51,7 +51,7 @@ namespace Strategy.Shell.Commands
             var libraryLocation = Path.Combine(SettingsManager.SharedDirectory, MachineDefManager.IsCurrentMachineGroupRouter() ? "router\\OPS" : "mill\\Ops");
 
             // Prompr user to select an operations library(s)
-            var operationsLib = this.fileBrowserService.BrowseForFile(this.Parent, LocalizationStrings.PromptForOperationsLibrary, Globals.FileFilterOperations, libraryLocation);
+            var operationsLib = this.fileBrowserService.BrowseForFile(this.Parent, LocalizationStrings.PromptForOperationsLibrary, Globals.FileFilterOperations, libraryLocation, true);
 
             if (!operationsLib.Any())
             {

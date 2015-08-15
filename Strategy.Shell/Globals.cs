@@ -3,74 +3,77 @@
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace Strategy.Shell
 {
+    using System.IO;
+
+    using Mastercam.IO;
+
     /// <summary>The toolbar icon.</summary>
     public enum TreeIconIndex
     {
         /// <summary>The operations.</summary>
-        Operations = 0,
+        Operations = 0, 
 
         /// <summary>The block drill.</summary>
-        BlockDrill,
+        BlockDrill, 
 
         /// <summary>The circle mill.</summary>
-        CircleMill,
+        CircleMill, 
 
         /// <summary>The contour.</summary>
-        Contour,
+        Contour, 
 
         /// <summary>The drill.</summary>
-        Drill,
+        Drill, 
 
         /// <summary>The engrave.</summary>
-        Engrave,
+        Engrave, 
 
         /// <summary>The helix bore.</summary>
-        HelixBore,
+        HelixBore, 
 
         /// <summary>The pocket.</summary>
-        Pocket,
+        Pocket, 
 
         /// <summary>The save.</summary>
-        Save,
+        Save, 
 
         /// <summary>The save as.</summary>
-        SaveAs,
+        SaveAs, 
 
         /// <summary>The new strategy.</summary>
-        NewStrategy,
+        NewStrategy, 
 
         /// <summary>The slot mill.</summary>
-        SlotMill,
+        SlotMill, 
 
         /// <summary>The thread mill.</summary>
-        ThreadMill,
+        ThreadMill, 
 
         /// <summary>The nesting operation.</summary>
-        NestingOperation,
+        NestingOperation, 
 
         /// <summary>The mill flat.</summary>
-        MillFlat,
+        MillFlat, 
 
         /// <summary>The operation group.</summary>
-        OperationGroup,
+        OperationGroup, 
 
         /// <summary>The filler.</summary>
-        Arrow,
+        Arrow, 
 
         /// <summary>The arrow 2.</summary>
-        Arrow2,
+        Arrow2, 
 
         /// <summary>The params.</summary>
-        Params,
+        Params, 
 
         /// <summary>The tree view add.</summary>
-        TreeViewAdd,
+        TreeViewAdd, 
 
         /// <summary>The tree view delete.</summary>
-        TreeViewDelete,
+        TreeViewDelete, 
 
         /// <summary>The main level.</summary>
         MainLevel
@@ -92,6 +95,18 @@ namespace Strategy.Shell
         /// </summary>
         public const string FileFilterDrawings = "(*.dxf)|*.dxf";
 
+        /// <summary>The file filter xml.</summary>
+        public const string FileFilterXml = "(*.xml)|*.xml";
+
         #endregion
+
+        /// <summary>The strategy folder.</summary>
+        public static readonly string StrategiesFolder = Path.Combine(SettingsManager.SharedDirectory, "ATP\\Strategies");
+
+        /// <summary>The levels folder.</summary>
+        public static readonly string LevelsFolder = Path.Combine(SettingsManager.SharedDirectory, "ATP\\Levels");
+
+        /// <summary>The definitions folder.</summary>
+        public static readonly string DefinitionsFolder = Path.Combine(SettingsManager.SharedDirectory, "ATP\\Definitions");
     }
 }

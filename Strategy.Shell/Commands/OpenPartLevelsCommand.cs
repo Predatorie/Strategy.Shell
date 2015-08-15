@@ -50,7 +50,8 @@ namespace Strategy.Shell.Commands
                 this.Parent,
                 LocalizationStrings.Title,
                 Globals.FileFilterDrawings,
-                Mastercam.IO.SettingsManager.SharedDirectory);
+                Mastercam.IO.SettingsManager.SharedDirectory,
+                true);
 
             if (file.Any())
             {

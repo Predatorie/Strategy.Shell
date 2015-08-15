@@ -100,10 +100,14 @@
     <Compile Include="Commands\ICommandBase.cs" />
     <Compile Include="Commands\IButtonsCommand.cs" />
     <Compile Include="Commands\IToolbarCommand.cs" />
+    <Compile Include="Commands\OpenStrategyCommand.cs" />
+    <Compile Include="Commands\SaveStrategyCommand.cs" />
     <Compile Include="Events\LevelSelectedMessage.cs" />
     <Compile Include="Commands\OpenLevelsCommand.cs" />
     <Compile Include="Commands\OpenOperationsCommand.cs" />
     <Compile Include="Commands\OpenPartLevelsCommand.cs" />
+    <Compile Include="Events\OpenLevelsMessage.cs" />
+    <Compile Include="Events\OpenStrategyMessage.cs" />
     <Compile Include="Events\OperationSelectedMessage.cs" />
     <Compile Include="Commands\RemoveLevelCommand.cs" />
     <Compile Include="Commands\SaveLevelsCommand.cs" />
@@ -114,6 +118,7 @@
     <Compile Include="Events\RemoveLevelMessage.cs" />
     <Compile Include="Events\SaveLevelsMessage.cs" />
     <Compile Include="Events\OperationsLibraryLoadMessage.cs" />
+    <Compile Include="Events\SaveStrategyMessage.cs" />
     <Compile Include="FunctionTable\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -132,8 +137,8 @@
       <DependentUpon>LocalizationStrings.resx</DependentUpon>
     </Compile>
     <Compile Include="Models\Ilevels.cs" />
-    <Compile Include="Models\IStrategy.cs" />
     <Compile Include="Models\Levels.cs" />
+    <Compile Include="Models\MappedLevel.cs" />
     <Compile Include="Models\ShellModules.cs" />
     <Compile Include="Models\Strategy.cs" />
     <Compile Include="NethookMain.cs" />
@@ -161,8 +166,10 @@
     <Compile Include="Services\IFileBrowserService.cs" />
     <Compile Include="Services\IFileManagerService.cs" />
     <Compile Include="Services\IMessageBoxService.cs" />
+    <Compile Include="Services\IStrategyService.cs" />
     <Compile Include="Services\ISystemInformationService.cs" />
     <Compile Include="Services\MessageBoxService.cs" />
+    <Compile Include="Services\StrategyService.cs" />
     <Compile Include="Services\SystemInformationService.cs" />
     <Compile Include="Views\ButtonBarView.cs">
       <SubType>UserControl</SubType>

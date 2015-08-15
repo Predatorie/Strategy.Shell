@@ -21,12 +21,13 @@ namespace Strategy.Shell.Services
         /// <param name="title">The title.</param>
         /// <param name="fileFilter">The file filter type</param>
         /// <param name="location">The Initial Directory</param>
+        /// <param name="multi">The multi.</param>
         /// <returns>The selected file pth</returns>
-        public List<string> BrowseForFile(IWin32Window parent, string title, string fileFilter, string location)
+        public List<string> BrowseForFile(IWin32Window parent, string title, string fileFilter, string location, bool multi)
         {
             using (var dlg = new OpenFileDialog())
             {
-                dlg.Multiselect = true;
+                dlg.Multiselect = multi;
                 dlg.Title = title;
                 dlg.Filter = fileFilter;
                 dlg.InitialDirectory = location;
@@ -57,6 +58,29 @@ namespace Strategy.Shell.Services
                 if (Directory.Exists(browse.SelectedPath))
                 {
                     return browse.SelectedPath;
+                }
+            }
+
+            return string.Empty;
+        }
+
+        /// <summary>The save file.</summary>
+        /// <param name="parent">The parent.</param>
+        /// <param name="title">The title.</param>
+        /// <param name="filter">The filter.</param>
+        /// <param name="initialDirectory">The initial directory.</param>
+        /// <returns>The <see cref="string"/>.</returns>
+        public string SaveFile(IWin32Window parent, string title, string filter, string initialDirectory)
+        {
+            using (var dlg = new SaveFileDialog())
+            {
+                dlg.Title = title;
+                dlg.Filter = filter;
+                dlg.InitialDirectory = initialDirectory;
+
+                if (dlg.ShowDialog(parent) == DialogResult.OK)
+                {
+                    return dlg.FileName;
                 }
             }
 

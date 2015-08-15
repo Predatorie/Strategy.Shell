@@ -68,7 +68,7 @@ namespace Strategy.Shell.Presenter
             view.Tree.AllowDrop = true;
 
             // Event subscriptions
-            this.eventAggregator.GetEvent<OperationsLibraryLoadMessage>().Subscribe(this.OnOperationsLibraryLoadEvent);
+            this.eventAggregator.GetEvent<OperationsLibraryLoadMessage>().Subscribe(this.OnOperationsLibraryLoadEvent);           
         }
 
         #endregion

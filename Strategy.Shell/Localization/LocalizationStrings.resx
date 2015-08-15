@@ -123,6 +123,9 @@
   <data name="CloseShell" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="LoadStrategy" xml:space="preserve">
+    <value>Load Strategy</value>
+  </data>
   <data name="MainLevelsNode" xml:space="preserve">
     <value>LEVELS</value>
   </data>
@@ -134,6 +137,9 @@
   </data>
   <data name="NoOperationsLoaded" xml:space="preserve">
     <value>No operations loaded</value>
+  </data>
+  <data name="OpenLevels" xml:space="preserve">
+    <value>Load Levels</value>
   </data>
   <data name="OpenOperationsLib" xml:space="preserve">
     <value>Operations</value>
@@ -155,6 +161,9 @@
   </data>
   <data name="SaveLevels" xml:space="preserve">
     <value>Save Levels</value>
+  </data>
+  <data name="SaveStrategy" xml:space="preserve">
+    <value>Save Strategy</value>
   </data>
   <data name="SelectFolder" xml:space="preserve">
     <value>Select Folder</value>

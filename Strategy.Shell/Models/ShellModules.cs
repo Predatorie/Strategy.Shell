@@ -29,9 +29,12 @@ namespace Strategy.Shell.Models
             this.Kernel.Bind<IFileManagerService>().To<FileManagerService>().InSingletonScope();
             this.Kernel.Bind<IEventAggregator>().To<EventAggregator>().InSingletonScope();
             this.Kernel.Bind<ISystemInformationService>().To<SystemInformationService>().InSingletonScope();
+            this.Kernel.Bind<IStrategyService>().To<StrategyService>().InSingletonScope();
 
             // Operation specific commands
             this.Kernel.Bind<IToolbarCommand>().To<OpenOperationsCommand>().InSingletonScope();
+            this.Kernel.Bind<IToolbarCommand>().To<SaveStrategyCommand>().InSingletonScope();
+            this.Kernel.Bind<IToolbarCommand>().To<OpenStrategyCommand>().InSingletonScope();
 
             // Levels specific commands
             this.Kernel.Bind<IToolbarCommand>().To<ScanLevelCommand>().InSingletonScope();

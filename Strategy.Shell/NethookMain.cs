@@ -55,7 +55,12 @@ namespace Strategy.Shell
             using (var kernel = new StandardKernel(new ShellModules()))
             {
                 // build our operations toolbar list
-                var operations = new List<IToolbarCommand> { kernel.Get<OpenOperationsCommand>() };
+                var operations = new List<IToolbarCommand>
+                                     {
+                                         kernel.Get<OpenOperationsCommand>(),
+                                         kernel.Get<OpenStrategyCommand>(),
+                                         kernel.Get<SaveStrategyCommand>()
+                                     };
 
                 // build our levels toolbar list
                 var levels = new List<IToolbarCommand>
