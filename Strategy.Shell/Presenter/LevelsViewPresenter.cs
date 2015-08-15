@@ -60,11 +60,11 @@ namespace Strategy.Shell.Presenter
         /// <param name="fileManagerService">The file Manager Service.</param>
         /// <param name="strategyService"></param>
         public LevelsViewPresenter(
-            ILevelsView view, 
-            IMessageBoxService msgBoxService, 
-            IFileBrowserService fileBrowserService, 
-            IEventAggregator eventAggregator, 
-            IFileManagerService fileManagerService, 
+            ILevelsView view,
+            IMessageBoxService msgBoxService,
+            IFileBrowserService fileBrowserService,
+            IEventAggregator eventAggregator,
+            IFileManagerService fileManagerService,
             IStrategyService strategyService)
         {
             // Wire up our services
@@ -98,28 +98,34 @@ namespace Strategy.Shell.Presenter
         /// <param name="e">The e.</param>
         private void OnSaveStrategyEvent(SaveStrategyMessage e)
         {
+            //// TODO: Fix the operations comment
             var nodes = this.view.Tree.Nodes[0].Nodes;
 
             if (nodes.Count > 1)
             {
-                var strategy = new Strategy { Name = e.Name };
+                var strategy = new Strategy { Name = e.Name, MappedLevels = new List<Mapping>() };
 
                 // Iterate each level
                 foreach (TreeNode level in nodes)
                 {
-                    var mapping = new MappedLevel { Name = level.Text };
-
                     var operations = level.Nodes;
                     if (operations.Count > 0)
                     {
+                        var mapping = new Mapping();
+
                         // Iterate each operation for this level
                         foreach (TreeNode operation in operations)
                         {
-                            mapping.Operations.Add(operation.Text);
+                            var op = (MastercamOperation)operation.Tag;
+
+                            // Keep the operation in sync with the lib it belongs too
+                            mapping.Comment = operation.Text;
+                            mapping.Library = op.Path;
+                            mapping.Level = level.Text;
+
+                            strategy.MappedLevels.Add(mapping);
                         }
                     }
-
-                    strategy.MappedLevels.Add(mapping);
                 }
 
                 // Serialize the strategy to disk
@@ -228,7 +234,7 @@ namespace Strategy.Shell.Presenter
             // Create the top node
             var mainNode = new TreeNode(LocalizationStrings.MainLevelsNode, (int)TreeIconIndex.MainLevel, (int)TreeIconIndex.MainLevel)
             {
-                NodeFont = new Font(this.view.Tree.Font, FontStyle.Bold), 
+                NodeFont = new Font(this.view.Tree.Font, FontStyle.Bold),
                 Tag = "main"
             };
 

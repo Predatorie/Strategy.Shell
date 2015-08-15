@@ -3,11 +3,12 @@
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace Strategy.Shell.Services
 {
     using System.IO;
-    using System.Xml.Serialization;
+    using System.Runtime.Serialization;
+    using System.Text;
+    using System.Xml;
 
     using Models;
 
@@ -20,13 +21,20 @@ namespace Strategy.Shell.Services
         {
             // TODO: Tokenize paths
 
-            // Create a new XmlSerializer instance with the type of the test class
-            var serializer = new XmlSerializer(typeof(Strategy));
-
-            // Create a new file stream to write the serialized object to a file
-            using (TextWriter writer = new StreamWriter(strategy.Name))
+            // Avoiding mutliple using's here, see-> CA2202: Do not dispose objects multiple times
+            XmlWriter xmlWriter = null;
+            try
             {
-                serializer.Serialize(writer, typeof(Strategy));
+                xmlWriter = XmlWriter.Create(strategy.Name, new XmlWriterSettings { Encoding = Encoding.UTF8, CloseOutput = false, Indent = true });
+                using (var dictionaryWriter = XmlDictionaryWriter.CreateDictionaryWriter(xmlWriter))
+                {
+                    var serializer = new DataContractSerializer(typeof(Strategy));
+                    serializer.WriteObject(dictionaryWriter, strategy);
+                }
+            }
+            finally
+            {
+                xmlWriter?.Dispose();
             }
         }
 
@@ -35,11 +43,19 @@ namespace Strategy.Shell.Services
         /// <returns>The <see cref="Strategy"/>.</returns>
         public Strategy Deserialize(string filepath)
         {
-            //// TODO: Tokenize paths
-            var serializer = new XmlSerializer(typeof(Strategy));
-            using (var reader = new FileStream(filepath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            Stream stream = null;
+            try
             {
-                return (Strategy)serializer.Deserialize(reader);
+                stream = new FileStream(filepath, FileMode.Open, FileAccess.Read, FileShare.Read);
+                using (var xmlReader = XmlDictionaryReader.CreateTextReader(stream, new XmlDictionaryReaderQuotas()))
+                {
+                    var serializer = new DataContractSerializer(typeof(Strategy));
+                    return serializer.ReadObject(xmlReader) as Strategy;
+                }
+            }
+            finally
+            {
+                stream?.Dispose();
             }
         }
     }

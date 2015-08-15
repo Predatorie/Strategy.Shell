@@ -138,7 +138,7 @@
     </Compile>
     <Compile Include="Models\Ilevels.cs" />
     <Compile Include="Models\Levels.cs" />
-    <Compile Include="Models\MappedLevel.cs" />
+    <Compile Include="Models\Mapping.cs" />
     <Compile Include="Models\ShellModules.cs" />
     <Compile Include="Models\Strategy.cs" />
     <Compile Include="NethookMain.cs" />

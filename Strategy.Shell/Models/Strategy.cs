@@ -3,31 +3,22 @@
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace Strategy.Shell.Models
 {
     using System.Collections.Generic;
-    using System.Xml.Serialization;
+    using System.Runtime.Serialization;
 
     /// <summary>The strategy.</summary>
-    [XmlRoot("STRATEGY")]
+    [DataContract(Name = "Strategy", Namespace = "")]
     public class Strategy 
     {
-        /// <summary>Initializes a new instance of the <see cref="Strategy"/> class.</summary>
-        public Strategy()
-        {
-            this.MappedLevels = new List<MappedLevel>();
-        }
-
-        /// <summary>Gets or sets the version.</summary>
-        [XmlElement]
-        public string Version => "2014";
-
-        /// <summary>Gets or sets the name.</summary>
-        [XmlElement]
+        /// <summary>Gets or sets the name of this strategy.</summary>
+        [DataMember(Name = "Name")]
         public string Name { get; set; }
 
-        /// <summary>Gets or sets the mapped levels.</summary>
-        [XmlArrayItem("MAPS")]
-        public List<MappedLevel> MappedLevels { get; set; }
+        /// <summary>Gets or sets the list of mapped levels + operations.</summary>
+        [DataMember(Name = "Maps")]
+        public List<Mapping> MappedLevels { get; set; }
     }
 }
