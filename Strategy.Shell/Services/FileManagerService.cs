@@ -16,7 +16,7 @@ namespace Strategy.Shell.Services
         /// <summary>The save strategy.</summary>
         /// <param name="filepath">The filepath.</param>
         /// <param name="o">The payload to serialize</param>
-        public void WriteObject(string filepath, object o)
+        public void WriteObject<T>(string filepath, T o)
         {
             // Avoiding mutliple using's here, see-> CA2202: Do not dispose objects multiple times
             XmlWriter xmlWriter = null;

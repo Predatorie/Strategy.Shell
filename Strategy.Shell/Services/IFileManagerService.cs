@@ -8,10 +8,11 @@ namespace Strategy.Shell.Services
     /// <summary>The FileManagerService interface.</summary>
     public interface IFileManagerService
     {
-        /// <summary>The save.</summary>
+        /// <summary>The write object.</summary>
         /// <param name="filepath">The filepath.</param>
-        /// <param name="o">The o.</param>
-        void WriteObject(string filepath, object o);
+        /// <param name="o">The payload.</param>
+        /// <typeparam name="T">The type</typeparam>
+        void WriteObject<T>(string filepath, T o);
 
         /// <summary>Reads the file to de-serialize</summary>
         /// <typeparam name="T">The type to de-serialize</typeparam>

@@ -7,6 +7,7 @@
 namespace Strategy.Shell.Models
 {
     using System.Runtime.Serialization;
+    using System.Windows.Forms;
 
     /// <summary>The mapped levels.</summary>
     [DataContract(Name = "Mapping", Namespace = "")]

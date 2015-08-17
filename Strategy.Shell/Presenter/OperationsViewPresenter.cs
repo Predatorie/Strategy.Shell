@@ -43,6 +43,8 @@ namespace Strategy.Shell.Presenter
         /// <summary>The event aggregator.</summary>
         private readonly IEventAggregator eventAggregator;
 
+        private readonly IStrategyService strategyService;
+
         #endregion
 
         #region Construction
@@ -52,12 +54,18 @@ namespace Strategy.Shell.Presenter
         /// <param name="msgBoxService">The msg box service.</param>
         /// <param name="fileBrowserService">The file browser service.</param>
         /// <param name="eventAggregator">The event aggregator.</param>
-        public OperationsViewPresenter(IOperationsView view, IMessageBoxService msgBoxService, IFileBrowserService fileBrowserService, IEventAggregator eventAggregator)
+        /// <param name="strategyService">The Strategy Service</param>
+        public OperationsViewPresenter(IOperationsView view,
+            IMessageBoxService msgBoxService,
+            IFileBrowserService fileBrowserService,
+            IEventAggregator eventAggregator,
+            IStrategyService strategyService)
         {
             // Wire up our services
             this.msgBoxService = msgBoxService;
             this.fileBrowserService = fileBrowserService;
             this.eventAggregator = eventAggregator;
+            this.strategyService = strategyService;
 
             this.view = view;
             view.ViewLoad += this.OperationsViewOnViewLoad;
@@ -68,7 +76,7 @@ namespace Strategy.Shell.Presenter
             view.Tree.AllowDrop = true;
 
             // Event subscriptions
-            this.eventAggregator.GetEvent<OperationsLibraryLoadMessage>().Subscribe(this.OnOperationsLibraryLoadEvent);           
+            this.eventAggregator.GetEvent<OperationsLibraryLoadMessage>().Subscribe(this.OnOperationsLibraryLoadEvent);
         }
 
         #endregion
@@ -102,159 +110,15 @@ namespace Strategy.Shell.Presenter
         /// <summary> This event handles loading of the treeview for all operation files selected</summary>
         private void OnOperationsLibraryLoadEvent(OperationsLibraryLoadMessage e)
         {
-            var totalOperations = 0;
-
-            // Iterate all libraries
-            foreach (var lib in e.Libraries)
+            var nodes = this.strategyService.LoadOperationData(e.Libraries);
+            if (nodes != null)
             {
+                // Append nodes to the parent node
+                this.view.Tree.Nodes[0].Nodes.Add(nodes);
+
                 FileManager.New(false);
-                if (FileManager.Open(lib))
-                {
-                    var operations = SearchManager.GetOperations();
-                    if (operations.Any())
-                    {
-                        var nodes = new List<TreeNode>();
-                        var counter = 0;
-
-                        // Only supported operations and those with a valid tool
-                        foreach (var operation in operations.Where(operation => this.OperationTypeSupported(operation.Type) & operation.OperationTool != null))
-                        {
-                            totalOperations++;
-
-                            var thisOperation = new MastercamOperation
-                            {
-                                Operation = operation,
-                                Path = Path.GetFullPath(lib),
-                                OperationType = operation.Type,
-                                Name = Path.GetFileName(lib)
-                            };
-
-                            // Operation Information TODO: Localize
-                            var linkingDepth = new TreeNode("Depth = " + operation.Linking.Depth, (int)TreeIconIndex.Arrow2, (int)TreeIconIndex.Arrow2);
-                            var linkingClearance = new TreeNode("Clearance = " + operation.Linking.Clearance, (int)TreeIconIndex.Arrow2, (int)TreeIconIndex.Arrow2);
-                            var linkingClearanceOn = new TreeNode("Clearance On = " + operation.Linking.ClearanceOn, (int)TreeIconIndex.Arrow2, (int)TreeIconIndex.Arrow2);
-                            var spindleSpeed = new TreeNode("Spindle Speed = " + operation.SpindleSpeed, (int)TreeIconIndex.Arrow2, (int)TreeIconIndex.Arrow2);
-                            var feedRate = new TreeNode("FeedRate = " + operation.FeedRate, (int)TreeIconIndex.Arrow2, (int)TreeIconIndex.Arrow2);
-                            var plungeRate = new TreeNode("PlungeRate = " + operation.PlungeRate, (int)TreeIconIndex.Arrow2, (int)TreeIconIndex.Arrow2);
-                            var diameterOffset = new TreeNode("Diameter Offset = " + operation.DiameterOffset, (int)TreeIconIndex.Arrow2, (int)TreeIconIndex.Arrow2);
-                            var tlo = new TreeNode("Length Offset = " + operation.LengthOffset, (int)TreeIconIndex.Arrow2, (int)TreeIconIndex.Arrow2);
-
-                            var operationInformation = new List<TreeNode>
-                                                           {
-                                                               linkingDepth,
-                                                               linkingClearance,
-                                                               linkingClearanceOn,
-                                                               spindleSpeed,
-                                                               feedRate,
-                                                               plungeRate,
-                                                               diameterOffset,
-                                                               tlo
-                                                           };
-
-                            // Tool information TODO = Localize
-                            var filename = new TreeNode("File = " + operation.OperationTool.FileName, (int)TreeIconIndex.Arrow2, (int)TreeIconIndex.Arrow2);
-                            var mfg = new TreeNode("Manufacture Code = " + operation.OperationTool.MfgToolCode, (int)TreeIconIndex.Arrow2, (int)TreeIconIndex.Arrow2);
-                            var name = new TreeNode("Name = " + operation.OperationTool.Name, (int)TreeIconIndex.Arrow2, (int)TreeIconIndex.Arrow2);
-                            var diameter = new TreeNode("Diameter = " + operation.OperationTool.Diameter, (int)TreeIconIndex.Arrow2, (int)TreeIconIndex.Arrow2);
-                            var fluteLength = new TreeNode("FluteLength = " + operation.OperationTool.FluteLength, (int)TreeIconIndex.Arrow2, (int)TreeIconIndex.Arrow2);
-                            var flutes = new TreeNode("Flutes = " + operation.OperationTool.Flutes, (int)TreeIconIndex.Arrow2, (int)TreeIconIndex.Arrow2);
-                            var length = new TreeNode("Length = " + operation.OperationTool.Length, (int)TreeIconIndex.Arrow2, (int)TreeIconIndex.Arrow2);
-                            var holderDia = new TreeNode("HolderDia = " + operation.OperationTool.HolderDia, (int)TreeIconIndex.Arrow2, (int)TreeIconIndex.Arrow2);
-                            var holderLength = new TreeNode("HolderDia = " + operation.OperationTool.HolderLength, (int)TreeIconIndex.Arrow2, (int)TreeIconIndex.Arrow2);
-
-                            var toolinformation = new List<TreeNode>
-                                           {
-                                               filename,
-                                               mfg,
-                                               name,
-                                               diameter,
-                                               fluteLength,
-                                               flutes,
-                                               length,
-                                               holderDia,
-                                               holderLength
-                                           };
-
-                            var index = (int)TreeIconIndex.MillFlat;
-                            switch (thisOperation.Operation.Type)
-                            {
-                                case OperationType.BlockDrill:
-                                    index = (int)TreeIconIndex.BlockDrill;
-                                    break;
-
-                                case OperationType.CircleMill:
-                                    index = (int)TreeIconIndex.CircleMill;
-                                    break;
-
-                                case OperationType.Contour:
-                                    index = (int)TreeIconIndex.Contour;
-                                    break;
-
-                                case OperationType.Drill:
-                                    index = (int)TreeIconIndex.Drill;
-                                    break;
-
-                                case OperationType.Engrave:
-                                    index = (int)TreeIconIndex.Engrave;
-                                    break;
-
-                                case OperationType.HelixBore:
-                                    index = (int)TreeIconIndex.HelixBore;
-                                    break;
-
-                                case OperationType.Pocket:
-                                    index = (int)TreeIconIndex.Pocket;
-                                    break;
-
-                                case OperationType.SlotMill:
-                                    index = (int)TreeIconIndex.SlotMill;
-                                    break;
-
-                                case OperationType.ThreadMill:
-                                    index = (int)TreeIconIndex.ThreadMill;
-                                    break;
-
-                                case OperationType.Nesting:
-                                    index = (int)TreeIconIndex.NestingOperation;
-                                    break;
-                            }
-
-                            counter++;
-                            var node = new TreeNode($"ID:{counter + " = " + thisOperation.Operation.Type + " - " + operation.Name}", index, index)
-                            {
-                                Tag = thisOperation,
-                                NodeFont = new Font(this.view.Tree.Font, FontStyle.Bold)
-                            };
-
-                            // TODO: Localize
-                            var op = new TreeNode("Params", (int)TreeIconIndex.Params, (int)TreeIconIndex.Params);
-                            var tool = new TreeNode("Tool", (int)TreeIconIndex.MillFlat, (int)TreeIconIndex.MillFlat);
-
-                            op.Nodes.AddRange(operationInformation.ToArray());
-                            tool.Nodes.AddRange(toolinformation.ToArray());
-
-                            node.Nodes.Add(op);
-                            node.Nodes.Add(tool);
-
-                            nodes.Add(node);
-                        }
-
-                        var allnodes = new TreeNode(lib, nodes.ToArray());
-                        allnodes.Expand();
-
-                        // Append nodes to the parent node
-                        this.view.Tree.Nodes[0].Nodes.Add(allnodes);
-                    }
-                }
+                this.view.Tree.Nodes[0].Expand();
             }
-
-            FileManager.New(false);
-
-            this.view.Tree.Nodes[0].Expand();
-
-            this.msgBoxService.Ok(
-                totalOperations > 0 ? $"{totalOperations} " + LocalizationStrings.OperationsLoaded : LocalizationStrings.NoOperationsLoaded,
-                LocalizationStrings.Title);
         }
 
         /// <summary>The operations view on selection changed.</summary>
@@ -320,30 +184,6 @@ namespace Strategy.Shell.Presenter
             list.Images.Add(Resource.MainLevel);
 
             this.view.Tree.ImageList = list;
-        }
-
-        /// <summary>The is operation type supported at this time.</summary>
-        /// <param name="operationType">The operation type.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
-        private bool OperationTypeSupported(OperationType operationType)
-        {
-            switch ((int)operationType)
-            {
-                case (int)OperationType.Contour:
-                case (int)OperationType.Pocket:
-                case (int)OperationType.Drill:
-                case (int)OperationType.BlockDrill:
-                case (int)OperationType.CircleMill:
-                case (int)OperationType.HelixBore:
-                case (int)OperationType.Engrave:
-                case (int)OperationType.ThreadMill:
-                case (int)OperationType.OnionSkinning:
-                case (int)OperationType.SlotMill:
-                    return true;
-
-                default:
-                    return false;
-            }
         }
 
         #endregion

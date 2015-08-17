@@ -142,7 +142,7 @@ namespace Strategy.Shell.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Part FIle.
+        ///   Looks up a localized string similar to Part File.
         /// </summary>
         public static string OpenPartFile {
             get {
@@ -214,11 +214,29 @@ namespace Strategy.Shell.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Strategy has been saved.
+        /// </summary>
+        public static string StrategySaved {
+            get {
+                return ResourceManager.GetString("StrategySaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Strategy Designer.
         /// </summary>
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tool.
+        /// </summary>
+        public static string Tool {
+            get {
+                return ResourceManager.GetString("Tool", resourceCulture);
             }
         }
     }

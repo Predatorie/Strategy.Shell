@@ -13,6 +13,7 @@ namespace Strategy.Shell.Presenter
     using System.Linq;
     using System.Windows.Forms;
 
+    using Mastercam.Database.Types;
     using Mastercam.IO;
 
     using Reactive.EventAggregator;
@@ -98,9 +99,7 @@ namespace Strategy.Shell.Presenter
         /// <param name="e">The e.</param>
         private void OnSaveStrategyEvent(SaveStrategyMessage e)
         {
-            //// TODO: Fix the operations comment
             var nodes = this.view.Tree.Nodes[0].Nodes;
-
             if (nodes.Count > 1)
             {
                 var strategy = new Strategy { Name = e.Name, MappedLevels = new List<Mapping>() };
@@ -129,7 +128,10 @@ namespace Strategy.Shell.Presenter
                 }
 
                 // Serialize the strategy to disk
-                this.strategyService.Serialize(strategy);
+                if (this.strategyService.Serialize(strategy))
+                {
+                    this.msgBoxService.Ok(LocalizationStrings.StrategySaved, LocalizationStrings.Title);
+                }
             }
         }
 
@@ -137,7 +139,24 @@ namespace Strategy.Shell.Presenter
         /// <param name="e">The e.</param>
         private void OnLoadStrategyEvent(OpenStrategyMessage e)
         {
-            //// Load strategy into the tree
+            if (!File.Exists(e.Name))
+            {
+                return;
+            }
+
+            var strategy = this.strategyService.Deserialize(e.Name);
+            if (strategy != null)
+            {
+                var node = this.strategyService.LoadStrategyData(strategy);
+                if (node != null)
+                {
+                    this.view.Tree.Nodes.Clear();
+                    this.CreateMainNode();
+
+                    this.view.Tree.Nodes[0].Nodes.Add(node);
+                    this.view.Tree.Nodes[0].Expand();
+                }
+            }
         }
 
         /// <summary>The on level drag drop.</summary>
@@ -230,6 +249,16 @@ namespace Strategy.Shell.Presenter
         private void LevelsViewOnViewLoad(object sender, EventArgs eventArgs)
         {
             this.LoadImages();
+            this.CreateMainNode();
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void CreateMainNode()
+        {
+            this.view.Tree.Nodes.Clear();
 
             // Create the top node
             var mainNode = new TreeNode(LocalizationStrings.MainLevelsNode, (int)TreeIconIndex.MainLevel, (int)TreeIconIndex.MainLevel)
@@ -241,10 +270,6 @@ namespace Strategy.Shell.Presenter
             this.view.Tree.Nodes.Add(mainNode);
             this.view.Tree.LabelEdit = true;
         }
-
-        #endregion
-
-        #region Private Methods
 
         /// <summary>The on remove level.</summary>
         /// <param name="e">The e.</param>
@@ -268,20 +293,18 @@ namespace Strategy.Shell.Presenter
             var level = new TreeNode(LocalizationStrings.NewLevelName + " " + count) { Tag = "level" };
 
             this.AddLevel(level);
+            this.view.Tree.Nodes[0].Expand();
+
         }
 
         /// <summary>The on save levels.</summary>
         /// <param name="e">The e.</param>
         private void OnSaveLevels(SaveLevelsMessage e)
         {
-            // TODO: Prompt for file name and save the levels to disk
             var levels = this.view.Tree.Nodes[0].Nodes;
-
             if (levels.Count > 0)
             {
-                var filename = SettingsManager.SharedDirectory + "\\text.xml";
-                var levelsList = new Levels { Name = filename };
-
+                var levelsList = new Levels { Name = e.FilePath };
                 foreach (TreeNode level in levels)
                 {
                     levelsList.List.Add(level.Text);
@@ -300,63 +323,76 @@ namespace Strategy.Shell.Presenter
 
             var levelsToAdd = new List<string>();
 
-            // Open all selected files and add levels to our list
-            foreach (var listOfNamedLevels in
-                e.FilePath.Where(FileManager.Open).Select(file => LevelsManager.GetLevelNumbersWithNames()).Where(listOfNamedLevels => listOfNamedLevels.Any()))
+            foreach (var file in e.FilePath)
             {
-                levelsToAdd = listOfNamedLevels.Select(LevelsManager.GetLevelName).ToList();
-            }
-
-            // Sort the levels
-            levelsToAdd.Sort();
-
-            var distinctList = new List<string>();
-            var previous = string.Empty;
-
-            // Filter out duplicate names
-            foreach (var name in levelsToAdd)
-            {
-                if (name != previous)
+                if (FileManager.Open(file))
                 {
-                    distinctList.Add(name);
-                }
+                    var indexes = LevelsManager.GetLevelNumbersWithNames();
 
-                previous = name;
-            }
+                    if (!indexes.Any())
+                    {
+                        continue;
+                    }
 
-            // Get the main node
-            var treeLevels = this.view.Tree.Nodes[0].Nodes;
-            if (treeLevels.Count > 0)
-            {
-                // Filter out duplicate names already in our tree
-                foreach (var node in treeLevels.Cast<TreeNode>().Where(node => distinctList.Contains(node.Text)))
-                {
-                    distinctList.Remove(node.Text);
-                }
-
-                // Finally add our new level nodes
-                foreach (var level in distinctList)
-                {
-                    this.AddLevel(new TreeNode(level));
-                }
-            }
-            else
-            {
-                // Ok to add as is
-                foreach (var level in distinctList)
-                {
-                    this.AddLevel(new TreeNode(level));
+                    levelsToAdd.AddRange(indexes.Select(LevelsManager.GetLevelName));
                 }
             }
 
-            // Re-open previous file
-            if (File.Exists(currentFile))
+            if (levelsToAdd.Any())
             {
-                FileManager.Open(currentFile);
-            }
-            else
-            {
-                FileManager.New();
+                // Sort the levels
+                levelsToAdd.Sort();
+
+                var distinctList = new List<string>();
+                var previous = string.Empty;
+
+                // Filter out duplicate names
+                foreach (var name in levelsToAdd)
+                {
+                    if (name != previous)
+                    {
+                        distinctList.Add(name);
+                    }
+
+                    previous = name;
+                }
+
+                // Get the main node
+                var treeLevels = this.view.Tree.Nodes[0].Nodes;
+                if (treeLevels.Count > 0)
+                {
+                    // Filter out duplicate names already in our tree
+                    foreach (var node in treeLevels.Cast<TreeNode>().Where(node => distinctList.Contains(node.Text)))
+                    {
+                        distinctList.Remove(node.Text);
+                    }
+
+                    // Finally add our new level nodes
+                    foreach (var level in distinctList)
+                    {
+                        this.AddLevel(new TreeNode(level));
+                    }
+                }
+                else
+                {
+                    // Ok to add as is
+                    foreach (var level in distinctList)
+                    {
+                        this.AddLevel(new TreeNode(level));
+                    }
+                }
+
+                // Re-open previous file
+                if (File.Exists(currentFile))
+                {
+                    FileManager.Open(currentFile);
+                }
+                else
+                {
+                    FileManager.New();
+                }
+
+                this.view.Tree.Nodes[0].Expand();
             }
         }
 

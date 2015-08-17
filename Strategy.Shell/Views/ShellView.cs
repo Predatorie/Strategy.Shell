@@ -82,7 +82,7 @@ namespace Strategy.Shell.Views
             var levelViewPresenter = new LevelsViewPresenter(levelView, msgBoxService, fileBrowserService, eventAggregator, fileManagerService, strategyService);
 
             var opsView = new OperationsView { Dock = DockStyle.Fill, Margin = new Padding(5) };
-            var opsViewPresenter = new OperationsViewPresenter(opsView, msgBoxService, fileBrowserService, eventAggregator);
+            var opsViewPresenter = new OperationsViewPresenter(opsView, msgBoxService, fileBrowserService, eventAggregator, strategyService);
 
             // Wire up the views
             this.buttonBarView = buttonView;

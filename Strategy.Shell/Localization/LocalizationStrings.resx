@@ -145,7 +145,7 @@
     <value>Operations</value>
   </data>
   <data name="OpenPartFile" xml:space="preserve">
-    <value>Part FIle</value>
+    <value>Part File</value>
   </data>
   <data name="OperationsLoaded" xml:space="preserve">
     <value>operations loaded</value>
@@ -168,7 +168,13 @@
   <data name="SelectFolder" xml:space="preserve">
     <value>Select Folder</value>
   </data>
+  <data name="StrategySaved" xml:space="preserve">
+    <value>Strategy has been saved</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>Strategy Designer</value>
+  </data>
+  <data name="Tool" xml:space="preserve">
+    <value>Tool</value>
   </data>
 </root>

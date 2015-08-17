@@ -9,6 +9,9 @@
 
 namespace Strategy.Shell.Services
 {
+    using System.Collections.Generic;
+    using System.Windows.Forms;
+
     using Models;
 
     /// <summary>The StrategyService interface.</summary>
@@ -16,11 +19,22 @@ namespace Strategy.Shell.Services
     {
         /// <summary>The serialize.</summary>
         /// <param name="strategy">The strategy.</param>
-        void Serialize(Strategy strategy);
+        /// <returns>The <see cref="bool"/>.</returns>
+        bool Serialize(Strategy strategy);
 
         /// <summary>The deserialize.</summary>
         /// <param name="filepath">The filepath.</param>
         /// <returns>The <see cref="Strategy"/>.</returns>
         Strategy Deserialize(string filepath);
+
+        /// <summary>The create operations tree.</summary>
+        /// <param name="libraries">The libraries.</param>
+        /// <returns>The <see cref="TreeNode"/>.</returns>
+        TreeNode LoadOperationData(List<string> libraries);
+
+        /// <summary>The create levels data.</summary>
+        /// <param name="strategy">The strategy.</param>
+        /// <returns>The <see cref="TreeNode"/>.</returns>
+        TreeNode LoadStrategyData(Strategy strategy);
     }
 }
