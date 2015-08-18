@@ -113,11 +113,11 @@ namespace Strategy.Shell.Presenter
             var nodes = this.strategyService.LoadOperationData(e.Libraries);
             if (nodes != null)
             {
-                // Append nodes to the parent node
-                this.view.Tree.Nodes[0].Nodes.Add(nodes);
-
                 FileManager.New(false);
-                this.view.Tree.Nodes[0].Expand();
+
+                // Append nodes to the parent node
+                this.view.Tree.Nodes[0].Nodes.AddRange(nodes.ToArray());
+                this.view.Tree.Nodes[0].Expand();                
             }
         }
 

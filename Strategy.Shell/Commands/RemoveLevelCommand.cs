@@ -35,12 +35,16 @@ namespace Strategy.Shell.Commands
             this.ToolTip = LocalizationStrings.RemoveLevel;
             this.CanExecute = false;
 
-            // TODO: This seems a little iffy at the moment
-            this.eventAggregator.GetEvent<LevelSelectedMessage>().Subscribe(e => this.CanExecute = true);
+            // Only allow remove level button to be enabled when the selected level
+            // is valid and not the top (main) level
+            this.eventAggregator.GetEvent<LevelSelectedMessage>().Subscribe(
+                (e) =>
+                    {
+                        this.CanExecute = e.Level != null && e.Level.Level != 0;
+                    });
+
             this.eventAggregator.GetEvent<OperationSelectedMessage>().Subscribe(e => this.CanExecute = false);
-
             this.eventAggregator.GetEvent<LevelSelectedMessage>().Subscribe(this.OnLevelToRemove);
-
         }
 
         /// <summary>The execute.</summary>

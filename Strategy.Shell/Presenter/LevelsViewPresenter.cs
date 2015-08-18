@@ -3,7 +3,6 @@
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace Strategy.Shell.Presenter
 {
     using System;
@@ -13,18 +12,17 @@ namespace Strategy.Shell.Presenter
     using System.Linq;
     using System.Windows.Forms;
 
-    using Mastercam.Database.Types;
     using Mastercam.IO;
 
     using Reactive.EventAggregator;
 
-    using Strategy.Shell.Events;
-    using Strategy.Shell.FunctionTable;
-    using Strategy.Shell.Interfaces;
-    using Strategy.Shell.Localization;
-    using Strategy.Shell.Models;
-    using Strategy.Shell.Operations;
-    using Strategy.Shell.Services;
+    using Events;
+    using FunctionTable;
+    using Interfaces;
+    using Localization;
+    using Models;
+    using Operations;
+    using Services;
 
     /// <summary>The levels view presenter.</summary>
     public class LevelsViewPresenter
@@ -128,7 +126,7 @@ namespace Strategy.Shell.Presenter
                 }
 
                 // Serialize the strategy to disk
-                if (this.strategyService.Serialize(strategy))
+                if (this.fileManagerService.SerializeObject(strategy.Name, strategy))
                 {
                     this.msgBoxService.Ok(LocalizationStrings.StrategySaved, LocalizationStrings.Title);
                 }
@@ -144,7 +142,7 @@ namespace Strategy.Shell.Presenter
                 return;
             }
 
-            var strategy = this.strategyService.Deserialize(e.Name);
+            var strategy = this.fileManagerService.DeserializeObject<Strategy>(e.Name);
             if (strategy != null)
             {
                 var node = this.strategyService.LoadStrategyData(strategy);
@@ -153,7 +151,7 @@ namespace Strategy.Shell.Presenter
                     this.view.Tree.Nodes.Clear();
                     this.CreateMainNode();
 
-                    this.view.Tree.Nodes[0].Nodes.Add(node);
+                    this.view.Tree.Nodes[0].Nodes.AddRange(node.ToArray());
                     this.view.Tree.Nodes[0].Expand();
                 }
             }
@@ -182,7 +180,10 @@ namespace Strategy.Shell.Presenter
                     // Confirm that the node at the drop location is not 
                     // the dragged node and that target node isn't null
                     // (for example if you drag outside the control)
-                    if (!draggedNode.Equals(targetNode) && targetNode != null && targetNode.Tag?.GetType() != typeof(MastercamOperation))
+                    // Also can't drop on the top level
+                    if (!draggedNode.Equals(targetNode) && targetNode != null &&
+                        targetNode.Tag?.GetType() != typeof(MastercamOperation) &&
+                        targetNode.Level != 0)
                     {
                         var clone = (TreeNode)draggedNode.Clone();
 
@@ -237,10 +238,7 @@ namespace Strategy.Shell.Presenter
         private void LevelsViewOnSelectionChanged(object sender, EventArgs eventArgs)
         {
             var selectedLevel = this.view.SelectedNode;
-            if (selectedLevel != null)
-            {
-                this.eventAggregator.Publish(new LevelSelectedMessage(selectedLevel));
-            }
+            this.eventAggregator.Publish(new LevelSelectedMessage(selectedLevel));
         }
 
         /// <summary>The levels view on view loaded.</summary>
@@ -256,6 +254,7 @@ namespace Strategy.Shell.Presenter
 
         #region Private Methods
 
+        /// <summary>The create main node.</summary>
         private void CreateMainNode()
         {
             this.view.Tree.Nodes.Clear();
@@ -310,7 +309,7 @@ namespace Strategy.Shell.Presenter
                     levelsList.List.Add(level.Text);
                 }
 
-                this.fileManagerService.WriteObject(levelsList.Name, levelsList);
+                this.fileManagerService.SerializeObject(levelsList.Name, levelsList);
             }
         }
 

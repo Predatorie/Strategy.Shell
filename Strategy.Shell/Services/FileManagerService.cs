@@ -16,29 +16,39 @@ namespace Strategy.Shell.Services
         /// <summary>The save strategy.</summary>
         /// <param name="filepath">The filepath.</param>
         /// <param name="o">The payload to serialize</param>
-        public void WriteObject<T>(string filepath, T o)
+        public bool SerializeObject<T>(string filepath, T o)
         {
             // Avoiding mutliple using's here, see-> CA2202: Do not dispose objects multiple times
             XmlWriter xmlWriter = null;
             try
             {
-                using (xmlWriter = XmlWriter.Create(filepath, new XmlWriterSettings { Encoding = Encoding.UTF8, CloseOutput = false, Indent = true }))
+                using (
+                    xmlWriter =
+                    XmlWriter.Create(
+                        filepath,
+                        new XmlWriterSettings { Encoding = Encoding.UTF8, CloseOutput = false, Indent = true }))
                 {
                     var serializer = new XmlSerializer(o.GetType());
                     serializer.Serialize(xmlWriter, o);
                 }
             }
+            catch
+            {
+                return false;
+            }
             finally
             {
                 xmlWriter?.Dispose();
             }
+
+            return true;
         }
 
-        /// <summary>The read object.</summary>
-        /// <param name="filepath">The filepath.</param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns>The <see cref="T"/>.</returns>
-        public T ReadObject<T>(string filepath)
+        /// <summary>De-serializes an object from file.</summary>
+        /// <param name="filepath">The filepath to the file location.</param>
+        /// <typeparam name="T">The object type</typeparam>
+        /// <returns>The <see cref="T"/> object type to return.</returns>
+        public T DeserializeObject<T>(string filepath)
         {
             XmlReader xmlReader = null;
             try

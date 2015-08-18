@@ -3,16 +3,12 @@
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace Strategy.Shell.Services
 {
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Runtime.Serialization;
-    using System.Text;
     using System.Windows.Forms;
-    using System.Xml;
 
     using Mastercam.Database;
     using Mastercam.Database.Types;
@@ -27,64 +23,10 @@ namespace Strategy.Shell.Services
     /// <summary>The strategy service.</summary>
     public class StrategyService : IStrategyService
     {
-        /// <summary>The serialize.</summary>
-        /// <param name="strategy">The strategy.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
-        public bool Serialize(Strategy strategy)
-        {
-            // TODO: Tokenize paths
-
-            // Avoiding mutliple using's here, see-> CA2202: Do not dispose objects multiple times
-            XmlWriter xmlWriter = null;
-            try
-            {
-                xmlWriter = XmlWriter.Create(
-                    strategy.Name, 
-                    new XmlWriterSettings { Encoding = Encoding.UTF8, CloseOutput = false, Indent = true });
-                using (var dictionaryWriter = XmlDictionaryWriter.CreateDictionaryWriter(xmlWriter))
-                {
-                    var serializer = new DataContractSerializer(typeof(Strategy));
-                    serializer.WriteObject(dictionaryWriter, strategy);
-                }
-            }
-            catch
-            {
-                //// TODO: Implement Logging
-                return false;
-            }
-            finally
-            {
-                xmlWriter?.Dispose();
-            }
-
-            return true;
-        }
-
-        /// <summary>The deserialize.</summary>
-        /// <param name="filepath">The filepath.</param>
-        /// <returns>The <see cref="Strategy"/>.</returns>
-        public Strategy Deserialize(string filepath)
-        {
-            Stream stream = null;
-            try
-            {
-                stream = new FileStream(filepath, FileMode.Open, FileAccess.Read, FileShare.Read);
-                using (var xmlReader = XmlDictionaryReader.CreateTextReader(stream, new XmlDictionaryReaderQuotas()))
-                {
-                    var serializer = new DataContractSerializer(typeof(Strategy));
-                    return serializer.ReadObject(xmlReader) as Strategy;
-                }
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
-        }
-
         /// <summary>The load operation data.</summary>
         /// <param name="libraries">The libraries.</param>
         /// <returns>The <see cref="TreeNode"/>.</returns>
-        public TreeNode LoadOperationData(List<string> libraries)
+        public List<TreeNode> LoadOperationData(List<string> libraries)
         {
             var nodes = new List<TreeNode>();
 
@@ -97,14 +39,16 @@ namespace Strategy.Shell.Services
                     var operations = SearchManager.GetOperations();
                     if (operations.Any())
                     {
+                        var library = new TreeNode(lib) { Tag = "library" };
+
                         // Only supported operations and those with a valid tool
                         foreach (var operation in operations.Where(operation => this.OperationTypeSupported(operation.Type) & operation.OperationTool != null))
                         {
                             var thisOperation = new MastercamOperation
                             {
-                                Operation = operation, 
-                                Path = Path.GetFullPath(lib), 
-                                OperationType = operation.Type, 
+                                Operation = operation,
+                                Path = Path.GetFullPath(lib),
+                                OperationType = operation.Type,
                                 Name = Path.GetFileName(lib)
                             };
 
@@ -123,24 +67,21 @@ namespace Strategy.Shell.Services
                             node.Nodes.Add(op);
                             node.Nodes.Add(tool);
 
-                            nodes.Add(node);
+                            library.Nodes.Add(node);
                         }
-                    }
-                }
 
-                if (nodes.Any())
-                {
-                    return new TreeNode(lib, nodes.ToArray());
+                        nodes.Add(library);
+                    }
                 }
             }
 
-            return null;
+            return nodes.Any() ? nodes : null;
         }
 
         /// <summary>Loads a strategy object into the Levels tree</summary>
-        /// <param name="strategy"></param>
-        /// <returns>The <see cref="TreeNode"/>.</returns>
-        public TreeNode LoadStrategyData(Strategy strategy)
+        /// <param name="strategy">The strategy to load</param>
+        /// <returns>The <see cref="TreeNode"/> tree nodes collection</returns>
+        public List<TreeNode> LoadStrategyData(Strategy strategy)
         {
             var nodes = new List<TreeNode>();
 
@@ -155,15 +96,17 @@ namespace Strategy.Shell.Services
                         var operations = SearchManager.GetOperations();
                         if (operations.Any())
                         {
-                            var opName = mapping.Comment;
-                            var operation = OperationsManager.ImportOperation(lib, opName, false);
+                            var name = mapping.Comment;
+                            var level = new TreeNode(mapping.Level) { Tag = "level" };
+
+                            var operation = OperationsManager.ImportOperation(lib, name, false);
                             if (operation != null)
                             {
                                 var thisOperation = new MastercamOperation
                                 {
-                                    Operation = operation, 
-                                    Path = Path.GetFullPath(lib), 
-                                    OperationType = operation.Type, 
+                                    Operation = operation,
+                                    Path = Path.GetFullPath(lib),
+                                    OperationType = operation.Type,
                                     Name = Path.GetFileName(lib)
                                 };
 
@@ -181,19 +124,16 @@ namespace Strategy.Shell.Services
                                 node.Nodes.Add(op);
                                 node.Nodes.Add(tool);
 
-                                nodes.Add(node);
-                            }
-                        }
+                                level.Nodes.Add(node);
 
-                        if (nodes.Any())
-                        {
-                            return new TreeNode(lib, nodes.ToArray());
+                                nodes.Add(level);
+                            }
                         }
                     }
                 }
             }
 
-            return null;
+            return nodes.Any() ? nodes : null;
         }
 
         #region Private Methods
@@ -253,7 +193,7 @@ namespace Strategy.Shell.Services
 
         /// <summary>The create tool list.</summary>
         /// <param name="operation">The operation.</param>
-        /// <returns>The <see cref="List"/>.</returns>
+        /// <returns>The List of treenodes.</returns>
         private List<TreeNode> CreateToolList(Operation operation)
         {
             // Tool information TODO = Localize
@@ -269,21 +209,21 @@ namespace Strategy.Shell.Services
 
             return new List<TreeNode>
                                     {
-                                        filename, 
-                                        mfg, 
-                                        name, 
-                                        diameter, 
-                                        fluteLength, 
-                                        flutes, 
-                                        length, 
-                                        holderDia, 
+                                        filename,
+                                        mfg,
+                                        name,
+                                        diameter,
+                                        fluteLength,
+                                        flutes,
+                                        length,
+                                        holderDia,
                                         holderLength
                                     };
         }
 
         /// <summary>The create operation list.</summary>
         /// <param name="operation">The operation.</param>
-        /// <returns>The <see cref="List"/>.</returns>
+        /// <returns>The List of treenodes.</returns>
         private List<TreeNode> CreateOperationList(Operation operation)
         {
             // Operation Information TODO: Localize
@@ -298,13 +238,13 @@ namespace Strategy.Shell.Services
 
             return new List<TreeNode>
                                     {
-                                        linkingDepth, 
-                                        linkingClearance, 
-                                        linkingClearanceOn, 
-                                        spindleSpeed, 
-                                        feedRate, 
-                                        plungeRate, 
-                                        diameterOffset, 
+                                        linkingDepth,
+                                        linkingClearance,
+                                        linkingClearanceOn,
+                                        spindleSpeed,
+                                        feedRate,
+                                        plungeRate,
+                                        diameterOffset,
                                         tlo
                                     };
         }
@@ -334,6 +274,5 @@ namespace Strategy.Shell.Services
         }
 
         #endregion
-
     }
 }
