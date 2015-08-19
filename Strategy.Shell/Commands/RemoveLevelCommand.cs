@@ -40,7 +40,7 @@ namespace Strategy.Shell.Commands
             this.eventAggregator.GetEvent<LevelSelectedMessage>().Subscribe(
                 (e) =>
                     {
-                        this.CanExecute = e.Level != null && e.Level.Level != 0;
+                        this.CanExecute = e.Level?.Level != 0;
                     });
 
             this.eventAggregator.GetEvent<OperationSelectedMessage>().Subscribe(e => this.CanExecute = false);

@@ -42,6 +42,7 @@ namespace Strategy.Shell.Models
             this.Kernel.Bind<IToolbarCommand>().To<AddLevelCommand>().InSingletonScope();
             this.Kernel.Bind<IToolbarCommand>().To<RemoveLevelCommand>().InSingletonScope();
             this.Kernel.Bind<IToolbarCommand>().To<SaveLevelsCommand>().InSingletonScope();
+            this.Kernel.Bind<IToolbarCommand>().To<OpenLevelsCommand>().InSingletonScope();
 
             // Bottom buttons
             this.Kernel.Bind<IButtonsCommand>().To<CloseShellCommand>().InSingletonScope();

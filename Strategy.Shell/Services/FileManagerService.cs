@@ -58,7 +58,7 @@ namespace Strategy.Shell.Services
                     var xs = new XmlSerializer(typeof(T));
                     return (T)xs.Deserialize(xmlReader);
                 }
-            }
+            }         
             finally
             {
                 xmlReader?.Dispose();

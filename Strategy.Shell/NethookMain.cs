@@ -65,11 +65,11 @@ namespace Strategy.Shell
                 // build our levels toolbar list
                 var levels = new List<IToolbarCommand>
                              {
-                                 kernel.Get<ScanLevelCommand>(),
                                  kernel.Get<OpenPartLevelsCommand>(),
                                  kernel.Get<AddLevelCommand>(),
                                  kernel.Get<RemoveLevelCommand>(),
-                                 kernel.Get<SaveLevelsCommand>()
+                                 kernel.Get<SaveLevelsCommand>(),
+                                 kernel.Get<OpenLevelsCommand>()
                              };
 
                 using (var shell = kernel.Get<ShellView>(

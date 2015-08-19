@@ -38,7 +38,7 @@ namespace Strategy.Shell.Commands
             this.eventAggregator = eventAggregator;
             this.fileBrowserService = fileBrowserService;
 
-            this.Icon = Resource.PartImport;
+            this.Icon = Resource.NewLevelScan;
             this.ToolTip = LocalizationStrings.OpenPartFile;
             this.CanExecute = true;
         }

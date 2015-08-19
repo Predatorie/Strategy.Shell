@@ -87,11 +87,39 @@ namespace Strategy.Shell.Presenter
             this.eventAggregator.GetEvent<OpenPartMessage>().Subscribe(this.OnOpenParts);
             this.eventAggregator.GetEvent<SaveStrategyMessage>().Subscribe(this.OnSaveStrategyEvent);
             this.eventAggregator.GetEvent<OpenStrategyMessage>().Subscribe(this.OnLoadStrategyEvent);
+            this.eventAggregator.GetEvent<OpenLevelsMessage>().Subscribe(this.OnOpenLevelsEvent);
         }
 
         #endregion
 
         #region Event Handlers
+
+        private void OnOpenLevelsEvent(OpenLevelsMessage e)
+        {
+            var levels = this.fileManagerService.DeserializeObject<Levels>(e.FilePath);
+            if (levels == null)
+            {
+                return;
+            }
+
+            // Filter out duplicates from tree
+            foreach (var node in levels.List.Select(level => new TreeNode(level) { Tag = "level" }))
+            {
+                if (this.view.Tree.Nodes[0].Nodes.Count > 0)
+                {
+                    if (this.view.Tree.Nodes[0].Nodes.Cast<TreeNode>().FirstOrDefault(n => n.Text == node.Text) == null)
+                    {
+                        this.AddLevel(node);
+                    }
+                }
+                else
+                {
+                    this.AddLevel(node);
+                }
+            }
+
+            this.view.Tree.Nodes[0].Expand();
+        }
 
         /// <summary>The on save strategy event.</summary>
         /// <param name="e">The e.</param>

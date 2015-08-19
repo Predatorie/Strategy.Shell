@@ -3,19 +3,13 @@
 //   Copyright (c) 2015 Mick George aphextwin@seidr.net
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace Strategy.Shell.Presenter
 {
     using System;
-    using System.Collections.Generic;
     using System.Drawing;
-    using System.IO;
-    using System.Linq;
     using System.Windows.Forms;
 
-    using Mastercam.Database.Types;
     using Mastercam.IO;
-    using Mastercam.Support;
 
     using Reactive.EventAggregator;
 
@@ -43,6 +37,7 @@ namespace Strategy.Shell.Presenter
         /// <summary>The event aggregator.</summary>
         private readonly IEventAggregator eventAggregator;
 
+        /// <summary>The strategy service.</summary>
         private readonly IStrategyService strategyService;
 
         #endregion
@@ -55,10 +50,10 @@ namespace Strategy.Shell.Presenter
         /// <param name="fileBrowserService">The file browser service.</param>
         /// <param name="eventAggregator">The event aggregator.</param>
         /// <param name="strategyService">The Strategy Service</param>
-        public OperationsViewPresenter(IOperationsView view,
-            IMessageBoxService msgBoxService,
-            IFileBrowserService fileBrowserService,
-            IEventAggregator eventAggregator,
+        public OperationsViewPresenter(IOperationsView view, 
+            IMessageBoxService msgBoxService, 
+            IFileBrowserService fileBrowserService, 
+            IEventAggregator eventAggregator, 
             IStrategyService strategyService)
         {
             // Wire up our services
@@ -83,16 +78,25 @@ namespace Strategy.Shell.Presenter
 
         #region Event Handlers
 
+        /// <summary>The on operation drag drop.</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The e.</param>
         private void OnOperationDragDrop(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.None;
         }
 
+        /// <summary>The on operation drag enter.</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The e.</param>
         private void OnOperationDragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Copy;
         }
 
+        /// <summary>The on operation item drag.</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The e.</param>
         private void OnOperationItemDrag(object sender, ItemDragEventArgs e)
         {
             // Only allow the operation node to be draggable
@@ -107,7 +111,7 @@ namespace Strategy.Shell.Presenter
 
         /// <summary>The operations library load event.</summary>
         /// <param name="e">The payload event.</param>
-        /// <summary> This event handles loading of the treeview for all operation files selected</summary>
+        /// <summary>This event handles loading of the treeview for all operation files selected</summary>
         private void OnOperationsLibraryLoadEvent(OperationsLibraryLoadMessage e)
         {
             var nodes = this.strategyService.LoadOperationData(e.Libraries);
@@ -143,7 +147,7 @@ namespace Strategy.Shell.Presenter
             // Create the top node
             var mainNode = new TreeNode(LocalizationStrings.MainNode, (int)TreeIconIndex.OperationGroup, (int)TreeIconIndex.OperationGroup)
             {
-                NodeFont = new Font(this.view.Tree.Font, FontStyle.Bold)
+                NodeFont = new Font(this.view.Tree.Font, FontStyle.Bold), 
             };
 
             this.view.Tree.Nodes.Add(mainNode);
