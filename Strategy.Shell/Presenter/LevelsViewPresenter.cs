@@ -74,11 +74,13 @@ namespace Strategy.Shell.Presenter
             this.strategyService = strategyService;
 
             this.view = view;
+
             view.ViewLoad += this.LevelsViewOnViewLoad;
             view.SelectionChanged += this.LevelsViewOnSelectionChanged;
-            view.Tree.ItemDrag += this.OnLevelItemDrag;
-            view.Tree.DragDrop += this.OnLevelDragDrop;
-            view.Tree.DragEnter += this.OnLevelDragEnter;
+            view.LevelDrag += this.OnLevelItemDrag;
+            view.LevelDragDrop += this.OnLevelDragDrop;
+            view.LevelDragEnter += this.OnLevelDragEnter;
+
             view.Tree.AllowDrop = true;
 
             this.eventAggregator.GetEvent<SaveLevelsMessage>().Subscribe(this.OnSaveLevels);
@@ -187,57 +189,61 @@ namespace Strategy.Shell.Presenter
 
         /// <summary>The on level drag drop.</summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The e.</param>
-        private void OnLevelDragDrop(object sender, DragEventArgs e)
+        /// <param name="args">The payload.</param>
+        private void OnLevelDragDrop(object sender, EventArgs args)
         {
-            var node = (TreeNode)e.Data.GetData(typeof(TreeNode));
+            var e = args as DragEventArgs;
+            var node = (TreeNode)e?.Data.GetData(typeof(TreeNode));
 
-            if (node?.Tag != null)
+            if (node?.Tag == null)
             {
-                if (node.Tag.GetType() == typeof(MastercamOperation))
+                return;
+            }
+
+            if (node.Tag.GetType() == typeof(MastercamOperation))
+            {
+                // Retrieve the client coordinates of the drop location.
+                var targetPoint = this.view.Tree.PointToClient(new Point(e.X, e.Y));
+
+                // Retrieve the node at the drop location.
+                var targetNode = this.view.Tree.GetNodeAt(targetPoint);
+
+                // Retrieve the node that was dragged.
+                var draggedNode = (TreeNode)e.Data.GetData(typeof(TreeNode));
+
+                // Confirm that the node at the drop location is not 
+                // the dragged node and that target node isn't null
+                // (for example if you drag outside the control)
+                // Also can't drop on the top level
+                if (!draggedNode.Equals(targetNode) && targetNode != null &&
+                    targetNode.Tag?.GetType() != typeof(MastercamOperation) &&
+                    targetNode.Level != 0)
                 {
-                    // Retrieve the client coordinates of the drop location.
-                    var targetPoint = this.view.Tree.PointToClient(new Point(e.X, e.Y));
+                    var clone = (TreeNode)draggedNode.Clone();
 
-                    // Retrieve the node at the drop location.
-                    var targetNode = this.view.Tree.GetNodeAt(targetPoint);
-
-                    // Retrieve the node that was dragged.
-                    var draggedNode = (TreeNode)e.Data.GetData(typeof(TreeNode));
-
-                    // Confirm that the node at the drop location is not 
-                    // the dragged node and that target node isn't null
-                    // (for example if you drag outside the control)
-                    // Also can't drop on the top level
-                    if (!draggedNode.Equals(targetNode) && targetNode != null &&
-                        targetNode.Tag?.GetType() != typeof(MastercamOperation) &&
-                        targetNode.Level != 0)
+                    // If we moving delete the original node
+                    if (e.Effect == DragDropEffects.Move)
                     {
-                        var clone = (TreeNode)draggedNode.Clone();
-
-                        // If we moving delete the original node
-                        if (e.Effect == DragDropEffects.Move)
-                        {
-                            draggedNode.Remove();
-                        }
-
-                        targetNode.Nodes.Add(clone);
-
-                        // Expand the node at the location to show the dropped node.
-                        targetNode.Expand();
+                        draggedNode.Remove();
                     }
+
+                    targetNode.Nodes.Add(clone);
+
+                    // Expand the node at the location to show the dropped node.
+                    targetNode.Expand();
                 }
             }
         }
 
         /// <summary>The on level drag enter.</summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The e.</param>
-        private void OnLevelDragEnter(object sender, DragEventArgs e)
+        /// <param name="args">The payload.</param>
+        private void OnLevelDragEnter(object sender, EventArgs args)
         {
-            var draggedNode = (TreeNode)e.Data.GetData(typeof(TreeNode));
+            var e = args as DragEventArgs;
+            var draggedNode = (TreeNode)e?.Data.GetData(typeof(TreeNode));
 
-            if (draggedNode.Parent?.Parent != null)
+            if (draggedNode?.Parent?.Parent != null)
             {
                 e.Effect = draggedNode.Parent.Parent.Text == LocalizationStrings.MainNode ? DragDropEffects.Copy : DragDropEffects.Move;
             }
@@ -245,18 +251,21 @@ namespace Strategy.Shell.Presenter
 
         /// <summary>The on level item drag.</summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The e.</param>
-        private void OnLevelItemDrag(object sender, ItemDragEventArgs e)
+        /// <param name="args">The payload.</param>
+        private void OnLevelItemDrag(object sender, EventArgs args)
         {
+            var e = args as ItemDragEventArgs;
             // Only allow the operation node to be draggable
-            var item = (TreeNode)e.Item;
+            var item = (TreeNode)e?.Item;
 
-            if (item.Parent?.Parent != null)
+            if (item?.Parent?.Parent == null)
             {
-                if (item.Parent?.Parent.Text == LocalizationStrings.MainLevelsNode)
-                {
-                    this.view.Tree.DoDragDrop(e.Item, DragDropEffects.Move);
-                }
+                return;
+            }
+
+            if (item.Parent?.Parent.Text == LocalizationStrings.MainLevelsNode)
+            {
+                this.view.Tree.DoDragDrop(e.Item, DragDropEffects.Move);
             }
         }
 

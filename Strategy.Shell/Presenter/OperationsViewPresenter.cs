@@ -50,10 +50,10 @@ namespace Strategy.Shell.Presenter
         /// <param name="fileBrowserService">The file browser service.</param>
         /// <param name="eventAggregator">The event aggregator.</param>
         /// <param name="strategyService">The Strategy Service</param>
-        public OperationsViewPresenter(IOperationsView view, 
-            IMessageBoxService msgBoxService, 
-            IFileBrowserService fileBrowserService, 
-            IEventAggregator eventAggregator, 
+        public OperationsViewPresenter(IOperationsView view,
+            IMessageBoxService msgBoxService,
+            IFileBrowserService fileBrowserService,
+            IEventAggregator eventAggregator,
             IStrategyService strategyService)
         {
             // Wire up our services
@@ -65,9 +65,9 @@ namespace Strategy.Shell.Presenter
             this.view = view;
             view.ViewLoad += this.OperationsViewOnViewLoad;
             view.SelectionChanged += this.OperationsViewOnSelectionChanged;
-            view.Tree.ItemDrag += this.OnOperationItemDrag;
-            view.Tree.DragDrop += this.OnOperationDragDrop;
-            view.Tree.DragEnter += this.OnOperationDragEnter;
+            view.OperationDrag += this.OnOperationItemDrag;
+            view.OperationDragDrop += this.OnOperationDragDrop;
+            view.OperationDragEnter += this.OnOperationDragEnter;
             view.Tree.AllowDrop = true;
 
             // Event subscriptions
@@ -80,27 +80,37 @@ namespace Strategy.Shell.Presenter
 
         /// <summary>The on operation drag drop.</summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The e.</param>
-        private void OnOperationDragDrop(object sender, DragEventArgs e)
+        /// <param name="e">The payload.</param>
+        private void OnOperationDragDrop(object sender, EventArgs e)
         {
-            e.Effect = DragDropEffects.None;
+            var dragEventArgs = e as DragEventArgs;
+            if (dragEventArgs != null)
+            {
+                dragEventArgs.Effect = DragDropEffects.None;
+            }
         }
 
         /// <summary>The on operation drag enter.</summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The e.</param>
-        private void OnOperationDragEnter(object sender, DragEventArgs e)
+        /// <param name="e">he payload.</param>
+        private void OnOperationDragEnter(object sender, EventArgs e)
         {
-            e.Effect = DragDropEffects.Copy;
+            var dragEventArgs = e as DragEventArgs;
+            if (dragEventArgs != null)
+            {
+                dragEventArgs.Effect = DragDropEffects.Copy;
+            }
         }
 
         /// <summary>The on operation item drag.</summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The e.</param>
-        private void OnOperationItemDrag(object sender, ItemDragEventArgs e)
+        /// <param name="arg">The payload.</param>
+        private void OnOperationItemDrag(object sender, EventArgs arg)
         {
+            var e = arg as ItemDragEventArgs;
+
             // Only allow the operation node to be draggable
-            var item = (TreeNode)e.Item;
+            var item = (TreeNode)e?.Item;
             if (item?.Tag == null || item.Tag.GetType() != typeof(MastercamOperation))
             {
                 return;
@@ -121,7 +131,7 @@ namespace Strategy.Shell.Presenter
 
                 // Append nodes to the parent node
                 this.view.Tree.Nodes[0].Nodes.AddRange(nodes.ToArray());
-                this.view.Tree.Nodes[0].Expand();                
+                this.view.Tree.Nodes[0].Expand();
             }
         }
 
@@ -147,7 +157,7 @@ namespace Strategy.Shell.Presenter
             // Create the top node
             var mainNode = new TreeNode(LocalizationStrings.MainNode, (int)TreeIconIndex.OperationGroup, (int)TreeIconIndex.OperationGroup)
             {
-                NodeFont = new Font(this.view.Tree.Font, FontStyle.Bold), 
+                NodeFont = new Font(this.view.Tree.Font, FontStyle.Bold),
             };
 
             this.view.Tree.Nodes.Add(mainNode);

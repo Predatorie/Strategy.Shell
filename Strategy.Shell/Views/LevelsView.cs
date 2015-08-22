@@ -10,6 +10,7 @@
 namespace Strategy.Shell.Views
 {
     using System;
+    using System.Runtime.Remoting.Channels;
     using System.Windows.Forms;
 
     using Interfaces;
@@ -25,9 +26,10 @@ namespace Strategy.Shell.Views
             this.InitializeComponent();
 
             this.LevelsTree.AfterSelect += (s, e) => this.OnSelectionChanged();
-            this.LevelsTree.ItemDrag += (s, e) => this.OnLevelDrag();
-            this.LevelsTree.DragDrop += (s, e) => this.OnLevelDragDrop();
-            this.LevelsTree.DragEnter += (s, e) => this.OnLevelDragEnter();
+
+            this.LevelsTree.ItemDrag += this.OnLevelDrag;
+            this.LevelsTree.DragDrop += this.OnLevelDragDrop;
+            this.LevelsTree.DragEnter += this.OnLevelDragEnter;
 
             this.Load += (s, e) => this.OnViewLoad();
         }
@@ -86,22 +88,22 @@ namespace Strategy.Shell.Views
             handler?.Invoke(this, EventArgs.Empty);
         }
 
-        protected virtual void OnLevelDragEnter()
+        protected virtual void OnLevelDragEnter(object sender, DragEventArgs e)
         {
             var handler = this.LevelDragEnter;
-            handler?.Invoke(this, EventArgs.Empty);
+            handler?.Invoke(sender, e);
         }
 
-        protected virtual void OnLevelDragDrop()
+        protected virtual void OnLevelDragDrop(object sender, DragEventArgs e)
         {
             var handler = this.LevelDragDrop;
-            handler?.Invoke(this, EventArgs.Empty);
+            handler?.Invoke(sender, e);
         }
 
-        protected virtual void OnLevelDrag()
+        protected virtual void OnLevelDrag(object sender, ItemDragEventArgs e)
         {
             var handler = this.LevelDrag;
-            handler?.Invoke(this, EventArgs.Empty);
+            handler?.Invoke(sender, e);
         }
 
         #endregion

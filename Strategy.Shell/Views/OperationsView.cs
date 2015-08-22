@@ -20,9 +20,9 @@ namespace Strategy.Shell.Views
         {
             this.InitializeComponent();
             this.OperationsTreeView.AfterSelect += (s, e) => this.OnSelectionChanged();
-            this.OperationsTreeView.ItemDrag += (s, e) => this.OnOperationDrag();
-            this.OperationsTreeView.DragEnter += (s, e) => this.OnOperationDragEnter();
-            this.OperationsTreeView.DragDrop += (s, e) => this.OnOperationDragDrop();
+            this.OperationsTreeView.ItemDrag += this.OnOperationDrag;
+            this.OperationsTreeView.DragEnter += this.OnOperationDragEnter;
+            this.OperationsTreeView.DragDrop += this.OnOperationDragDrop;
 
             this.Load += (s, e) => this.OnViewLoad();
         }
@@ -88,24 +88,24 @@ namespace Strategy.Shell.Views
         }
 
         /// <summary>The on operation drag.</summary>
-        protected virtual void OnOperationDrag()
+        protected virtual void OnOperationDrag(object sender, ItemDragEventArgs e)
         {
             var handler = this.OperationDrag;
-            handler?.Invoke(this, (ItemDragEventArgs)EventArgs.Empty);
+            handler?.Invoke(sender, e);
         }
 
         /// <summary>The on operation drag enter.</summary>
-        protected virtual void OnOperationDragEnter()
+        protected virtual void OnOperationDragEnter(object sender, DragEventArgs e)
         {
             var handler = this.OperationDragEnter;
-            handler?.Invoke(this, (ItemDragEventArgs)EventArgs.Empty);
+            handler?.Invoke(sender, e);
         }
 
         /// <summary>The on operation drag drop.</summary>
-        protected virtual void OnOperationDragDrop()
+        protected virtual void OnOperationDragDrop(object sender, DragEventArgs e)
         {
             var handler = this.OperationDragDrop;
-            handler?.Invoke(this, (ItemDragEventArgs)EventArgs.Empty);
+            handler?.Invoke(sender, e);
         }
 
         #endregion
